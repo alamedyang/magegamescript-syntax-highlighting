@@ -1,0 +1,154 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "MageGameScript",
+	"patterns": [
+		{ "include": "#comments" },
+		{ "include": "#keywords" },
+		{ "include": "#booleans" },
+		{ "include": "#cardinal" },
+		{ "include": "#buttons" },
+		{ "include": "#constants" },
+		{ "include": "#variables" },
+		{ "include": "#labels" },
+		{ "include": "#fields" },
+		{ "include": "#operators" },
+		{ "include": "#scriptnames" },
+		{ "include": "#string-double" },
+		{ "include": "#string-single" }
+	],
+	"repository": {
+		"comments": {
+			"patterns": [{
+				"name": "comment.line.mgs",
+				"match": "/*(.*?)*\\/"
+			}]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.mgs",
+					"match": "\\b(block|close|copy|erase|fade in|fade out|goto|load|loop|make|mutate|open|pan|play|rotate|save|shake|show|teleport|turn|wait|walk)\\b"
+				},
+				{
+					"name": "keyword.control.conditional.mgs",
+					"match": "\\b(if|then)\\b"
+				},
+				{
+					"name": "keyword.control.assignment.mgs",
+					"match": "\\b(set)\\b"
+				}
+			]
+		},
+		"booleans": {
+			"patterns": [{
+				"name": "constant.language.mgs",
+				"match": "\\b(true|false|on|off|glitched|unglitched)\\b"
+			}]
+		},
+		"cardinal": {
+			"patterns": [{
+				"name": "constant.language.mgs",
+				"match": "\\b(north|south|east|west)\\b"
+			}]
+		},
+		"buttons": {
+			"patterns": [{
+				"name": "constant.language.mgs",
+				"match": "\\b(MEM0|MEM1|MEM2|MEM3|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|XOR|ADD|SUB|PAGE|LJOY_CENTER|LJOY_UP|LJOY_DOWN|LJOY_LEFT|LJOY_RIGHT|RJOY_CENTER|RJOY_UP|RJOY_DOWN|RJOY_LEFT|RJOY_RIGHT|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY)\\b"
+			}]
+		},
+		"constants": {
+			"patterns": [{
+				"name": "constant.numeric.integer.mgs",
+				"match": "(\\s(-?[0-9]+(ms|px)?)\\b)|(\\b(once|twice|thrice)\\b|\\b(x[0-9]+)\\b)"
+			}]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "string.variable.mgs variable.parameter.mgs",
+					"match": "(\\s#[0-9A-F]+\\s)"
+				}
+			]
+		},
+		"labels": {
+			"patterns": [
+				{
+					"name": "variable.parameter.mgs",
+					"match": "\\b(entity|flag|geometry|map|dialog|warp state|camera|player control|variable|slot|hex dialog|hex control|hex clipboard|button)\\b"
+				}
+			]
+		},
+		"fields": {
+			"patterns": [
+				{
+					"name": "variable.parameter.mgs",
+					"match": "\\b(name|x|y|interactScript|tickScript|type|primaryID|secondaryID|primaryIDtype|animation|animationFrame|direction|hackableStateA|hackableStateB|hackableStateC|hackableStateD|hackableStateAU2|hackableStateCU2|path)\\b"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.logical.mgs",
+					"match": "\\s[=<>]\\s"
+				}
+			]
+		},
+		"scriptnames": {
+			"patterns": [{
+				"name": "entity.name.function.mgs",
+				"match": "[-A-Za-z0-9_=<>]+:\\s"
+			}]
+		},
+		"string-single": {
+			"begin": "'",
+			"beginCaptures": {
+				"0": {
+					"name": "string.quoted.double.mgs punctuation.definition.string.begin.mgs"
+				}
+			},
+			"end": "'",
+			"endCaptures": {
+				"0": {
+					"name": "string.quoted.double.mgs punctuation.definition.string.end.mgs"
+				}
+			},
+			"patterns": [
+				{
+					"name": "punctuation.definition.variable.mgs variable.language.mgs",
+					"match": "(%PLAYER%|%PATH%|%SELF%)"
+				},
+				{
+					"name": "string.quoted.double.mgs punctuation.definition.string.end.mgs",
+					"match": "[-A-Za-z_<>/?%*+=#!0-9 \"]*"
+				}
+			]
+		},
+		"string-double": {
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "string.quoted.double.mgs punctuation.definition.string.begin.mgs"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "string.quoted.double.mgs punctuation.definition.string.end.mgs"
+				}
+			},
+			"patterns": [
+				{
+					"name": "punctuation.definition.variable.mgs variable.language.mgs",
+					"match": "(%PLAYER%|%PATH%|%SELF%)"
+				},
+				{
+					"name": "string.quoted.double.mgs punctuation.definition.string.end.mgs",
+					"match": "[-A-Za-z_<>/?%*+=#!0-9 ']*"
+				}
+			]
+		}
+	},
+	"scopeName": "source.mgs"
+}

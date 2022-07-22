@@ -1,0 +1,25 @@
+{
+    "name": "magegamescript-colors",
+    "displayName": "MageGameScript Colors",
+    "description": "Syntax highlighting for MageGameScript",
+    "version": "0.1.0",
+    "engines": {
+        "vscode": "^1.69.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "mgs",
+            "aliases": ["MageGameScript", "mgs"],
+            "extensions": [".mgs"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "mgs",
+            "scopeName": "source.mgs",
+            "path": "./syntaxes/mgs.tmLanguage.json"
+        }]
+    }
+}
