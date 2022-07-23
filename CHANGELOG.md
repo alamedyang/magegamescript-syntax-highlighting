@@ -4,4 +4,5 @@ All notable changes to the "magegamescript-colors" extension will be documented 
 
 ## 2022-07-22
 
+- Better comment handling (0.1.1)
 - Initial release (0.1.0)

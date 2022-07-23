@@ -12,16 +12,30 @@
 		{ "include": "#labels" },
 		{ "include": "#fields" },
 		{ "include": "#operators" },
-		{ "include": "#scriptnames" },
+		{ "include": "#script-labels" },
 		{ "include": "#string-double" },
 		{ "include": "#string-single" }
 	],
 	"repository": {
 		"comments": {
-			"patterns": [{
-				"name": "comment.line.mgs",
-				"match": "/*(.*?)*\\/"
-			}]
+			"begin": "/\\*",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment comment.block"
+				}
+			},
+			"end": "\\*/",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment comment.block"
+				}
+			},
+			"patterns": [
+				{
+					"name": "comment.block",
+					"match": ".+?"
+				}
+			]
 		},
 		"keywords": {
 			"patterns": [
@@ -75,7 +89,7 @@
 			"patterns": [
 				{
 					"name": "variable.parameter.mgs",
-					"match": "\\b(entity|flag|geometry|map|dialog|warp state|camera|player control|variable|slot|hex dialog|hex control|hex clipboard|button)\\b"
+					"match": "\\b(entity|flag|geometry|map|dialog|serial dialog|warp state|camera|player control|variable|slot|hex dialog|hex control|hex clipboard|button)\\b"
 				}
 			]
 		},
@@ -95,7 +109,7 @@
 				}
 			]
 		},
-		"scriptnames": {
+		"script-labels": {
 			"patterns": [{
 				"name": "entity.name.function.mgs",
 				"match": "[-A-Za-z0-9_=<>]+:\\s"
