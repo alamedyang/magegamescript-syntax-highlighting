@@ -2,6 +2,10 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-07-23
+
+- Script name strings now yellow; bug fixes (0.1.2)
+
 ## 2022-07-22
 
 - Better comment handling (0.1.1)
