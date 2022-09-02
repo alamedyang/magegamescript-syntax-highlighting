@@ -1,5 +1,5 @@
 settings dialog {
-	parameters for entity "Entity Name" {
+	parameters for label Player {
 		entity "%PLAYER%"
 	}
 }
@@ -9,6 +9,7 @@ settings for dialog {
 		entity "%PLAYER%"
 		portrait "mage-happy"
 		alignment BR
+		wrap messages 40
 		/* Saying it the long way (BOTTOM_RIGHT)
 		would be okay, too */
 	}
@@ -22,7 +23,7 @@ settings for dialog {
 }
 
 dialog "testie" { Player "What the heck?" }
-dialog "testie2" {
+dialog testie2 {
 
 	Player "Huh. Not sure about this."
 
@@ -100,7 +101,7 @@ logic-entities {
 	if entity "Entity Name" interactScript is not "name-of-checked-script-interact" then goto "script-do-if-entity-y"
 	if entity "Entity Name" tickScript is "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
 	if entity "Entity Name" tickScript is not "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
-	if entity "Entity Name" type is "some-kind-of-entity-type" then goto "script-do-if-entity-type"
+	if entity "Entity Name" type is old_man then goto "script-do-if-entity-type"
 	if entity "Entity Name" type is not "some-kind-of-entity-type" then goto "script-do-if-entity-type"
 	if entity "Entity Name" primaryID is 16 then goto "script-do-if-entity-primaryid"
 	if entity "Entity Name" primaryID is not 16 then goto "script-do-if-entity-primaryid"
@@ -167,13 +168,13 @@ logic-others {
 }
 
 set-entity {
-	set entity "Entity Name" name to "New Name"
+	if entity "Entity Name" name to Bob
 	set entity "Entity Name" x to 128
 	set entity "Entity Name" y to 128
 	set entity "Entity Name" type to "some-kinda-sheep"
 	set entity "Entity Name" primaryID to 1
 	set entity "Entity Name" secondaryID to 2
-	set entity "Entity Name" primaryIDtype to 0
+	set entity "Entity Name" primaryIDtype to asdfasdf8
 	set entity "Entity Name" hackableStateA to 128
 	set entity "Entity Name" hackableStateB to 128
 	set entity "Entity Name" hackableStateC to 128
@@ -198,7 +199,7 @@ entity-choreography-appearance {
 	set entity "Entity Name" animationFrame to 0
 	turn entity "Entity Name" north
 	rotate entity "Entity Name" 1
-	turn entity "Entity Name" toward entity "Target Entity"
+	turn entity "Entity Name" toward entity Bob
 	turn entity "Entity Name" toward geometry "target-geometry"
 	make entity "Entity Name" glitched
 	make entity "Entity Name" unglitched
@@ -226,9 +227,9 @@ controlling-variables {
 	set flag "save-flag-to-set" to true
 	set flag "save-flag-to-set-NOT" to false
 	set warp state to "warp-state-string"
-	mutate "variable-name-set" = 5
-	mutate "variable-name-add" + 5
-	mutate "variable-name-sub" - 5
+	mutate variable variable-name-set = 5
+	mutate variable-name-add + 5
+	mutate variable test - 5
 	mutate "variable-name-div" / 5
 	mutate "variable-name-mul" * 5
 	mutate "variable-name-mod" % 5

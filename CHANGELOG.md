@@ -2,6 +2,10 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-09-02
+
+- Brought into line with more relaxed MGS syntax (0.2.1)
+
 ## 2022-08-22
 
 - Update to MGS language v2 (0.2.0)

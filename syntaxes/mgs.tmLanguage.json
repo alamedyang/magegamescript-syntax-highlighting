@@ -12,51 +12,63 @@
 			"patterns": [
 				{ "include": "#comment_block" },
 				{ "include": "#comment_inline" }
-			],
-			"repository": {
-				"comment_block": {
-					"begin": "/\\*",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment"
-						}
-					},
-					"end": "\\*/",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment"
-						}
-					},
+			]
+		},
+		"comment_block": {
+			"begin": "/\\*",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment"
+				}
+			},
+			"end": "\\*/",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment"
+				}
+			},
+			"name": "comment.block",
+			"patterns": [
+				{
 					"name": "comment.block",
-					"patterns": [
-						{
-							"name": "comment.block",
-							"match": ".+?"
-						}
-					]
+					"match": ".+?"
+				}
+			]
+		},
+		"self_player_quoted": {
+			"match": "(['\"])(%PLAYER%|%SELF%)(\\1)",
+			"captures": {
+				"1": {
+					"name": "string.variable.mgs"
 				},
-				"comment_inline": {
-					"begin": "\/\/",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment"
-						}
-					},
-					"end": "\n",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment"
-						}
-					},
-					"name": "comment.line.double-slash",
-					"patterns": [
-						{
-							"name": "comment.block",
-							"match": ".+?"
-						}
-					]
+				"2": {
+					"name": "punctuation.definition.variable.mgs variable.language.mgs"
+				},
+				"3": {
+					"name": "string.variable.mgs"
 				}
 			}
+		},
+		"comment_inline": {
+			"begin": "\/\/",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment"
+				}
+			},
+			"end": "\n",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.comment"
+				}
+			},
+			"name": "comment.line.double-slash",
+			"patterns": [
+				{
+					"name": "comment.block",
+					"match": ".+?"
+				}
+			]
 		},
 		"dialog_settings_node": {
 			"begin": "(settings)(\\s+(for))?\\s+(dialog)\\s*({)",
@@ -112,7 +124,7 @@
 			]
 		},
 		"dialog_settings_global_parameters_node": {
-			"begin": "\\b(parameters)(\\s+for)?(\\s+global)?\\s+(defaults?)\\s+({)",
+			"begin": "\\b(parameters\\s+)?(for\\s+)?(global\\s+)?(defaults?\\s+)({)",
 			"beginCaptures": {
 				"1": {
 					"name": "support.type"
@@ -146,8 +158,15 @@
 					"name": "variable.parameter.mgs"
 				},
 				{
-					"match": "\\b(wrap|set)\\b",
-					"name": "keyword.control.assignment.mgs"
+					"match": "\\b(wrap|set)\\s+(messages|options)\\b",
+					"captures": {
+						"1": {
+							"name": "keyword.control.assignment.mgs"
+						},
+						"2": {
+							"name": "variable.parameter.mgs"
+						}
+					}
 				},
 				{
 					"match": "\\bto\\b",
@@ -165,22 +184,38 @@
 					"match": "\\b([0-9]+)\\b",
 					"name": "constant.numeric.integer.mgs"
 				},
+				{ "include": "#self_player_quoted" },
+				{ "include": "#dialog_message" }
+			]
+		},
+		"dialog_message": {
+			"begin": "(?<!\\\\)(?:\\\\{2})*\\K\"",
+			"beginCaptures": {
+				"0": { "name": "string.quoted.double.mgs string.variable.mgs" }
+			},
+			"end": "(?<!\\\\)(?:\\\\{2})*\\K\"",
+			"endCaptures": {
+				"0": { "name": "string.quoted.double.mgs string.variable.mgs" }
+			},
+			"patterns": [
 				{
-					"match": "(['\"])(%PLAYER%|%SELF%)*?(\\1)",
-					"captures": {
-						"1": {
-							"name": "string.variable.mgs"
-						},
-						"2": {
-							"name": "punctuation.definition.variable.mgs variable.language.mgs"
-						},
-						"3": {
-							"name": "string.variable.mgs"
-						}
-					}
+					"match": "[%][^%]+?[%]",
+					"name": "punctuation.definition.variable.mgs variable.language.mgs"
 				},
 				{
-					"match": "(['\"])[^`]*?\\1",
+					"match": "\\$[^\\$]+?\\$",
+					"name": "punctuation.definition.variable.mgs variable.language.mgs"
+				},
+				{
+					"match": "\\\\n",
+					"name": "constant.character.escape.mgs"
+				},
+				{
+					"match": "\\\\\"",
+					"name": "constant.character.escape.mgs"
+				},
+				{
+					"match": ".+?",
 					"name": "string.variable.mgs"
 				}
 			]
@@ -246,21 +281,24 @@
 			}
 		},
 		"dialog_option_goto": {
-			"match": "(:)\\s*(script\\s)?(((['\"])[^`]*?\\5)|[^\\s'\"]+)",
+			"match": "(:)\\s*(goto\\s)?(script\\s)?(((['\"])[^`]*?\\6)|[^\\s'\"]+)",
 			"captures": {
 				"1": {
 					"name": "keyword.operator"
 				},
 				"2": {
-					"name": "variable.parameter.mgs support.variable.mgs"
+					"name": "keyword.control.mgs"
 				},
 				"3": {
+					"name": "variable.parameter.mgs support.variable.mgs"
+				},
+				"4": {
 					"name": "entity.name.function.mgs"
 				}
 			}
 		},
 		"dialog_entity_specifier": {
-			"match": "\\b(entity)\\s+((['\"])[^`]*?\\3)",
+			"match": "\\b(entity)\\s+(([^\\s'\"]+|(['\"])[^`]*?\\4))",
 			"captures": {
 				"1": {
 					"name":"variable.parameter.mgs"
@@ -297,6 +335,9 @@
 				{ "include": "#script_keyword_scripts_bodge" },
 				{ "include": "#script_keyword_scripts" },
 				{ "include": "#script_interact_scripts" },
+				{ "include": "#script_specifier_string_pairs" },
+				{ "include": "#script_specifier_string_pairs_mutate" },
+				{ "include": "#script_entity_property_to" },
 				{ "include": "#script_keywords" },
 				{ "include": "#script_booleans" },
 				{ "include": "#script_cardinals" },
@@ -334,17 +375,17 @@
 			}
 		},
 		"script_interact_scripts": {
-			"match": "\\b(interactScript|tickScript|lookScript)\\s+(is|is not|to)\\s((([^\\s'\"]+|(['\"])[^`]*?\\6)))",
+			"match": "\\b(interactScript|tickScript|lookScript)\\s+(is|to)\\s+(not\\s+)?(([^\\s'\"]+)|((['\"])[^`]*?\\7))",
 			"captures": {
 				"1": { "name": "variable.parameter.mgs" },
-				"3": { "name": "entity.name.function.mgs" }
+				"4": { "name": "entity.name.function.mgs" }
 			}
 		},
 		"script_keywords": {
 			"patterns": [
 				{
 					"name": "keyword.control.mgs",
-					"match": "\\b(block|close|copy|erase|fade in|fade out|load|loop|make|mutate|open|pan|play|rotate|save|shake|show|teleport|turn|wait|walk)\\b"
+					"match": "\\b(block|close|copy|erase|fade in|fade out|load|loop|make|open|pan|play|rotate|save|shake|show|teleport|turn|wait|walk)\\b"
 				},
 				{
 					"name": "keyword.control.conditional.mgs",
@@ -376,6 +417,10 @@
 				},
 				{
 					"name": "constant.numeric.integer.mgs",
+					"match": "(#[0-9A-F]+)"
+				},
+				{
+					"name": "constant.numeric.integer.mgs",
 					"match": "(-?[0-9]+)"
 				},
 				{
@@ -390,11 +435,35 @@
 		},
 		"script_labels": {
 			"name": "variable.parameter.mgs",
-			"match": "\\b(flag|geometry|map|variable|dialog|button|serial dialog|entity|warp state|camera|player control|slot|hex dialog mode|hex control|hex clipboard|hex editor)\\b"
+			"match": "\\b(button|serial dialog|camera|player control|slot|hex dialog mode|hex control|hex clipboard|hex editor)\\b"
+		},
+		"script_specifier_string_pairs": {
+			"match": "\\b(flag|geometry|map|variable|dialog|serial dialog|entity)\\s+(([^\\s'\"]+?)|((['\"])[^`]*?\\5))\\s+",
+			"captures": {
+				"1": { "name": "variable.parameter.mgs" },
+				"2": { "name": "string.variable.mgs" }
+			}
+		},
+		"script_specifier_string_pairs_mutate": {
+			"match": "\\b((mutate)(\\s+variable)?)\\s+(([^\\s'\"]+?)|((['\"])[^`]*?\\7))\\s+(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+(([0-9]+)|(([^\\s'\"]+?)|((['\"])[^`]*?\\14)))",
+			"captures": {
+				"2": { "name": "keyword.control.assignment.mgs" },
+				"3": { "name": "variable.parameter.mgs.mgs" },
+				"4": { "name": "string.variable.mgs" },
+				"10": { "name": "constant.numeric.integer.mgs" },
+				"11": { "name": "string.variable.mgs" }
+			}
+		},
+		"script_entity_property_to": {
+			"match": "\\b(name|type|warp state|path)\\s+(is|to)(\\s+not)?\\s+(([^\\s'\"]+?)|((['\"])[^`]*?\\7))\\s+",
+			"captures": {
+				"1": { "name": "variable.parameter.mgs" },
+				"4": { "name": "string.variable.mgs" }
+			}
 		},
 		"script_fields": {
 			"name": "variable.parameter.mgs",
-			"match": "\\b(name|x|y|interactScript|tickScript|type|primaryID|secondaryID|primaryIDtype|animation|animationFrame|direction|hackableStateA|hackableStateB|hackableStateC|hackableStateD|hackableStateAU2|hackableStateAU4|hackableStateCU2|path)\\b"
+			"match": "\\b(x|y|primaryID|secondaryID|primaryIDtype|animation|animationFrame|direction|hackableStateA|hackableStateB|hackableStateC|hackableStateD|hackableStateAU2|hackableStateAU4|hackableStateCU2)\\b"
 		},
 		"script_operators": {
 			"name": "keyword.operator.logical.mgs",

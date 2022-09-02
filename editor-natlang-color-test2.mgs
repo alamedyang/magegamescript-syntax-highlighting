@@ -1,0 +1,331 @@
+settings for dialog {
+	global default {
+		alignment BOTTOM_LEFT
+	}
+	parameters for label Player {
+		alignment BOTTOM_RIGHT
+	}
+	parameters for label SELF {
+		alignment BOTTOM_LEFT
+	}
+	parameters for entity "Strong Bad" {
+		alignment TOP_LEFT
+	}
+}
+dialog "dialog-baker-glitched" {
+	SELF
+	"Qacwk, A kmvvwfdq usf'l kww kljsayzl. A\nymwkk A kzgmdv uml tsuc gf lzw usxxawfw."
+}
+dialog "dialog-strong_bad-glitched" {
+	SELF
+	"fhqwhgadshgnsdhjsdbkhsdabkfabkveybvf"
+}
+dialog "dialog-bobg-glitched" {
+	SELF
+	"Gung'f n onq fvta."
+}
+dialog "dialog-bobrock-glitched" {
+	SELF
+	"Sqd'j meha byau jxyi."
+}
+dialog "dialog-baker-start" {
+	SELF
+	"Hey, I'm pretty swamped. Can you run an\nerrand for me?"
+
+	Player
+	"What do you need?"
+
+	SELF
+	"The Bobs-Only Club placed a huge order for\nB-shaped donuts, due tonight, but I can't\nget anyone to confirm the order."
+	"They haven't paid yet, either."
+	"I went over there this morning, but they\nwouldn't let me in! And Bob wouldn't tell\nme anything!"
+	"I just want to know whether or not they\nstill want these donuts. I'm running out\nof time to get everything ready by\ntonight."
+	"Can you find out for me? Get some answers\nfrom Bob? Any Bob?"
+
+	Player
+	"Sure, I can swing past that way. See what\nI can find out."
+
+	SELF
+	"Thanks."
+	"Oh, and happy birthday."
+}
+dialog "dialog-baker-start-s" {
+	SELF
+	"Hear anything from the Bobs-Only Club yet?"
+}
+dialog "dialog-bobrock-gottago" {
+	SELF
+	"Goin' back to work."
+}
+dialog "dialog-bobrock-start1" {
+	SELF
+	"Name's Bob."
+	"Stone Cold %Bob Austin%."
+	"...."
+	"Right, what's yours, then?"
+
+	Player
+	"You don't know who I am? We've both lived\nhere for years!"
+
+	SELF
+	"Don't know nobody. All I know is, gotta\nkeep everyone out."
+	"You know, unless their name is Bob."
+
+	Player
+	"Bob?"
+
+	SELF
+	"Bob. Camel case.\nNice and plain.\nTraditional."
+	"'Cause this club is Bobs-only. You know,\nthe Bobs-Only Club."
+
+	Player
+	"Why is it Bobs only?"
+
+	SELF
+	"Why?\nWhy is it Bobs only?"
+	"Why, it wouldn't be the Bobs-Only Club if\nI just let anyone in!"
+}
+dialog "dialog-bobrock-start2" {
+	Player
+	"Well, the baker needs to know whether the\nclub still needs a bunch of B-shaped\ndonuts for tonight."
+	"Do you know if the Bobs still want them?\nThere's gonna be a party tonight, right?"
+
+	SELF
+	"That's for Bobs to know."
+	"Only Bobs."
+	"Bobs only."
+
+	Player
+	"I think the baker needs to know, too!"
+
+	SELF
+	"Well, if his name was Bob, I would've let\nhim in!"
+}
+dialog "dialog-bobrock-bounce" {
+	SELF
+	"So, what's your name then?"
+}
+dialog "dialog-bobrock-nobob" {
+	Player
+	"Um....\nit's %PLAYER%."
+
+	SELF
+	"Sorry, can't unlock the door for ya.\nBobs only."
+}
+dialog "dialog-bobrock-yesbob1" {
+	Player
+	"Why, what luck! My name happens to be Bob!"
+
+	SELF
+	"Nice. Great name. I'll open it on up."
+}
+dialog "dialog-bobrock-yesbob2" {
+	SELF
+	"Head inside quick, now."
+}
+dialog "dialog-bobsclub1" {
+	name ????
+	"Oh, hello. You must be here for the annual\nBobs-Only Party, right?"
+}
+dialog "dialog-bobsclub2" {
+	entity "Guardian Bob"
+	"Well, I hate to tell you this, but it's\ncanceled this year."
+
+	Player
+	"What? Canceled?"
+
+	entity "Guardian Bob"
+	"Yeah. This time, for real."
+	"I mean, every year they SAY its canceled,\nbut this time it's actually genuinely\ncanceled."
+
+	entity "Strong Bad"
+	alignment BOTTOM_LEFT
+	"Wait, canceled?!"
+}
+dialog "dialog-bobsclub3" {
+	entity "Strong Bad"
+	"But what about all the ladies?!"
+
+	Player
+	alignment TOP_RIGHT
+	"Ladies? I'm pretty sure Bob is a masculine\nname, traditionally."
+
+	entity "Strong Bad"
+	"Nuh-uh!"
+	"What about Bob... rietta? Bob... velyn?"
+	"Barbara? I mean, Bob-ara?"
+	"They're still gonna come to the party,\naren't they?"
+
+	Player
+	alignment TOP_RIGHT
+	"Sorry, dude! Not if the party's canceled."
+	"...Also not if none of them are named Bob."
+
+	entity "Strong Bad"
+	"Sure, they'll come! I just gotta wait a\nlittle more!"
+
+	Player
+	alignment TOP_RIGHT
+	"I think you came to the wrong party."
+}
+dialog "dialog-bobsclub4" {
+	entity "Guardian Bob"
+	"Well, this place should be full of Bobs...\nnext year."
+}
+dialog "dialog-bobsclub5" {
+	entity "Strong Bad"
+	alignment BOTTOM_LEFT
+	"Bob-alina!\nBob-cine!\nBob-quelyn!\nCome baaaack!"
+}
+dialog "dialog-bobsclub6" {
+	Player
+	"So I guess I can tell the baker to cancel\nthe donut order then, huh?"
+
+	entity "Guardian Bob"
+	"Guess so. Sorry about this."
+}
+dialog "dialog-bobsclub-bob" {
+	SELF
+	"They could've told me the party was\nactually canceled before I made the trip\nout here."
+	"And it was a long trip, too. I came all\nthe way from the net!"
+	"*sigh*\nOh, well."
+}
+dialog "dialog-bobsclub-bob-where" {
+	SELF
+	"Wait. Weren't there two Bob golems last\nyear?"
+}
+dialog "dialog-bobsclub-strongbob" {
+	SELF
+	"Why, hello there, fellow Bob!"
+
+	Player
+	"Your name is Bob?"
+
+	SELF
+	"Why, it sure is!"
+
+	Player
+	"You look an awful lot like Strong Bad to\nme."
+
+	SELF
+	"Wha-what? STRONG BAD? Never heard of him.\nThough he sounds like quite the rugged\nand handsome gentleman."
+	"The name's Strong BOB! Just lookee here\nat my fake -- I mean real -- ID!"
+
+	Player
+	"(This ID clearly belongs to \"Bob Newhart,\"\nbut the word Newhart is crossed out.)"
+	"(I guess Bob out front doesn't have very\ngood eyes.)"
+}
+dialog "dialog-bobsclub-strongbob-s" {
+	SELF
+	"Yessirree! Strong Bob's the name, and\npartyin's the game!"
+}
+dialog "dialog-balloonbox" {
+	Player
+	"Just a box of uninflated balloons."
+	"How many balloons does a party need,\nanyway?"
+}
+dialog "dialog-bobrock-bounce-rehash" {
+	Player
+	"We've been through all this before, you\nknow."
+
+	SELF
+	"Doesn't matter. It's just the rules.\nBobs only."
+}
+dialog "dialog-bobrock-nobob-rehash" {
+	Player
+	"...."
+	"Fine. I guess I'm not getting in, then."
+
+	SELF
+	"Damn straight."
+}
+dialog "dialog-bobrock-yesbob-rehash" {
+	Player
+	"Well, my name is Bob! Happy?"
+
+	SELF
+	"Cool. Great name."
+}
+dialog "dialog-baker-end" {
+	SELF
+	"Canceled? The party at the Bobs-Only Club\nwas canceled? For real?"
+
+	Player
+	"That's what Bob said."
+
+	SELF
+	"Bob? Stone Cold Bob Austin?"
+
+	Player
+	"Uh... well, it was someone named Bob."
+
+	SELF
+	"Great. Just great. Just as I was putting\neverything in the oven. Not gonna pay me\neither, are they?"
+	"Well, thanks for finding out for me.\nNow I need to find a way to move four\ndozen B-shaped donuts."
+}
+dialog "dialog-baker-end-s" {
+	SELF
+	"Say, you wouldn't want a B-shaped donut,\nwould you? On the house."
+}
+dialog "dialog-bobmoss-glitched1" {
+	SELF
+	"Well that's no good. I should really try\nto relax. Loosen up a bit...."
+}
+dialog "dialog-bobmoss-glitched2" {
+	SELF
+	"Ahh, that feels nice."
+}
+dialog "dialog-bobmoss-start1" {
+	SELF
+	"Oh, hello, there."
+}
+dialog "dialog-bobmoss-start2" {
+	SELF
+	"I was just admiring the forest, with its\nhappy little trees...."
+	"I've made so many squirrel friends,\nand...."
+}
+dialog "dialog-bobmoss-start3" {
+	SELF
+	"Oh!"
+	"I didn't realize how late it was getting.\nI think I might be late for work."
+	"I'd better head out. Hope to see you\nagain."
+}
+dialog "dialog-bobmoss-start-s" {
+	SELF
+	"Sorry, I can't serve anyone until the\nparty starts."
+	"Help yourself to a Cactus Cooler, though.\nPlenty in the fridge."
+}
+dialog "dialog-fridge" {
+	Player
+	"Wow. There's literally nothing but cans of\nCactus Cooler in here."
+}
+dialog "dialog-bobwall" {
+	Player
+	"Wall of Bobs: famous Bobs."
+	"Robert Parr, superhero.\nBob Kelso, physician.\nSpongeBob, fry cook.\nSideshow Bob, entertainer."
+	"There sure are a lot of Bobs in the world."
+}
+dialog "dialog-bread" {
+	Player
+	"Mmmm, fresh bread!"
+}
+dialog "dialog-debug-bob-q" {
+	SELF
+	"How to Bob?"
+	> "Skip Bob Austin conversation" : goto script debug-bob-skipconvo
+	> "Above + set name Bob" : goto "debug-bob-also-setnamebob"
+	> "Skip cutscene and teleport" : "debug-bob-teleport"
+	> "Never mind" : goto "debug-bob-no"
+}
+dialog "dialog-debug-bob-skipconvo" {
+	SELF
+	"Bob Austin has been spoken to."
+}
+dialog "dialog-debug-bob-also-setnamebob" {
+	SELF
+	"Bob Austin has been spoken to, and your\nname is Bob."
+}
+dialog "dialog-debug-bob-teleport" {
+	SELF
+	"Teleportation in progress."
+}
