@@ -35,7 +35,7 @@
 				}
 			]
 		},
-		"self_player_quoted": {
+		"entity_relative_self_player": {
 			"match": "(['\"])(%PLAYER%|%SELF%)(\\1)",
 			"captures": {
 				"1": {
@@ -71,16 +71,16 @@
 			]
 		},
 		"dialog_settings_node": {
-			"begin": "(settings)(\\s+(for))?\\s+(dialog)\\s*({)",
+			"begin": "(settings)(\\s+for)?\\s+(dialog)\\s*({)",
 			"beginCaptures": {
 				"1": { "name": "support.type" },
-				"4": { "name": "variable.parameter.mgs" },
-				"5": { "name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin" }
+				"3": { "name": "variable.parameter.mgs" },
+				"4": { "name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin.mgs" }
 			},
 			"end": "}",
 			"endCaptures": {
 				"0": {
-					"name": "punctuation.definition.bracket.curly.end punctuation.definition.bracket.curly.end"
+					"name": "punctuation.definition.bracket.curly.end.mgs punctuation.definition.bracket.curly.end.mgs"
 				}
 			},
 			"patterns": [
@@ -96,31 +96,30 @@
 			]
 		},
 		"dialog_settings_individual_parameters_node": {
-			"begin": "\\b(parameters)(\\s+(for))?\\s+(label|entity)\\s+(([^\\s'\"]+)|(['\"])[^`]*?\\7)\\s+({)",
+			"begin": "\\b(parameters)(\\s+for)?\\s+(label|entity)\\s+(([^\\s'\"]+)|(['\"])[^`]*?\\6)\\s+({)",
 			"beginCaptures": {
 				"1": {
 					"name": "support.type.mgs"
 				},
-				"4": {
+				"3": {
 					"name": "variable.parameter.mgs"
 				},
-				"5": {
+				"4": {
 					"name": "support.type.mgs"
 				},
-				"8": {
-					"name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin"
+				"7": {
+					"name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin.mgs"
 				}
 			},
 			"end": "}",
 			"endCaptures": {
 				"0": {
-					"name": "punctuation.definition.bracket.curly.end punctuation.definition.bracket.curly.end"
+					"name": "punctuation.definition.bracket.curly.end.mgs punctuation.definition.bracket.curly.end.mgs"
 				}
 			},
 			"patterns": [
 				{ "include": "#comment_node" },
-				{ "include": "#dialog_settings_individual_parameter" },
-				{ "include": "#dialog_settings_individual_value" }
+				{ "include": "#dialog_parameter" }
 			]
 		},
 		"dialog_settings_global_parameters_node": {
@@ -136,7 +135,7 @@
 					"name": "keyword.other"
 				},
 				"5": {
-					"name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin"
+					"name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin.mgs"
 				}
 			},
 			"end": "}",
@@ -147,46 +146,114 @@
 			},
 			"patterns": [
 				{ "include": "#comment_node" },
-				{ "include": "#dialog_settings_individual_parameter" },
-				{ "include": "#dialog_settings_individual_value" }
+				{ "include": "#dialog_parameter" }
 			]
 		},
-		"dialog_settings_individual_parameter": {
+		"dialog_parameter": {
 			"patterns": [
 				{
-					"match": "\\b(entity|alignment|name|portrait|messages|options)\\b",
-					"name": "variable.parameter.mgs"
+					"match": "\\b(entity)\\s+(\")(%PLAYER%|%SELF%)(\")",
+					"captures": {
+						"1": {
+							"name": "variable.parameter.mgs"
+						},
+						"2": {
+							"name": "string.variable.mgs"
+						},
+						"3": {
+							"name": "punctuation.definition.variable.mgs variable.language.mgs"
+						},
+						"4": {
+							"name": "string.variable.mgs"
+						}
+					}
 				},
 				{
-					"match": "\\b(wrap|set)\\s+(messages|options)\\b",
+					"match": "\\b(entity)\\s+(([-A-Za-z0-9_.#$]+)|(['\"])([^`]*?)\\4)\\s",
+					"captures": {
+						"0": {
+							"name": "string.variable.mgs"
+						},
+						"1": {
+							"name": "variable.parameter.mgs"
+						},
+						"3": {
+							"name": "support.type.mgs"
+						},
+						"5": {
+							"name": "support.type.mgs"
+						}
+					}
+				},
+				{
+					"match": "\\b(name)\\s+(['\"])(%[^%]+%)\\2",
+					"captures": {
+						"0": {
+							"name": "string.variable.mgs"
+						},
+						"1": {
+							"name": "variable.parameter.mgs"
+						},
+						"3": {
+							"name": "punctuation.definition.variable.mgs variable.language.mgs"
+						}
+					}
+				},
+				{
+					"match": "\\b(border_tileset|emote)\\s+([0-9]+)\\b",
+					"captures": {
+						"1": {
+							"name": "variable.parameter.mgs"
+						},
+						"2": {
+							"name": "constant.numeric.integer.mgs"
+						}
+					}
+				},
+				{
+					"match": "\\b(name|portrait|border_tileset)\\s+(([-A-Za-z0-9_.#$]+)|(['\"])[^`]*?\\4)\\s",
+					"captures": {
+						"1": {
+							"name": "variable.parameter.mgs"
+						},
+						"2": {
+							"name": "string.variable.mgs"
+						}
+					}
+				},
+				{
+					"match": "\\b(alignment)\\s+(TR|BR|TL|BL|TOP_RIGHT|BOTTOM_RIGHT|TOP_LEFT|BOTTOM_LEFT)\\b",
+					"captures": {
+						"1": {
+							"name": "variable.parameter.mgs"
+						},
+						"2": {
+							"name": "constant.language.mgs"
+						}
+					}
+				},
+				{
+					"match": "\\b(wrap|set)\\s+(messages|options)(\\s+to)?\\s+([0-9]+)\\b",
 					"captures": {
 						"1": {
 							"name": "keyword.control.assignment.mgs"
 						},
 						"2": {
 							"name": "variable.parameter.mgs"
+						},
+						"3": {
+							"name": "keyword.operator.mgs"
+						},
+						"4": {
+							"name": "constant.numeric.integer.mgs"
 						}
 					}
-				},
-				{
-					"match": "\\bto\\b",
-					"name": "keyword.operator.mgs"
 				}
 			]
 		},
-		"dialog_settings_individual_value": {
-			"patterns": [
-				{
-					"match": "\\b(TR|BR|TL|BL|TOP_RIGHT|BOTTOM_RIGHT|TOP_LEFT|BOTTOM_LEFT)\\b",
-					"name": "constant.language.mgs"
-				},
-				{
-					"match": "\\b([0-9]+)\\b",
-					"name": "constant.numeric.integer.mgs"
-				},
-				{ "include": "#self_player_quoted" },
-				{ "include": "#dialog_message" }
-			]
+		"dialog_bareword_identifier": {
+			"match": "\\b[-A-Za-z0-9_.#$]+\\b",
+			"name": "support.type.mgs"
 		},
 		"dialog_message": {
 			"begin": "(?<!\\\\)(?:\\\\{2})*\\K\"",
@@ -199,6 +266,10 @@
 			},
 			"patterns": [
 				{
+					"match": "\\\\[n\"$%]",
+					"name": "constant.character.escape.mgs"
+				},
+				{
 					"match": "[%][^%]+?[%]",
 					"name": "punctuation.definition.variable.mgs variable.language.mgs"
 				},
@@ -207,21 +278,13 @@
 					"name": "punctuation.definition.variable.mgs variable.language.mgs"
 				},
 				{
-					"match": "\\\\n",
-					"name": "constant.character.escape.mgs"
-				},
-				{
-					"match": "\\\\\"",
-					"name": "constant.character.escape.mgs"
-				},
-				{
 					"match": ".+?",
 					"name": "string.variable.mgs"
 				}
 			]
 		},
 		"dialog_node": {
-			"begin": "\\b(dialog)(\\s+(([^\\s'\"]+|(['\"])[^`]*?\\5)))?\\s+({)",
+			"begin": "\\b(dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5)))?\\s+({)",
 			"beginCaptures": {
 				"1": { "name": "keyword.control.assignment.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
@@ -235,17 +298,15 @@
 			},
 			"patterns": [
 				{ "include": "#comment_node" },
-				{ "include": "#dialog_option_label" },
+				{ "include": "#dialog_parameter" },
+				{ "include": "#dialog_message" },
 				{ "include": "#dialog_option_goto" },
-				{ "include": "#dialog_entity_specifier" },
-				{ "include": "#dialog_settings_individual_parameter" },
-				{ "include": "#dialog_settings_individual_value" },
 				{ "include": "#dialog_rando_operator" },
-				{ "include": "#dialog_generic_specifier" }
+				{ "include": "#dialog_bareword_identifier" }
 			]
 		},
 		"show_dialog_node": {
-			"begin": "\\b(show)\\s+(dialog)(\\s+(([^\\s'\"]+|(['\"])[^`]*?\\6)))?\\s+({)",
+			"begin": "\\b(show)\\s+(dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6)))?\\s+({)",
 			"beginCaptures": {
 				"1": { "name": "keyword.control.assignment.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
@@ -260,28 +321,15 @@
 			},
 			"patterns": [
 				{ "include": "#comment_node" },
-				{ "include": "#dialog_option_label" },
+				{ "include": "#dialog_parameter" },
+				{ "include": "#dialog_message" },
 				{ "include": "#dialog_option_goto" },
-				{ "include": "#dialog_entity_specifier" },
-				{ "include": "#dialog_settings_individual_parameter" },
-				{ "include": "#dialog_settings_individual_value" },
 				{ "include": "#dialog_rando_operator" },
-				{ "include": "#dialog_generic_specifier" }
+				{ "include": "#dialog_bareword_identifier" }
 			]
 		},
-		"dialog_option_label": {
-			"match": "(>)\\s*((['\"])[^`]*?\\3)",
-			"captures": {
-				"1": {
-					"name": "keyword.operator"
-				},
-				"2": {
-					"name": "string.quoted.double.mgs string.variable.mgs"
-				}
-			}
-		},
 		"dialog_option_goto": {
-			"match": "(:)\\s*(goto\\s)?(script\\s)?(((['\"])[^`]*?\\6)|[^\\s'\"]+)",
+			"match": "(:)\\s*(goto\\s)?(script\\s)?(((['\"])[^`]*?\\6)|[-A-Za-z0-9_.#$]+)",
 			"captures": {
 				"1": {
 					"name": "keyword.operator"
@@ -297,31 +345,16 @@
 				}
 			}
 		},
-		"dialog_entity_specifier": {
-			"match": "\\b(entity)\\s+(([^\\s'\"]+|(['\"])[^`]*?\\4))",
-			"captures": {
-				"1": {
-					"name":"variable.parameter.mgs"
-				},
-				"2": {
-					"name": "support.type.mgs"
-				}
-			}
-		},
 		"dialog_rando_operator":{
 			"match": "[:>]",
 			"name": "keyword.operator"
 		},
-		"dialog_generic_specifier": {
-			"match": "[^\\s'\"]",
-			"name": "support.type.mgs"
-		},
 		"script_node": {
-			"begin": "\\b(script\\s+)?((([^\\s'\"]+|(['\"])[^`]*?\\5)))?\\s+({)",
+			"begin": "(script\\s+)?(((([-A-Za-z0-9_.#$]+)|((['\"])[^`]*?\\7))))\\s+({)",
 			"beginCaptures": {
 				"1": { "name": "keyword.control.assignment.mgs" },
 				"2": { "name": "entity.name.function.mgs" },
-				"7": { "name": "punctuation.definition.bracket.curly.begin.mgs punctuation.definition.parameters.begin.mgs" }
+				"8": { "name": "punctuation.definition.bracket.curly.begin.mgs punctuation.definition.parameters.begin.mgs" }
 			},
 			"end": "}",
 			"endCaptures": {
@@ -335,7 +368,9 @@
 				{ "include": "#script_keyword_scripts_bodge" },
 				{ "include": "#script_keyword_scripts" },
 				{ "include": "#script_interact_scripts" },
+				{ "include": "#script_specifier_string_pairs_relative" },
 				{ "include": "#script_specifier_string_pairs" },
+				{ "include": "#script_specifier_string_serial_special" },
 				{ "include": "#script_specifier_string_pairs_mutate" },
 				{ "include": "#script_entity_property_to" },
 				{ "include": "#script_keywords" },
@@ -350,7 +385,7 @@
 			]
 		},
 		"script_keyword_scripts_bodge": {
-			"match": "\\b(copy)\\s+(entity)",
+			"match": "\\b(copy)\\s+(entity|variable)",
 			"captures": {
 				"1": {
 					"name": "keyword.control.mgs"
@@ -361,7 +396,7 @@
 			}
 		},
 		"script_keyword_scripts": {
-			"match": "\\b(goto|copy)\\s+(script\\s+)?((([^\\s'\"]+|(['\"])[^`]*?\\6)))",
+			"match": "\\b(goto|copy)\\s+(script\\s+)?((([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6)))",
 			"captures": {
 				"1": {
 					"name": "keyword.control.mgs"
@@ -375,7 +410,7 @@
 			}
 		},
 		"script_interact_scripts": {
-			"match": "\\b(interactScript|tickScript|lookScript)\\s+(is|to)\\s+(not\\s+)?(([^\\s'\"]+)|((['\"])[^`]*?\\7))",
+			"match": "\\b(interactScript|tickScript|lookScript)\\s+(is|to)\\s+(not\\s+)?(([-A-Za-z0-9_.#$]+)|((['\"])[^`]*?\\7))",
 			"captures": {
 				"1": { "name": "variable.parameter.mgs" },
 				"4": { "name": "entity.name.function.mgs" }
@@ -425,7 +460,7 @@
 				},
 				{
 					"name": "constant.numeric.integer.mgs",
-					"match": "\\b((once|twice|thrice)|(x[0-9]+))"
+					"match": "\\b((once|twice|thrice)|([0-9]+x?))"
 				}
 			]
 		},
@@ -438,14 +473,30 @@
 			"match": "\\b(button|serial dialog|camera|player control|slot|hex dialog mode|hex control|hex clipboard|hex editor)\\b"
 		},
 		"script_specifier_string_pairs": {
-			"match": "\\b(flag|geometry|map|variable|dialog|serial dialog|entity)\\s+(([^\\s'\"]+?)|((['\"])[^`]*?\\5))\\s+",
+			"match": "\\b(flag|geometry|map|variable|dialog|serial dialog|entity)\\s+(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\5))\\s+",
 			"captures": {
 				"1": { "name": "variable.parameter.mgs" },
 				"2": { "name": "string.variable.mgs" }
 			}
 		},
+		"script_specifier_string_pairs_relative": {
+			"match": "\\b(entity)\\s+((['\"])(%PLAYER%|%SELF%)\\3)",
+			"captures": {
+				"1": { "name": "variable.parameter.mgs" },
+				"2": { "name": "string.variable.mgs" },
+				"4": { "name": "punctuation.definition.variable.mgs variable.language.mgs" }
+			}
+		},
+		"script_specifier_string_serial_special": {
+			"match": "\\b(serial connect)\\s+(message\\s+)?(to\\s+)?(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\7))\\s+",
+			"captures": {
+				"1": { "name": "variable.parameter.mgs" },
+				"2": { "name": "variable.parameter.mgs" },
+				"4": { "name": "string.variable.mgs" }
+			}
+		},
 		"script_specifier_string_pairs_mutate": {
-			"match": "\\b((mutate)(\\s+variable)?)\\s+(([^\\s'\"]+?)|((['\"])[^`]*?\\7))\\s+(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+(([0-9]+)|(([^\\s'\"]+?)|((['\"])[^`]*?\\14)))",
+			"match": "\\b((mutate)(\\s+variable)?)\\s+(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\7))\\s+(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+(([0-9]+)|(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\14)))",
 			"captures": {
 				"2": { "name": "keyword.control.assignment.mgs" },
 				"3": { "name": "variable.parameter.mgs.mgs" },
@@ -455,7 +506,7 @@
 			}
 		},
 		"script_entity_property_to": {
-			"match": "\\b(name|type|warp state|path)\\s+(is|to)(\\s+not)?\\s+(([^\\s'\"]+?)|((['\"])[^`]*?\\7))\\s+",
+			"match": "\\b(name|type|warp state|path)\\s+(is|to)(\\s+not)?\\s+(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\7))\\s+",
 			"captures": {
 				"1": { "name": "variable.parameter.mgs" },
 				"4": { "name": "string.variable.mgs" }
