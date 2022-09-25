@@ -2,6 +2,13 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-09-24 (v0.2.3)
+
+- QOL for auto text behavior, including:
+	- auto indent after `{`
+	- comment or decomment now uses inline comment syntax
+	- finding matching brackets when one is selected
+
 ## 2022-09-06 (v0.2.2)
 
 - Quote-wrapped script declarations without `script` prefix are now correctly colored

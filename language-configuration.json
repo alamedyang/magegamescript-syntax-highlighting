@@ -1,17 +1,30 @@
 {
     "comments": {
         // symbols used for start and end a block comment. Remove this entry if your language does not support block comments
-        "blockComment": [ "/*", "*/" ]
+        "blockComment": [ "/*", "*/" ],
+		"lineComment": "//"
     },
     // symbols that are auto closed when typing
+	// (there is a version of this to stop this behavior when specific places, e.g. in a string or comment)
     "autoClosingPairs": [
         ["\"", "\""],
         ["'", "'"],
         ["{", "}"],
     ],
     // symbols that can be used to surround a selection
+	// (e.g. select text then type one of these to surround it)
     "surroundingPairs": [
         ["\"", "\""],
-        ["'", "'"]
-    ]
+        ["'", "'"],
+        ["{", "}"]
+    ],
+	// other ones I found :D
+	// highlighting the matching bracket pair when one is selected:
+	"brackets": [
+		["{","}"]
+	],
+	"indentationRules": {
+		"increaseIndentPattern": "^((?!\\/\\/).)*(\\{[^}]*)$",
+		"decreaseIndentPattern": "^((?!.*?\\/\\*).*\\*/)?\\s*[\\}].*$"
+	  }
 }
