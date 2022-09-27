@@ -35,20 +35,6 @@
 				}
 			]
 		},
-		"entity_relative_self_player": {
-			"match": "(['\"])(%PLAYER%|%SELF%)(\\1)",
-			"captures": {
-				"1": {
-					"name": "string.variable.mgs"
-				},
-				"2": {
-					"name": "punctuation.definition.variable.mgs variable.language.mgs"
-				},
-				"3": {
-					"name": "string.variable.mgs"
-				}
-			}
-		},
 		"comment_inline": {
 			"begin": "\/\/",
 			"beginCaptures": {
@@ -74,13 +60,13 @@
 			"begin": "(settings)(\\s+for)?\\s+(dialog)\\s*({)",
 			"beginCaptures": {
 				"1": { "name": "support.type" },
-				"3": { "name": "variable.parameter.mgs" },
-				"4": { "name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin.mgs" }
+				"3": { "name": "variable.parameter.mgs support.variable.mgs" },
+				"4": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
 			"end": "}",
 			"endCaptures": {
 				"0": {
-					"name": "punctuation.definition.bracket.curly.end.mgs punctuation.definition.bracket.curly.end.mgs"
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
 				}
 			},
 			"patterns": [
@@ -102,19 +88,19 @@
 					"name": "support.type.mgs"
 				},
 				"3": {
-					"name": "variable.parameter.mgs"
+					"name": "variable.parameter.mgs support.variable.mgs"
 				},
 				"4": {
 					"name": "support.type.mgs"
 				},
 				"7": {
-					"name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin.mgs"
+					"name": "mega.block.mgs punctuation.section.block.begin.mgs"
 				}
 			},
 			"end": "}",
 			"endCaptures": {
 				"0": {
-					"name": "punctuation.definition.bracket.curly.end.mgs punctuation.definition.bracket.curly.end.mgs"
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
 				}
 			},
 			"patterns": [
@@ -129,19 +115,19 @@
 					"name": "support.type"
 				},
 				"3": {
-					"name": "variable.parameter.mgs"
+					"name": "variable.parameter.mgs support.variable.mgs"
 				},
 				"4": {
 					"name": "keyword.other"
 				},
 				"5": {
-					"name": "punctuation.definition.parameters.begin.mgs punctuation.definition.bracket.curly.begin.mgs"
+					"name": "mega.block.mgs punctuation.section.block.begin.mgs"
 				}
 			},
 			"end": "}",
 			"endCaptures": {
 				"0": {
-					"name": "punctuation.definition.bracket.curly.end punctuation.definition.bracket.curly.end"
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
 				}
 			},
 			"patterns": [
@@ -155,7 +141,7 @@
 					"match": "\\b(entity)\\s+(\")(%PLAYER%|%SELF%)(\")",
 					"captures": {
 						"1": {
-							"name": "variable.parameter.mgs"
+							"name": "variable.parameter.mgs support.variable.mgs"
 						},
 						"2": {
 							"name": "string.variable.mgs"
@@ -175,7 +161,7 @@
 							"name": "string.variable.mgs"
 						},
 						"1": {
-							"name": "variable.parameter.mgs"
+							"name": "variable.parameter.mgs support.variable.mgs"
 						},
 						"3": {
 							"name": "support.type.mgs"
@@ -186,24 +172,27 @@
 					}
 				},
 				{
-					"match": "\\b(name)\\s+(['\"])(%[^%]+%)\\2",
+					"match": "\\b(name)\\s+(['\"])(%[^%]+%)(\\2)",
 					"captures": {
 						"0": {
 							"name": "string.variable.mgs"
 						},
 						"1": {
-							"name": "variable.parameter.mgs"
+							"name": "variable.parameter.mgs support.variable.mgs"
 						},
 						"3": {
 							"name": "punctuation.definition.variable.mgs variable.language.mgs"
+						},
+						"4": {
+							"name": "string.variable.mgs"
 						}
 					}
 				},
 				{
-					"match": "\\b(border_tileset|emote)\\s+([0-9]+)\\b",
+					"match": "\\b(emote)\\s+([0-9]+)\\b",
 					"captures": {
 						"1": {
-							"name": "variable.parameter.mgs"
+							"name": "variable.parameter.mgs support.variable.mgs"
 						},
 						"2": {
 							"name": "constant.numeric.integer.mgs"
@@ -214,7 +203,7 @@
 					"match": "\\b(name|portrait|border_tileset)\\s+(([-A-Za-z0-9_.#$]+)|(['\"])[^`]*?\\4)\\s",
 					"captures": {
 						"1": {
-							"name": "variable.parameter.mgs"
+							"name": "variable.parameter.mgs support.variable.mgs"
 						},
 						"2": {
 							"name": "string.variable.mgs"
@@ -225,7 +214,7 @@
 					"match": "\\b(alignment)\\s+(TR|BR|TL|BL|TOP_RIGHT|BOTTOM_RIGHT|TOP_LEFT|BOTTOM_LEFT)\\b",
 					"captures": {
 						"1": {
-							"name": "variable.parameter.mgs"
+							"name": "variable.parameter.mgs support.variable.mgs"
 						},
 						"2": {
 							"name": "constant.language.mgs"
@@ -233,13 +222,13 @@
 					}
 				},
 				{
-					"match": "\\b(wrap|set)\\s+(messages|options)(\\s+to)?\\s+([0-9]+)\\b",
+					"match": "\\b(wrap)\\s+(messages|serial)(\\s+to)?\\s+([0-9]+)\\b",
 					"captures": {
 						"1": {
 							"name": "keyword.control.assignment.mgs"
 						},
 						"2": {
-							"name": "variable.parameter.mgs"
+							"name": "variable.parameter.mgs support.variable.mgs"
 						},
 						"3": {
 							"name": "keyword.operator.mgs"
@@ -251,9 +240,35 @@
 				}
 			]
 		},
-		"dialog_bareword_identifier": {
-			"match": "\\b[-A-Za-z0-9_.#$]+\\b",
-			"name": "support.type.mgs"
+		"dialog_option_goto": {
+			"match": "(:)\\s*(goto\\s)?(script\\s)?(((['\"])[^`]*?\\6)|[-A-Za-z0-9_.#$]+)",
+			"captures": {
+				"1": {
+					"name": "keyword.operator"
+				},
+				"2": {
+					"name": "keyword.control.mgs"
+				},
+				"3": {
+					"name": "variable.parameter.mgs support.variable.mgs"
+				},
+				"4": {
+					"name": "entity.name.function.mgs"
+				}
+			}
+		},
+		"dialog_body": {
+			"patterns": [
+				{ "include": "#comment_node" },
+				{ "include": "#dialog_parameter" },
+				{ "include": "#dialog_message" },
+				{ "include": "#dialog_option_goto" },
+				{
+					"match": "[:>]",
+					"name": "keyword.operator.mgs"
+				},
+				{ "include": "#dialog_bareword_identifier" }
+			]
 		},
 		"dialog_message": {
 			"begin": "(?<!\\\\)(?:\\\\{2})*\\K\"",
@@ -283,26 +298,25 @@
 				}
 			]
 		},
+		"dialog_bareword_identifier": {
+			"match": "\\b[-A-Za-z0-9_.#$]+\\b",
+			"name": "support.type.mgs"
+		},
 		"dialog_node": {
 			"begin": "\\b(dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5)))?\\s+({)",
 			"beginCaptures": {
 				"1": { "name": "keyword.control.assignment.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
-				"6": { "name": "punctuation.definition.bracket.curly.begin.mgs punctuation.definition.parameters.begin.mgs" }
+				"6": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
 			"end": "}",
 			"endCaptures": {
 				"0": {
-					"name": "punctuation.definition.bracket.curly.end.mgs punctuation.definition.bracket.curly.end.mgs"
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
 				}
 			},
 			"patterns": [
-				{ "include": "#comment_node" },
-				{ "include": "#dialog_parameter" },
-				{ "include": "#dialog_message" },
-				{ "include": "#dialog_option_goto" },
-				{ "include": "#dialog_rando_operator" },
-				{ "include": "#dialog_bareword_identifier" }
+				{ "include": "#dialog_body" }
 			]
 		},
 		"show_dialog_node": {
@@ -311,148 +325,376 @@
 				"1": { "name": "keyword.control.assignment.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
 				"3": { "name": "string.quoted.double.mgs string.variable.mgs" },
-				"7": { "name": "punctuation.definition.bracket.curly.begin.mgs punctuation.definition.parameters.begin.mgs" }
+				"7": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
 			"end": "}",
 			"endCaptures": {
 				"0": {
-					"name": "punctuation.definition.bracket.curly.end.mgs punctuation.definition.bracket.curly.end.mgs"
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
 				}
 			},
 			"patterns": [
-				{ "include": "#comment_node" },
-				{ "include": "#dialog_parameter" },
-				{ "include": "#dialog_message" },
-				{ "include": "#dialog_option_goto" },
-				{ "include": "#dialog_rando_operator" },
-				{ "include": "#dialog_bareword_identifier" }
+				{ "include": "#dialog_body" }
 			]
 		},
-		"dialog_option_goto": {
-			"match": "(:)\\s*(goto\\s)?(script\\s)?(((['\"])[^`]*?\\6)|[-A-Za-z0-9_.#$]+)",
-			"captures": {
-				"1": {
-					"name": "keyword.operator"
-				},
-				"2": {
-					"name": "keyword.control.mgs"
-				},
-				"3": {
-					"name": "variable.parameter.mgs support.variable.mgs"
-				},
-				"4": {
-					"name": "entity.name.function.mgs"
-				}
-			}
+		"if_then": {
+			"begin": "\\bif\\b",
+			"beginCaptures": {
+				"0": { "name": "keyword.control.conditional.mgs" }
+			},
+			"end": "(\\bthen\\b)|\\n",
+			"endCaptures": {
+				"0": { "name": "keyword.control.conditional.mgs" }
+			},
+			"patterns": [
+				{ "include": "#conditions" }
+			]
 		},
-		"dialog_rando_operator":{
-			"match": "[:>]",
-			"name": "keyword.operator"
+		"conditions": {
+			"patterns": [
+				{
+					"match": "\\b(button)(\\s+(MEM0|MEM1|MEM2|MEM3|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|XOR|ADD|SUB|PAGE|LJOY_CENTER|LJOY_UP|LJOY_DOWN|LJOY_LEFT|LJOY_RIGHT|RJOY_CENTER|RJOY_UP|RJOY_DOWN|RJOY_LEFT|RJOY_RIGHT|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY))?\\b",
+					"captures": {
+						"0": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "constant.language.mgs" }
+					}
+				},
+				{
+					"match": "\\b(entity)\\s+((['\"])(%PLAYER%|%SELF%)\\3)",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "string.variable.mgs" },
+						"4": { "name": "punctuation.definition.variable.mgs variable.language.mgs" }
+					}
+				},
+				{
+					"match": "\\b(flag|variable|entity|geometry)\\s+((([-A-Za-z0-9_.#$]+\\b)|(['\"])[^`]*?\\5))?",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(interactScript|tickScript|lookScript)\\s+is\\s+(not\\s+)?([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4)",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "entity.name.function.mgs" }
+					}
+				},
+				{
+					"match": "\\b(direction)\\s+is\\s+(not\\s+)?(north|south|east|west)",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "constant.language.mgs" }
+					}
+				},
+				{
+					"match": "\\bis\\s+(not\\s+)?(true|false|on|off|glitched|unglitched)\\b",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "constant.language.mgs" }
+					}
+				},
+				{
+					"match": "\\bis\\s+(not\\s+)?(currently\\s+pressed|inside)\\b",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" }
+					}
+				},
+				{
+					"match": "\\bis\\s+(not\\s+)?((==|<=|<|>|>=)\\s+)?([0-9]+)\\b",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" },
+						"4": { "name": "constant.numeric.integer.mgs" }
+					}
+				},
+				{
+					"match": "\\bis\\s+(not\\s+)?((==|<=|<|>|>=)\\s+)?((([-A-Za-z0-9_.#$]+\\b)|(['\"])[^`]*?\\7))",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" },
+						"4": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(name|type|path)\\s+is\\s+(not\\s+)?(([-A-Za-z0-9_.#$]+)|(['\"])[^`]*?\\5)",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" },
+						"3": { "name": "string.variable.mgs" }
+					}
+
+				},
+				{
+					"match": "\\b(x|y|primaryID|secondaryID|primaryIDtype|animation|animationFrame|hackableStateA|hackableStateB|hackableStateC|hackableStateD|hackableStateAU2|hackableStateCU2|hackableStateAU4)\\s+is\\s+(not\\s+)?([0-9]+)",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" },
+						"3": { "name": "constant.numeric.integer.mgs" }
+					}
+
+				}
+			]
+		},
+		"zigzag": {
+			"patterns": [
+				{ "include": "#zigzag_condition" },
+				{ "include": "#zigzag_else_body" },
+				{ "include": "#zigzag_body" }
+			]
+		},
+		"zigzag_condition": {
+			"begin": "\\b(if|else\\s*if)\\s+(\\()",
+			"beginCaptures": {
+				"0": { "name": "keyword.control.conditional.mgs" },
+				"1": { "name": "meta.parens.mgs punctuation.section.parens.begin" }
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": { "name": "meta.parens.mgs punctuation.section.parens.end" }
+			},
+			"patterns": [
+				{ "include": "#comment_node" },
+				{ "include": "#conditions" },
+				{
+					"match": "\\|\\|",
+					"name": "keyword.operator.logical.mgs"
+				}
+			]
+		},
+		"zigzag_body": {
+			"begin": "(\\{)",
+			"beginCaptures": {
+				"1": { "name": "keyword.control.conditional.mgs" },
+				"2": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": { "name": "mega.block.mgs punctuation.section.block.end.mgs" }
+			},
+			"patterns": [
+				{ "include": "#comment_node" },
+				{ "include": "#zigzag" },
+				{ "include": "#script_body" }
+			]
+		},
+		"zigzag_else_body": {
+			"begin": "\\belse\\s+(\\{)",
+			"beginCaptures": {
+				"0": { "name": "keyword.control.conditional.mgs" },
+				"1": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": { "name": "mega.block.mgs punctuation.section.block.end.mgs" }
+			},
+			"patterns": [
+				{ "include": "#comment_node" },
+				{ "include": "#script_body" }
+			]
+		},
+		"script_body": {
+			"patterns": [
+				{ "include": "#comment_node" },
+				{ "include": "#zigzag" },
+				{ "include": "#show_dialog_node" },
+				{ "include": "#if_then" },
+				{
+					"name": "keyword.control.mgs",
+					"match": "\\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|load|set|fade\\s+in|fade\\s+out|load|erase|save|open|close|wait|block|shake)\\b"
+				},
+				{
+					"name": "variable.parameter.mgs support.variable.mgs",
+					"match": "\\b(animation|slot|camera|player\\s+control|hex\\s+(dialog\\s+mode|control|clipboard|editor))\\b"
+				},
+				{
+					"match": "\\b(to\\s+)?(true|false|on|off|glitched|unglitched)\\b",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "constant.language.mgs" }
+					}
+				},
+				{
+					"name": "constant.language.mgs",
+					"match": "\\b(north|south|east|west)\\b"
+				},
+				{
+					"match": "\\b(name|type|path)(\\s+to)?\\s+([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4)?",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" },
+						"3": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(x|y|primaryID|secondaryID|primaryIDtype|animation|animationFrame|hackableStateA|hackableStateB|hackableStateC|hackableStateD|hackableStateAU2|hackableStateCU2|hackableStateAU4)(\\s+to)?\\s+([0-9]]+)?",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" },
+						"3": { "name": "constant.numeric.integer.mgs" }
+					}
+				},
+				{ "include": "#script_constants" },
+				{
+					"match": "\\b(to|from)\\s+(#[0-9A-F]+)?\\b",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "constant.numeric.integer.mgs" }
+					}
+				},
+				{
+					"match": "\\b(along|follow|toward|from|into|over|for)\\b",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" }
+					}
+				},
+				{
+					"patterns": [
+						{
+							"begin": "(copy\\s+)?(entity|geometry)\\s+(\")",
+							"beginCaptures": {
+								"1": { "name": "keyword.control.mgs" },
+								"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+								"3": { "name": "string.quoted.double.mgs punctuation.definition.string.begin.mgs" }
+							},
+							"end": "\"",
+							"endCaptures": {
+								"0": { "name": "string.quoted.double.mgs punctuation.definition.string.end.mgs" }
+							},
+							"patterns": [
+								{
+									"name": "punctuation.definition.variable.mgs variable.language.mgs",
+									"match": "(%PLAYER%|%PATH%|%SELF%)"
+								},
+								{
+									"name": "string.quoted.double.mgs string.variable.mgs",
+									"match": "[^\"]"
+								}
+							]
+						},
+						{
+							"begin": "(copy\\s+)?(entity|geometry)\\s+(')",
+							"beginCaptures": {
+								"1": { "name": "keyword.control.mgs" },
+								"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+								"3": { "name": "string.quoted.double.mgs punctuation.definition.string.begin.mgs" }
+							},
+							"end": "'",
+							"endCaptures": {
+								"0": { "name": "string.quoted.single.mgs punctuation.definition.string.end.mgs" }
+							},
+							"patterns": [
+								{
+									"name": "punctuation.definition.variable.mgs variable.language.mgs",
+									"match": "(%PLAYER%|%PATH%|%SELF%)"
+								},
+								{
+									"name": "string.quoted.double.mgs string.variable.mgs",
+									"match": "[^']"
+								}
+							]
+						}
+					]
+				},
+				{
+					"match": "\\b(map tickScript)(\\s+to)?\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "keyword.operator.logical.mgs" },
+						"3": { "name": "entity.name.function.mgs" }
+					}
+				},
+				{
+					"match": "\\b(copy\\s+)?(flag|variable|map|geometry|entity)\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))?",
+					"captures": {
+						"1": { "name": "keyword.control.mgs" },
+						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(goto|copy)\\s+(script\\s+)?(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))",
+					"captures": {
+						"1": { "name": "keyword.control.mgs" },
+						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "entity.name.function.mgs" }
+					}
+				},
+				{
+					"match": "\\b(warp\\s+state|serial\\s+connect(\\s+message)?)(\\s+to)?\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6))?",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"4": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(flag|geometry|map|variable|entity|dialog|serial\\s+dialog)\\s+((([-A-Za-z0-9_.#$]+\\b)|(['\"])[^`]*?\\5))?",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(show)\\s+((serial\\s+)?dialog)\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6))",
+					"captures": {
+						"1": { "name": "keyword.control.mgs" },
+						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"4": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(mutate)\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4))",
+					"captures": {
+						"1": { "name": "keyword.control.mgs" },
+						"3": { "name": "string.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(interactScript|tickScript|lookScript)\\s+(to\\s+)?([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4)",
+					"captures": {
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "entity.name.function.mgs" }
+					}
+				},
+				{
+					"match": "(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?|==|<=|<|>|>=)\\s+([0-9]+)\\b",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "constant.numeric.integer.mgs" }
+					}
+				},
+				{
+					"match": "(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?|==|<=|<|>|>=)\\s+([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\3)",
+					"captures": {
+						"1": { "name": "keyword.operator.logical.mgs" },
+						"2": { "name": "string.variable.mgs" }
+					}
+				}
+			]
 		},
 		"script_node": {
 			"begin": "(script\\s+)?(((([-A-Za-z0-9_.#$]+)|((['\"])[^`]*?\\7))))\\s+({)",
 			"beginCaptures": {
 				"1": { "name": "keyword.control.assignment.mgs" },
 				"2": { "name": "entity.name.function.mgs" },
-				"8": { "name": "punctuation.definition.bracket.curly.begin.mgs punctuation.definition.parameters.begin.mgs" }
+				"8": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
 			"end": "}",
 			"endCaptures": {
-				"0": {
-					"name": "punctuation.definition.bracket.curly.end.mgs punctuation.definition.bracket.curly.end.mgs"
-				}
+				"0": { "name": "mega.block.mgs punctuation.section.block.end.mgs" }
 			},
 			"patterns": [
-				{ "include": "#comment_node" },
-				{ "include": "#show_dialog_node" },
-				{ "include": "#script_keyword_scripts_bodge" },
-				{ "include": "#script_keyword_scripts" },
-				{ "include": "#script_interact_scripts" },
-				{ "include": "#script_specifier_string_pairs_relative" },
-				{ "include": "#script_specifier_string_pairs" },
-				{ "include": "#script_specifier_string_serial_special" },
-				{ "include": "#script_specifier_string_pairs_mutate" },
-				{ "include": "#script_entity_property_to" },
-				{ "include": "#script_keywords" },
-				{ "include": "#script_booleans" },
-				{ "include": "#script_cardinals" },
-				{ "include": "#script_buttons" },
-				{ "include": "#script_constants" },
-				{ "include": "#script_labels" },
-				{ "include": "#script_fields" },
-				{ "include": "#script_operators" },
-				{ "include": "#script_strings" }
+				{ "include": "#script_body" }
 			]
-		},
-		"script_keyword_scripts_bodge": {
-			"match": "\\b(copy)\\s+(entity|variable)",
-			"captures": {
-				"1": {
-					"name": "keyword.control.mgs"
-				},
-				"2": {
-					"name": "variable.parameter.mgs"
-				}
-			}
-		},
-		"script_keyword_scripts": {
-			"match": "\\b(goto|copy)\\s+(script\\s+)?((([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6)))",
-			"captures": {
-				"1": {
-					"name": "keyword.control.mgs"
-				},
-				"2": {
-					"name": "variable.parameter.mgs"
-				},
-				"3": {
-					"name": "entity.name.function.mgs"
-				}
-			}
-		},
-		"script_interact_scripts": {
-			"match": "\\b(interactScript|tickScript|lookScript)\\s+(is|to)\\s+(not\\s+)?(([-A-Za-z0-9_.#$]+)|((['\"])[^`]*?\\7))",
-			"captures": {
-				"1": { "name": "variable.parameter.mgs" },
-				"4": { "name": "entity.name.function.mgs" }
-			}
-		},
-		"script_keywords": {
-			"patterns": [
-				{
-					"name": "keyword.control.mgs",
-					"match": "\\b(block|close|copy|erase|fade in|fade out|load|loop|make|open|pan|play|rotate|save|shake|show|teleport|turn|wait|walk)\\b"
-				},
-				{
-					"name": "keyword.control.conditional.mgs",
-					"match": "\\b(if|then)\\b"
-				},
-				{
-					"name": "keyword.control.assignment.mgs",
-					"match": "\\b(set)\\b"
-				}
-			]
-		},
-		"script_booleans": {
-			"name": "constant.language.mgs",
-			"match": "\\b(true|false|on|off|glitched|unglitched)\\b"
-		},
-		"script_cardinals": {
-			"name": "constant.language.mgs",
-			"match": "\\b(north|south|east|west)\\b"
-		},
-		"script_buttons": {
-			"name": "constant.language.mgs",
-			"match": "\\b(MEM0|MEM1|MEM2|MEM3|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|XOR|ADD|SUB|PAGE|LJOY_CENTER|LJOY_UP|LJOY_DOWN|LJOY_LEFT|LJOY_RIGHT|RJOY_CENTER|RJOY_UP|RJOY_DOWN|RJOY_LEFT|RJOY_RIGHT|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY)\\b"
 		},
 		"script_constants": {
 			"patterns": [
 				{
 					"name": "constant.numeric.integer.mgs",
 					"match": "([0-9]+(ms|px)?)"
-				},
-				{
-					"name": "constant.numeric.integer.mgs",
-					"match": "(#[0-9A-F]+)"
 				},
 				{
 					"name": "constant.numeric.integer.mgs",
@@ -467,112 +709,6 @@
 		"script_variables": {
 			"name": "string.variable.mgs variable.parameter.mgs",
 			"match": "#[0-9A-F]+"
-		},
-		"script_labels": {
-			"name": "variable.parameter.mgs",
-			"match": "\\b(button|serial dialog|camera|player control|slot|hex dialog mode|hex control|hex clipboard|hex editor)\\b"
-		},
-		"script_specifier_string_pairs": {
-			"match": "\\b(flag|geometry|map|variable|dialog|serial dialog|entity)\\s+(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\5))\\s+",
-			"captures": {
-				"1": { "name": "variable.parameter.mgs" },
-				"2": { "name": "string.variable.mgs" }
-			}
-		},
-		"script_specifier_string_pairs_relative": {
-			"match": "\\b(entity)\\s+((['\"])(%PLAYER%|%SELF%)\\3)",
-			"captures": {
-				"1": { "name": "variable.parameter.mgs" },
-				"2": { "name": "string.variable.mgs" },
-				"4": { "name": "punctuation.definition.variable.mgs variable.language.mgs" }
-			}
-		},
-		"script_specifier_string_serial_special": {
-			"match": "\\b(serial connect)\\s+(message\\s+)?(to\\s+)?(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\7))\\s+",
-			"captures": {
-				"1": { "name": "variable.parameter.mgs" },
-				"2": { "name": "variable.parameter.mgs" },
-				"4": { "name": "string.variable.mgs" }
-			}
-		},
-		"script_specifier_string_pairs_mutate": {
-			"match": "\\b((mutate)(\\s+variable)?)\\s+(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\7))\\s+(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+(([0-9]+)|(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\14)))",
-			"captures": {
-				"2": { "name": "keyword.control.assignment.mgs" },
-				"3": { "name": "variable.parameter.mgs.mgs" },
-				"4": { "name": "string.variable.mgs" },
-				"10": { "name": "constant.numeric.integer.mgs" },
-				"11": { "name": "string.variable.mgs" }
-			}
-		},
-		"script_entity_property_to": {
-			"match": "\\b(name|type|warp state|path)\\s+(is|to)(\\s+not)?\\s+(([-A-Za-z0-9_.#$]+?)|((['\"])[^`]*?\\7))\\s+",
-			"captures": {
-				"1": { "name": "variable.parameter.mgs" },
-				"4": { "name": "string.variable.mgs" }
-			}
-		},
-		"script_fields": {
-			"name": "variable.parameter.mgs",
-			"match": "\\b(x|y|primaryID|secondaryID|primaryIDtype|animation|animationFrame|direction|hackableStateA|hackableStateB|hackableStateC|hackableStateD|hackableStateAU2|hackableStateAU4|hackableStateCU2)\\b"
-		},
-		"script_operators": {
-			"name": "keyword.operator.logical.mgs",
-			"match": "\\s(==|<=|<|>|>=)\\s"
-		},
-		"script_strings": {
-			"patterns": [
-				{ "include": "#script_string_single" },
-				{ "include": "#script_string_double" }
-			]
-		},
-		"script_string_double": {
-			"begin": "\"",
-			"beginCaptures": {
-				"0": {
-					"name": "string.quoted.double.mgs punctuation.definition.string.begin.mgs"
-				}
-			},
-			"end": "\"",
-			"endCaptures": {
-				"0": {
-					"name": "string.quoted.double.mgs punctuation.definition.string.end.mgs"
-				}
-			},
-			"patterns": [
-				{
-					"name": "punctuation.definition.variable.mgs variable.language.mgs",
-					"match": "(%PLAYER%|%PATH%|%SELF%)"
-				},
-				{
-					"name": "string.quoted.double.mgs punctuation.definition.string.end.mgs",
-					"match": "[^\"`]*"
-				}
-			]
-		},
-		"script_string_single": {
-			"begin": "'",
-			"beginCaptures": {
-				"0": {
-					"name": "string.quoted.single.mgs punctuation.definition.string.begin.mgs"
-				}
-			},
-			"end": "'",
-			"endCaptures": {
-				"0": {
-					"name": "string.quoted.single.mgs punctuation.definition.string.end.mgs"
-				}
-			},
-			"patterns": [
-				{
-					"name": "punctuation.definition.variable.mgs variable.language.mgs",
-					"match": "(%PLAYER%|%PATH%|%SELF%)"
-				},
-				{
-					"name": "string.quoted.single.mgs punctuation.definition.string.end.mgs",
-					"match": "[^'`]*"
-				}
-			]
 		}
 	},
 	"scopeName": "source.mgs"

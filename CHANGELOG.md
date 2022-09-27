@@ -2,6 +2,13 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-09-27 (v0.3.0)
+
+- MGS Natlang "zigzag" preprocessor support:
+	- Added `if` / `else if` / `else` condition coloring
+	- Improved syntax consistency
+	- Punctuation handling for `(` / `)`
+
 ## 2022-09-24 (v0.2.3)
 
 - QOL for auto text behavior, including:

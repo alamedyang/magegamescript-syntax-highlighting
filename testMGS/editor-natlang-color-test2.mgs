@@ -3,178 +3,163 @@ settings for dialog {
 	parameters for label SELF { entity "%SELF%" }
 	parameters for label PLAYER {
 		entity "%PLAYER%"
-		name "Sammy"
 		alignment BR
 	}
 }
 
-show_dialog-bender-glitched {
-	show dialog {
-		SELF emote 1
-		"I speak binary fluently, kid! A little trick like this won't slow me down!"
-	}
-	set entity "%SELF%" interactScript to show_dialog-bender-start
-}
-
 show_dialog-bender-start {
-	if entity "%SELF%" is glitched then goto show_dialog-bender-glitched
-	copy set_handler-bender-off
+	// glitched Bender
+	if (entity "%SELF%" is glitched) {
+		show dialog {
+			SELF emote 1
+			"I speak binary fluently, kid! A little trick like this won't slow me down!"
+		}
+	}
+	// normal dialog; turn off bender's handler and make him face the player
+	copy set-bender-handler-none
 	copy face-player
-	if flag storyflag-bender is true then goto show_dialog-bender-end-s
-	if entity Bender type is bender then goto show_dialog-bender-end
-	if flag bender-backstory is true then goto show_dialog-bender-eval
-	if entity Bender type is bender_sadbutt then goto show_dialog-bender-backstory
-	goto show_dialog-bender-meatbag
-}
-
-show_dialog-bender-meatbag {
-	show dialog {
-		SELF name "????"
-		SELF "Hey, you! Bite my --\nAhhh!"
-		"Aaaargh, this is terrible! My ass is even more missing than before!"
-		"First someone bit it off, and now it's an entirely different kind of ass!"
-		"I feel like this is your fault somehow!"
-		"Hurry up and fix it, kid!"
+	/* ----- puzzle was solved(?) ----- */
+	if (flag storyflag-bender is true) { // SOLVED
+		if (entity Bender type is bender) { // and he's still bender
+			copy bite-my-shiny-metal-ass
+			show dialog {
+				SELF emote 1 "Ooh, yeah!"
+				PLAYER "It's shiny. I'll give you that."
+			}
+		} else { // but he's not bender
+			show dialog { SELF "Yeah, yeah, you're a real comedian, kid. Now turn me back!" }
+		}
+		// bender handler set (loiter)
+		copy set-bender-handler-loiter
+	} else { // NOT SOLVED
+		if (entity Bender type is bender) { // but he's bender now
+			if (flag bender-backstory is false) { // if you HAVEN'T heard his backstory before
+				show dialog {
+					SELF "Hey, my ass! It's back!"
+				}
+				copy bite-my-shiny-metal-ass
+				show dialog {
+					SELF emote 1
+					"Hee hee hee!"
+					"Hey, everyone! %Bender%'s ass is back!"
+			
+					SELF
+					"...."
+					"Don't look so smug, kid. It had nothing to do with you."
+					"I'm sure my ass came home on its own!"
+				}
+			} else { // if you HAVE heard his backstory before
+				show dialog {
+					SELF "Hey, you did it! My ass is back!"
+				}
+				copy bite-my-shiny-metal-ass
+				show dialog {
+					SELF emote 1 "Hee hee hee!"
+					"Hey, everyone! %Bender%'s ass is back!"
+					PLAYER "...."
+					SELF "...."
+					PLAYER "Well?"
+					SELF "Well, what?"
+					PLAYER "You said you'd give me a reward!"
+					SELF "I did! You got a front row seat to me, %Bender%, showing off my shiny metal ass!"
+					"That's the greatest reward there is!"
+					PLAYER "I don't know why I assumed you'd be friendly."
+					SELF "Well, you know what they say about assumptions."
+					SELF emote 1 "They make a shiny ass... and they give it to me, %Bender%."
+				}
+			}
+			// You solved the puzzle though! Setting puzzle state:
+			set flag bender-backstory to true
+			set flag storyflag-bender to true // why not lol
+			copy calculate-hint-tracking-series
+			if (variable hint-tracking-check is 5) {
+				// if the hint series is the same, reset hint
+				copy set-hint-none
+			}
+			copy set-bender-handler-loiter
+		} else { // he's not bender now
+			if (flag bender-backstory is true) { // you've heard the backstory
+				if (entity Bender type is "bender_sadbutt") { // he is sadbutt
+					copy bite-my-shiny-metal-ass-sad
+					show dialog {
+						SELF "...Oh, right. My ass. Someone bit it off."
+						"So what's the holdup? I know you can fix it!"
+						"I'll reward you! Just hurry it up!"
+					}
+				} else { // he's not bender OR sadbutt
+					show dialog {
+						SELF "Come on! That doesn't look anything like me, half-assed or full-assed."
+					}
+				}
+			} else { // you haven't heard the backstory
+				if (entity Bender type is bender_sadbutt) { // if bender is sadbutt
+					show dialog {
+						PLAYER "Oh! You look friendly!"
+						SELF "Well, I'm not!"
+					}
+					copy bite-my-shiny-metal-ass-sad
+					show dialog {
+						SELF "Aww, man... I forgot! Someone bit my shiny metal ass!"
+						"Why would someone do such a horrible thing to an innocent robot?!"
+						"Life's not the same without my ass! How else am I supposed to taunt everyone stupid-looking?"
+					}
+					// branch briefly depending on whether the player looks like bender...
+					if (entity "%PLAYER%" type is "bender_sadbutt" || entity "%PLAYER%" type is bender) {
+						show dialog { SELF "Hey, you, strangely-handsome-looking kid! You're the one with the magic whatsit!" }
+					} else {
+						show dialog { SELF "Hey, you, kid! You're the one with the magic whatsit!" }
+					}
+					// ...and continue
+					show dialog {
+						SELF "Can't you fix this with your whatever powers?"
+						"I'll give you a great reward! Just get my ass back!"
+					}
+				} else { // bender is NOT sadbutt
+					show dialog {
+						SELF name "????"
+						SELF "Hey, you! Bite my --\nAhhh!"
+						"Aaaargh, this is terrible! My ass is even more missing than before!"
+						"First someone bit it off, and now it's an entirely different kind of ass!"
+						"I feel like this is your fault somehow!"
+						"Hurry up and fix it, kid!"
+					}
+				}
+			}
+			// You've now heard his backstory; set hinteger to Bender
+			set flag bender-backstory to true
+			copy set-hint-bender
+			// Turn on bender's look handler again
+			copy set-bender-handler-watch
+			// Reset interact_script
+		}
 	}
-	goto wrapup_dialog-bender-start
-}
-
-show_dialog-bender-backstory {
-	show dialog {
-		PLAYER "Oh! You look friendly!"
-		SELF "Well, I'm not!"
-	}
-	copy bite-my-shiny-metal-ass-sad
-	show dialog {
-		SELF "Aww, man... I forgot! Someone bit my shiny metal ass!"
-		"Why would someone do such a horrible thing to an innocent robot?!"
-		"Life's not the same without my ass! How else am I supposed to taunt everyone stupid-looking?"
-	}
-	if entity "%PLAYER%" type is bender_sadbutt then goto show_dialog-bender-start-alt
-	if entity "%PLAYER%" type is bender then goto show_dialog-bender-start-alt
-	show dialog {
-		SELF "Hey, you, kid! You're the one with the magic whatsit!"
-		"Can't you fix this with your whatever powers?"
-		"I'll give you a great reward! Just get my ass back!"
-	}
-	goto wrapup_dialog-bender-start
-}
-
-show_dialog-bender-start-alt {
-	show dialog {
-		SELF "Hey, you, strangely-handsome-looking kid! You're the one with the magic whatsit!"
-		"Can't you fix this with your whatever powers?"
-		"I'll give you a great reward! Just get my ass back!"
-	}
-	goto wrapup_dialog-bender-start
-}
-
-wrapup_dialog-bender-start {
-	set flag bender-backstory to true
-	copy set-hint-bender
-	copy set_handler-bender-on
+	// reset
 	set entity "%SELF%" interactScript to show_dialog-bender-start
 }
 
-show_dialog-bender-eval {
-	if entity Bender type is bender_sadbutt then goto show_dialog-bender-start-s
-	if entity Bender type is bender then goto show_dialog-bender-end
-	show dialog {
-		SELF "Come on! That doesn't look anything like me, half-assed or full-assed."
-	}
-	goto wrapup_dialog-bender-start
+/* ---- Bender on_tick handlers --- */
+
+set-bender-handler-none {
+	set entity "Bob Austin" tickScript to null_script
+	set entity Bender tickScript to null_script
+}
+set-bender-handler-watch {
+	set entity Bender tickScript to face-player
+	set entity "Bob Austin" tickScript to handler-bender-timer
+}
+set-bender-handler-loiter {
+	set entity "Bob Austin" tickScript to null_script
+	set entity Bender tickScript to on_tick-bender-loiter
 }
 
-show_dialog-bender-start-s {
-	copy bite-my-shiny-metal-ass-sad
-	show dialog {
-		SELF "...Oh, right. My ass. Someone bit it off."
-		"So what's the holdup? I know you can fix it!"
-		"I'll reward you! Just hurry it up!"
-	}
-	goto wrapup_dialog-bender-start
+handler-bender-timer {
+	wait 2800ms
+	play entity Bender animation 2 once
+	wait 3900ms
+	play entity Bender animation 2 once
 }
 
-show_dialog-bender-end {
-	if flag bender-backstory is false then goto show_dialog-bender-end-surprise
-	show dialog {
-		SELF "Hey, you did it! My ass is back!"
-	}
-	copy bite-my-shiny-metal-ass
-	show dialog {
-		SELF emote 1 "Hee hee hee!"
-		"Hey, everyone! %Bender%'s ass is back!"
-		PLAYER "...."
-		SELF "...."
-		PLAYER "Well?"
-		SELF "Well, what?"
-		PLAYER "You said you'd give me a reward!"
-		SELF "I did! You got a front row seat to me, %Bender%, showing off my shiny metal ass!"
-		"That's the greatest reward there is!"
-		PLAYER "I don't know why I assumed you'd be friendly."
-		SELF "Well, you know what they say about assumptions."
-		SELF emote 1 "They make a shiny ass... and they give it to me, %Bender%."
-	}
-	goto bender-wrapup-eval
-}
-
-bender-wrapup-eval {
-	set flag bender-backstory to true
-	set flag storyflag-bender to true
-	copy calculate-hint-tracking-series
-	if variable hint-tracking-check is 5 then goto reset-bender-hint-only
-		// if the hint series is the same, reset hint
-	goto bender-success-wrapup
-}
-
-reset-bender-hint-only {
-	copy set-hint-none
-	goto bender-success-wrapup
-}
-
-bender-success-wrapup {
-	goto show_dialog-bender-end-wrapup
-}
-
-show_dialog-bender-end-wrapup {
-	copy set_handler-bender-none
-	set entity "%SELF%" interactScript to show_dialog-bender-start
-}
-
-show_dialog-bender-end-s {
-	if entity Bender type is bender then goto show_dialog-bender-satisfied
-	show dialog {
-		SELF "Yeah, yeah, you're a real comedian, kid. Now turn me back!"
-	}
-	goto show_dialog-bender-end-wrapup
-}
-
-show_dialog-bender-end-surprise {
-	show dialog {
-		SELF "Hey, my ass! It's back!"
-	}
-	copy bite-my-shiny-metal-ass
-	show dialog {
-		SELF emote 1
-		"Hee hee hee!"
-		"Hey, everyone! %Bender%'s ass is back!"
-
-		SELF
-		"...."
-		"Don't look so smug, kid. It had nothing to do with you."
-		"I'm sure my ass came home on its own!"
-	}
-	goto bender-wrapup-eval
-}
-
-show_dialog-bender-satisfied {
-	copy bite-my-shiny-metal-ass
-	show dialog {
-		SELF emote 1 "Ooh, yeah!"
-		PLAYER "It's shiny. I'll give you that."
-	}
-	goto show_dialog-bender-end-wrapup
-}
+/* ---- Bender choreography --- */
 
 bite-my-shiny-metal-ass {
 	set player control to off
@@ -197,26 +182,4 @@ on_tick-bender-loiter {
 	wait 1400ms
 	turn entity "%SELF%" north
 	wait 2000ms
-}
-
-set_handler-bender-off {
-	set entity "Bob Austin" tickScript to null_script
-	set entity Bender tickScript to null_script
-}
-
-set_handler-bender-on {
-	set entity Bender tickScript to face-player
-	set entity "Bob Austin" tickScript to handler-bender-timer
-}
-
-set_handler-bender-none {
-	set entity "Bob Austin" tickScript to null_script
-	set entity Bender tickScript to on_tick-bender-loiter
-}
-
-handler-bender-timer {
-	wait 2800ms
-	play entity Bender animation 2 once
-	wait 3900ms
-	play entity Bender animation 2 once
 }

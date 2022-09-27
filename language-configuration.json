@@ -10,21 +10,24 @@
         ["\"", "\""],
         ["'", "'"],
         ["{", "}"],
+        ["(", ")"]
     ],
     // symbols that can be used to surround a selection
 	// (e.g. select text then type one of these to surround it)
     "surroundingPairs": [
         ["\"", "\""],
         ["'", "'"],
-        ["{", "}"]
+        ["{", "}"],
+        ["(", ")"]
     ],
 	// other ones I found :D
 	// highlighting the matching bracket pair when one is selected:
 	"brackets": [
+		["(",")"],
 		["{","}"]
 	],
 	"indentationRules": {
-		"increaseIndentPattern": "^((?!\\/\\/).)*(\\{[^}]*)$",
-		"decreaseIndentPattern": "^((?!.*?\\/\\*).*\\*/)?\\s*[\\}].*$"
+		"increaseIndentPattern": "^((?!\\/\\/).)*(\\{[^}\"'`]*|\\([^)\"'`]*)$",
+		"decreaseIndentPattern": "^((?!.*?\\/\\*).*\\*/)?\\s*[\\}\\)].*$"
 	  }
 }
