@@ -103,19 +103,19 @@ logic-entities {
 		goto script cript-do-if-entity-x
 	if entity "Entity Name" x is not 0 then
 		goto "script-do-if-entity-x"
-	if entity "Entity Name" interactScript is name-of-checked-script-interact then
+	if entity "Entity Name" interact_script is name-of-checked-script-interact then
 		 goto script-do-if-entity-y
-	if entity "Entity Name" interactScript is not "name-of-checked-script-interact" then goto "script-do-if-entity-y"
-	if entity "Entity Name" tickScript is "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
-	if entity "Entity Name" tickScript is not "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
+	if entity "Entity Name" interact_script is not "name-of-checked-script-interact" then goto "script-do-if-entity-y"
+	if entity "Entity Name" tick_script is "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
+	if entity "Entity Name" tick_script is not "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
 	if entity "Entity Name" type is old_man then goto "script-do-if-entity-type"
 	if entity "Entity Name" type is not "some-kind-of-entity-type" then goto "script-do-if-entity-type"
-	if entity "Entity Name" primaryID is 16 then goto "script-do-if-entity-primaryid"
-	if entity "Entity Name" primaryID is not 16 then goto "script-do-if-entity-primaryid"
-	if entity "Entity Name" secondaryID is 16 then goto "script-do-if-entity-secondaryid"
-	if entity "Entity Name" secondaryID is not 16 then goto "script-do-if-entity-secondaryid"
-	if entity "Entity Name" primaryIDtype is 16 then goto "script-do-if-entity-primaryid-type"
-	if entity "Entity Name" primaryIDtype is not 16 then goto "script-do-if-entity-primaryid-type"
+	if entity "Entity Name" primary_id is 16 then goto "script-do-if-entity-primary_id"
+	if entity "Entity Name" primary_id is not 16 then goto "script-do-if-entity-primary_id"
+	if entity "Entity Name" secondary_id is 16 then goto "script-do-if-entity-secondary_id"
+	if entity "Entity Name" secondary_id is not 16 then goto "script-do-if-entity-secondary_id"
+	if entity "Entity Name" primary_id_type is 16 then goto "script-do-if-entity-primary_id-type"
+	if entity "Entity Name" primary_id_type is not 16 then goto "script-do-if-entity-primary_id-type"
 	if entity "Entity Name" animation is 1 then goto "script-do-if-entity-animation"
 	if entity "Entity Name" animation is not 1 then goto "script-do-if-entity-animation"
 	if entity "Entity Name" animationFrame is 1 then goto "script-do-if-entity-frame"
@@ -124,19 +124,19 @@ logic-entities {
 	if entity "Entity Name" direction is not north then goto "script-do-if-entity-direction"
 	if entity "Entity Name" is glitched then goto "script-do-if-entity-is-glitched"
 	if entity "Entity Name" is not glitched then goto "script-do-if-entity-is-NOT-glitched"
-	if entity "Entity Name" hackableStateA is 1 then goto "script-do-if-entity-is-hackable-a"
-	if entity "Entity Name" hackableStateA is not 1 then goto "script-do-if-entity-is-hackable-a"
-	if entity "Entity Name" hackableStateB is 1 then goto "script-do-if-entity-is-hackable-b"
-	if entity "Entity Name" hackableStateB is not 1 then goto "script-do-if-entity-is-hackable-b"
-	if entity "Entity Name" hackableStateC is 1 then goto "script-do-if-entity-is-hackable-c"
-	if entity "Entity Name" hackableStateC is not 1 then goto "script-do-if-entity-is-hackable-c"
-	if entity "Entity Name" hackableStateD is 1 then goto "script-do-if-entity-is-hackable-d"
-	if entity "Entity Name" hackableStateD is not 1 then goto "script-do-if-entity-is-hackable-d"
-	if entity "Entity Name" hackableStateAU2 is 1 then goto "script-do-if-entity-is-hackable-a-u2"
-	if entity "Entity Name" hackableStateAU2 is not 1 then goto "script-do-if-entity-is-hackable-a-u2"
-	if entity "Entity Name" hackableStateCU2 is 1 then goto "script-do-if-entity-is-hackable-c-u2"
-	if entity "Entity Name" hackableStateCU2 is not 1 then goto "script-do-if-entity-is-hackable-c-u2"
-	if entity "Entity Name" hackableStateAU4 is 1 then goto "script-do-if-entity-is-hackable-a-u4"
+	if entity "Entity Name" hackable_state_a is 1 then goto "script-do-if-entity-is-hackable-a"
+	if entity "Entity Name" hackable_state_a is not 1 then goto "script-do-if-entity-is-hackable-a"
+	if entity "Entity Name" hackable_state_b is 1 then goto "script-do-if-entity-is-hackable-b"
+	if entity "Entity Name" hackable_state_b is not 1 then goto "script-do-if-entity-is-hackable-b"
+	if entity "Entity Name" hackable_state_c is 1 then goto "script-do-if-entity-is-hackable-c"
+	if entity "Entity Name" hackable_state_c is not 1 then goto "script-do-if-entity-is-hackable-c"
+	if entity "Entity Name" hackable_state_d is 1 then goto "script-do-if-entity-is-hackable-d"
+	if entity "Entity Name" hackable_state_d is not 1 then goto "script-do-if-entity-is-hackable-d"
+	if entity "Entity Name" hackable_state_au2 is 1 then goto "script-do-if-entity-is-hackable-a-u2"
+	if entity "Entity Name" hackable_state_au2 is not 1 then goto "script-do-if-entity-is-hackable-a-u2"
+	if entity "Entity Name" hackable_state_cu2 is 1 then goto "script-do-if-entity-is-hackable-c-u2"
+	if entity "Entity Name" hackable_state_cu2 is not 1 then goto "script-do-if-entity-is-hackable-c-u2"
+	if entity "Entity Name" hackable_state_au4 is 1 then goto "script-do-if-entity-is-hackable-a-u4"
 	/* note: expected_bool is missing on purpose -- not enough bytes available! */
 	if entity "Entity Name" path is "some-kind-of-geometry-name" then goto "script-do-if-entity-path"
 	if entity "Entity Name" path is not "some-kind-of-geometry-name" then goto "script-do-if-entity-path"
@@ -179,16 +179,16 @@ set-entity {
 	set entity "Entity Name" x to 128
 	set entity "Entity Name" y to 128
 	set entity "Entity Name" type to "some-kinda-sheep"
-	set entity "Entity Name" primaryID to 1
-	set entity "Entity Name" secondaryID to 2
-	set entity "Entity Name" primaryIDtype to asdfasdf8
-	set entity "Entity Name" hackableStateA to 128
-	set entity "Entity Name" hackableStateB to 128
-	set entity "Entity Name" hackableStateC to 128
-	set entity "Entity Name" hackableStateD to 128
-	set entity "Entity Name" hackableStateAU2 to 123
-	set entity "Entity Name" hackableStateCU2 to 2
-	set entity "Entity Name" hackableStateAU4 to 4
+	set entity "Entity Name" primary_id to 1
+	set entity "Entity Name" secondary_id to 2
+	set entity "Entity Name" primary_id_type to asdfasdf8
+	set entity "Entity Name" hackable_state_a to 128
+	set entity "Entity Name" hackable_state_b to 128
+	set entity "Entity Name" hackable_state_c to 128
+	set entity "Entity Name" hackable_state_d to 128
+	set entity "Entity Name" hackable_state_au2 to 123
+	set entity "Entity Name" hackable_state_cu2 to 2
+	set entity "Entity Name" hackable_state_au4 to 4
 }
 
 entity-choreography-paths {
@@ -225,9 +225,9 @@ camera-control {
 controlling-scripts {
 	goto "script-to-run"
 	copy script script-to-copy
-	set map tickScript to "script-map-tick"
-	set entity "Entity Name" interactScript to "script-entity-interact"
-	set entity "Entity Name" tickScript to "script-entity-tick"
+	set map tick_script to "script-map-tick"
+	set entity "Entity Name" interact_script to "script-entity-interact"
+	set entity "Entity Name" tick_script to "script-entity-tick"
 }
 
 controlling-variables {

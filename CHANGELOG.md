@@ -2,6 +2,12 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-09-27 (v0.3.1)
+
+- Misc updates
+	- Words like `primaryID` now back to their original JSON form (`primary_id`)
+	- Keywords like `turn`/`copy`/`set` (apart from `if`/`else`/`goto`) are now `constant.language` instead of `keyword.control` (the same color as the other language constants like `true` and `north`)
+
 ## 2022-09-27 (v0.3.0)
 
 - MGS Natlang "zigzag" preprocessor support:
