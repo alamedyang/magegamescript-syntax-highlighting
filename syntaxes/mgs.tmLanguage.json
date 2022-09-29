@@ -82,7 +82,7 @@
 			]
 		},
 		"dialog_settings_individual_parameters_node": {
-			"begin": "\\b(parameters)(\\s+for)?\\s+(label|entity)\\s+(([^\\s'\"]+)|(['\"])[^`]*?\\6)\\s+({)",
+			"begin": "\\b(parameters)(\\s+for)?\\s+(label|entity)\\s+(([^\\s'\"]+)|(['\"])[^`]*?\\6)\\s*({)",
 			"beginCaptures": {
 				"1": {
 					"name": "support.type.mgs"
@@ -109,7 +109,7 @@
 			]
 		},
 		"dialog_settings_global_parameters_node": {
-			"begin": "\\b(parameters\\s+)?(for\\s+)?(global\\s+)?(defaults?\\s+)({)",
+			"begin": "\\b(parameters)?(\\s+for)?(\\s+global)?(\\s+defaults?)\\s*({)",
 			"beginCaptures": {
 				"1": {
 					"name": "support.type"
@@ -244,7 +244,7 @@
 			"match": "(:)\\s*(goto\\s)?(script\\s)?(((['\"])[^`]*?\\6)|[-A-Za-z0-9_.#$]+)",
 			"captures": {
 				"1": {
-					"name": "keyword.operator"
+					"name": "keyword.control.mgs"
 				},
 				"2": {
 					"name": "keyword.control.mgs"
@@ -264,8 +264,12 @@
 				{ "include": "#dialog_message" },
 				{ "include": "#dialog_option_goto" },
 				{
-					"match": "[:>]",
-					"name": "keyword.operator.mgs"
+					"match": ">",
+					"name": "keyword.control.mgs"
+				},
+				{
+					"match": ":",
+					"name": "keyword.control.mgs"
 				},
 				{ "include": "#dialog_bareword_identifier" }
 			]
@@ -303,11 +307,11 @@
 			"name": "support.type.mgs"
 		},
 		"dialog_node": {
-			"begin": "\\b(dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5)))?\\s+({)",
+			"begin": "\\b(dialog)(\\s+([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4))\\s*({)",
 			"beginCaptures": {
-				"1": { "name": "keyword.control.assignment.mgs" },
+				"1": { "name": "constant.language.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
-				"6": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+				"5": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
 			"end": "}",
 			"endCaptures": {
@@ -320,7 +324,7 @@
 			]
 		},
 		"show_dialog_node": {
-			"begin": "\\b(show)\\s+(dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6)))?\\s+({)",
+			"begin": "\\b(show)\\s+(dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6)))?\\s*({)",
 			"beginCaptures": {
 				"1": { "name": "constant.language.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
@@ -446,7 +450,7 @@
 			]
 		},
 		"zigzag_condition": {
-			"begin": "\\b(if|else\\s*if)\\s+(\\()",
+			"begin": "\\b(if|else\\s+if)\\s*(\\()",
 			"beginCaptures": {
 				"0": { "name": "keyword.control.conditional.mgs" },
 				"1": { "name": "meta.parens.mgs punctuation.section.parens.begin" }
@@ -506,8 +510,12 @@
 					"match": "\\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|load|set|fade\\s+in|fade\\s+out|load|erase|save|open|close|wait|block|shake)\\b"
 				},
 				{
+					"name": "keyword.control.mgs",
+					"match": "\\b(load)\\b"
+				},
+				{
 					"name": "variable.parameter.mgs support.variable.mgs",
-					"match": "\\b(animation|slot|camera|player\\s+control|hex\\s+(dialog\\s+mode|control|clipboard|editor))\\b"
+					"match": "\\b(animation|slot|camera|player\\s+control|hex(\\s+(dialog\\s+mode|control|clipboard|editor))?)\\b"
 				},
 				{
 					"match": "\\b(to\\s+)?(true|false|on|off|glitched|unglitched)\\b",
@@ -615,11 +623,12 @@
 					}
 				},
 				{
-					"match": "\\b(goto)\\s+(script\\s+)?(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))",
+					"match": "\\b(then\\s+)?(goto)\\s+(script\\s+)?(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6))",
 					"captures": {
 						"1": { "name": "keyword.control.mgs" },
-						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
-						"3": { "name": "entity.name.function.mgs" }
+						"2": { "name": "keyword.control.mgs" },
+						"3": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"4": { "name": "entity.name.function.mgs" }
 					}
 				},
 				{
@@ -684,7 +693,7 @@
 			]
 		},
 		"script_node": {
-			"begin": "(script\\s+)?(((([-A-Za-z0-9_.#$]+)|((['\"])[^`]*?\\7))))\\s+({)",
+			"begin": "(script\\s+)?(((([-A-Za-z0-9_.#$]+)|((['\"])[^`]*?\\7))))\\s*({)",
 			"beginCaptures": {
 				"1": { "name": "keyword.control.assignment.mgs" },
 				"2": { "name": "entity.name.function.mgs" },

@@ -2,6 +2,15 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-09-29 (v0.3.2)
+
+- Misc improvements
+	- The token `{` can now smoosh up against the previous word (e.g. `dialog dialogName{`)
+	- Dialog options `>` and `:` now marked with `keyword.control` to indicate that they result in a script jump
+	- `load` now marked with `keyword.control` to indicate that it results in (effectively) a script jump
+	- `then` will now be colored even if isolated on the next line
+	- `dialog` in dialog nodes now marked as `constant.language` instead of `keyword.control`
+
 ## 2022-09-27 (v0.3.1)
 
 - Misc updates

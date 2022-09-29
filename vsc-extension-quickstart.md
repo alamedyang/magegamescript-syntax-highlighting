@@ -30,4 +30,7 @@
 
 ---
 
-Note to self: to repackage this, run `vsce package`
+- Note to self: to repackage this, run `vsce package`
+- To generate other tmLanguage formats, use the "TextMate Languages" plugin by pedro-w
+	- To generate XML version (for Sublime Text), go to the Command Palette in VSCode and select "Convert to tmLanguage PLIST file"
+	- This can also make YAML versions I guess

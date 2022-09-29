@@ -18,13 +18,12 @@ settings for dialog {
 	parameters default { wrap messages 42 }
 	parameters for global default {
 		wrap messages to 40 // 42 is default
-		wrap options to 35
 		alignment BOTTOM_LEFT
 		alignment TR
 	}
 }
 
-dialog "testie" { Player: "What the heck" }
+dialog "testie" { Player "What the heck" }
 dialog testie2 {
 
 	entity "Uncle Zappy" "Messages\nor something"
@@ -39,7 +38,7 @@ dialog testie2 {
 	entity "Entity Name"
 	"What??"
 	> "This keeps breaking! \$\$\$(NOT)"
-		: goto script goto-next
+		: goto-next
 	> "Then goto %Helga%" : goto "goto-next"
 	> "THIS IS WORKING GREAT ACTUALLY" : script "lololol"
 
@@ -92,19 +91,20 @@ script hex-editor { //asdfasdfasdf
 	set hex control off
 	set hex clipboard on
 	set hex clipboard off
+	if entity Bob then goto asdfasdf
 }
 
 logic-entities {
-	if entity "Entity Name" name is "Checked Name" then
-		 goto "script-do-if-entity-name"
+	if entity "Entity Name" name is "Checked Name"
+		then goto "script-do-if-entity-name"
 	if entity "Entity Name" name is not "Checked Name" then
-		 goto "script-do-if-NOT-entity-name"
+		goto "script-do-if-NOT-entity-name"
 	if entity "Entity Name" x is 0 then
 		goto script cript-do-if-entity-x
 	if entity "Entity Name" x is not 0 then
 		goto "script-do-if-entity-x"
 	if entity "Entity Name" interact_script is name-of-checked-script-interact then
-		 goto script-do-if-entity-y
+		goto script-do-if-entity-y
 	if entity "Entity Name" interact_script is not "name-of-checked-script-interact" then goto "script-do-if-entity-y"
 	if entity "Entity Name" tick_script is "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
 	if entity "Entity Name" tick_script is not "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
@@ -181,7 +181,7 @@ set-entity {
 	set entity "Entity Name" type to "some-kinda-sheep"
 	set entity "Entity Name" primary_id to 1
 	set entity "Entity Name" secondary_id to 2
-	set entity "Entity Name" primary_id_type to asdfasdf8
+	set entity "Entity Name" primary_id_type to 4
 	set entity "Entity Name" hackable_state_a to 128
 	set entity "Entity Name" hackable_state_b to 128
 	set entity "Entity Name" hackable_state_c to 128
@@ -234,6 +234,7 @@ controlling-variables {
 	set flag "save-flag-to-set" to true
 	set flag "save-flag-to-set-NOT" to false
 	set warp state to "warp-state-string"
+	mutate variable-name-set RNG 5
 	mutate variable-name-set = 5
 	mutate variable-name-add + 5
 	mutate test - 5
