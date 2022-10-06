@@ -53,7 +53,7 @@ test-script {
 		Jackob "You see?"
 		Player "WHAT IS THIS\nHOW IS THIS"
 		
-		name "Jackob"
+		entity "%PLAYER%"
 		alignment TR
 		emote 4
 		border_tileset 3
@@ -118,8 +118,8 @@ logic-entities {
 	if entity "Entity Name" primary_id_type is not 16 then goto "script-do-if-entity-primary_id-type"
 	if entity "Entity Name" animation is 1 then goto "script-do-if-entity-animation"
 	if entity "Entity Name" animation is not 1 then goto "script-do-if-entity-animation"
-	if entity "Entity Name" animationFrame is 1 then goto "script-do-if-entity-frame"
-	if entity "Entity Name" animationFrame is not 1 then goto "script-do-if-entity-frame"
+	if entity "Entity Name" animation_frame is 1 then goto "script-do-if-entity-frame"
+	if entity "Entity Name" animation_frame is not 1 then goto "script-do-if-entity-frame"
 	if entity "Entity Name" direction is north then goto "script-do-if-entity-direction"
 	if entity "Entity Name" direction is not north then goto "script-do-if-entity-direction"
 	if entity "Entity Name" is glitched then goto "script-do-if-entity-is-glitched"
@@ -203,7 +203,7 @@ entity-choreography-appearance {
 	play entity "Entity Name" animation 0 1x
 	play entity "Entity Name" animation 0 2x
 	set entity "Entity Name" animation to 0
-	set entity "Entity Name" animationFrame to 0
+	set entity "Entity Name" animation_frame to 0
 	turn entity "Entity Name" north
 	rotate entity "Entity Name" 1
 	turn entity "Entity Name" toward entity Bob

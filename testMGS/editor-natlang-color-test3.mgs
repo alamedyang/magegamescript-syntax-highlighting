@@ -2,13 +2,169 @@ settings for dialog {
 	parameters for global defaults {
 		alignment BOTTOM_LEFT
 	}
-	parameters for label PLAYER {
+	parameters for label "PLAYER" {
 		entity "%PLAYER%"
 		alignment TOP_LEFT
 	}
-	parameters for label SELF {
+	parameters for entity SELF {
 		entity "%SELF%"
 	}
+}
+
+const! (
+	$var1 = 1
+	$var2 = #FFF //asdf asdffsdf
+	$var3 = once
+	$var4 = 1x
+	$var5 = 100ms
+	$var6 = 100px
+	$var7 = 100
+	$var8 = true
+	$var9 = north
+	$var10 = "BOTTOM_RIGHT"
+	$var11 = "%SELF%"
+)
+
+dialog testie2 {
+	bareword
+	entity "CRAZYTOWN"
+	alignment $varname
+	alignment BR
+	name $var
+	name FOO
+	name "%FRED%"
+	name "01"
+	portrait $var
+	portrait barewrod
+	portrait "asdf"
+	emote $asdfasdf
+	emote 1
+	entity $asdfasdf
+	entity Bob
+	entity "%HELGA%"
+	entity "%PLAYER%"
+	entity "asdfasdf"
+	border_tileset $var
+	border_tileset "codec"
+	border_tileset codec
+	wrap messages to 50
+	"message"
+	"message2"
+
+	PLAYER "Why won't you let me iN??"
+	entity "Bob Austin" "Your name isn't Bob"
+
+	barewrod "message"
+	$barewordVar "message"
+
+	entity $entityName alignment TR "asdfadsf"
+	entity bareword alignment TR "message"
+	entity "%PLAYER%" alignment TR "message"
+	entity "other" alignment TR "message"
+
+	name $nameName "message"
+	name bareword "message"
+	name "%Relative Name%" "message"
+	name "other" "message"
+
+	$varName
+	alignment TR
+	"message\nmessage%asdf%"
+
+}
+
+script testie {
+	if (interact_script is not scriptName) {}
+	if (interact_script is scriptName) {}
+	if (interact_script is $noVarsAllowed) {}
+
+	if (direction is not $var) {}
+	if (direction is not north) {}
+	if (direction is $var) {}
+	if (direction is south) {}
+
+	if (button ANY is not true) {}
+	if (button ANY is not $variable) {}
+	if (button ANY is true) {}
+	if (button ANY is $variable) {}
+
+	if (path is not string) {}
+	if (path is not "%LOL%") {}
+	if (path is not "%PATH%") {}
+	if (path is string) {}
+	if (path is "%LOL%") {}
+	if (path is "%PATH%") {}
+
+//(name|type|entity_type|path|warp\\s+state)
+	if (name is not $varname) {}
+	if (name is not bareword) {}
+	if (name is not "%WONTWORK%") {}
+	if (name is not "quotedString") {}
+	if (name is $varname) {}
+	if (name is bareword) {}
+	if (name is "%WONTWORK%") {}
+	if (name is "quotedString") {}
+
+	if (primary_id is not $varname) {}
+	if (primary_id is not nope) {}
+	if (primary_id is not 50) {}
+	if (primary_id is $varname) {}
+	if (primary_id is nope) {}
+	if (primary_id is 50) {}
+	
+	if (button $var) {}
+	if (button quois) {}
+	if (button ANY) {}
+
+	if (flag $var) {}
+	if (flag bareword) {}
+	if (flag "%WONTWORK%") {}
+	if (flag "quotedString") {}
+	if (flag $var) {}
+
+	if (is not true) {}
+	if (is true) {}
+	if (is not currently pressed) {}
+	if (is currently pressed) {}
+	if (is not inside) {}
+	if (is inside) {}
+	if (is not == 9000) {}
+	if (is not 9000) {}
+	if (is not $var) {}
+	if (is == 9000) {}
+	if (is 9000) {}
+	if (is $var) {}
+	if (flag "%WONTWORK%") {}
+	if (flag "quotedString") {}
+}
+
+script {
+	block 400 block 400ms
+	wait 400 wait 400ms
+	make camera follow entity "BOB"
+	make camera follow entity BOB
+	make camera follow entity $var
+	open hex editor
+	erase slot 2
+	erase slot $var // ????
+	goto script scriptName
+	goto script "scriptName"
+	goto scriptName
+	goto "scriptName"
+	copy script scriptName
+	copy script "scriptName"
+	copy scriptName
+	copy "scriptName"
+	loop entity Bob along geometry Stick over 1000ms
+	loop entity Bob along geometry $var over 1000ms
+	loop entity $var along geometry Stick over 1000ms
+	geometry $var
+	show serial dialog asdfsdf
+	show dialog sdflkjf
+	SET 58958905 SET $avasdf SET kljsdfljk SET "sdf"
+	interact_script to $asdfasdf
+	entity BOB type to $var
+
 }
 
 map-action_testing-load {
@@ -192,7 +348,7 @@ mage05-check_player_current_animation {
 }
 
 mage05-check_player_current_frame {
-	if entity "%PLAYER%" animationFrame is 4 then goto script mage05-set_success_dialog
+	if entity "%PLAYER%" animation_frame is 4 then goto script mage05-set_success_dialog
 }
 
 mage05-set_success_dialog {
@@ -214,7 +370,7 @@ mage05-success_prompt {
 		"Now I will change my animation to test\nSET_ENTITY_CURRENT_ANIMATION and\nSET_ENTITY_CURRENT_FRAME. I should\nStart on the third frame."
 	}
 	set entity "Mage 05" animation to 2
-	set entity "Mage 05" animationFrame to 2
+	set entity "Mage 05" animation_frame to 2
 	set entity "Mage 05" interact_script to mage05-initial_prompt
 }
 

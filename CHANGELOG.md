@@ -2,6 +2,15 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-10-05 (v0.4.0)
+
+- Support for the `const!` macro
+	- Except for things like script names and dialog messages, action variables can now be substituted by `$` + bareword (a natlang const)
+- Dialog identifiers are now *all* a separate color (and now entirely uniform in color), regardless of type: bareword identifier, `entity`, and `name`
+	- (Only the chars in `%PLAYER%` and `%SELF%` are not this color)
+- Moderate refactoring (partly to enable the above)
+- Various small fixes (e.g. `animationFrame` -> `animation_frame`)
+
 ## 2022-09-29 (v0.3.2)
 
 - Misc improvements

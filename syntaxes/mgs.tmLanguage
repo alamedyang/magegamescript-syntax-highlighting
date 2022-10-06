@@ -24,6 +24,10 @@
         <key>include</key>
         <string>#script_node</string>
       </dict>
+      <dict>
+        <key>include</key>
+        <string>#var_node</string>
+      </dict>
     </array>
     <key>repository</key>
     <dict>
@@ -89,7 +93,7 @@
         </dict>
         <key>end</key>
         <string>
-</string>
+|$</string>
         <key>endCaptures</key>
         <dict>
           <key>0</key>
@@ -119,7 +123,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type</string>
+            <string>support.type.mgs</string>
           </dict>
           <key>3</key>
           <dict>
@@ -224,13 +228,13 @@
       <key>dialog_settings_global_parameters_node</key>
       <dict>
         <key>begin</key>
-        <string>\b(parameters)?(\s+for)?(\s+global)?(\s+defaults?)\s*({)</string>
+        <string>\b(parameters\s+)?(for\s+)?(global\s+)?(defaults?)?\s*({)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type</string>
+            <string>support.type.mgs</string>
           </dict>
           <key>3</key>
           <dict>
@@ -240,7 +244,7 @@
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>keyword.other</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <key>5</key>
           <dict>
@@ -270,40 +274,103 @@
           </dict>
         </array>
       </dict>
-      <key>dialog_parameter</key>
+      <key>generic_numberish</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>match</key>
-            <string>\b(entity)\s+(")(%PLAYER%|%SELF%)(")</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>string.variable.mgs</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.definition.variable.mgs variable.language.mgs</string>
-              </dict>
-              <key>4</key>
-              <dict>
-                <key>name</key>
-                <string>string.variable.mgs</string>
-              </dict>
-            </dict>
+            <string>#[0-9A-F]+\b</string>
+            <key>name</key>
+            <string>constant.numeric.integer.mgs</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(entity)\s+(([-A-Za-z0-9_.#$]+)|(['"])([^`]*?)\4)\s</string>
+            <string>\b([0-9]+(ms|px|x)?|once|twice|thrice)\b</string>
+            <key>name</key>
+            <string>constant.numeric.integer.mgs</string>
+          </dict>
+        </array>
+      </dict>
+      <key>generic_var</key>
+      <dict>
+        <key>match</key>
+        <string>\$[-A-Za-z0-9_.#$]+\b</string>
+        <key>name</key>
+        <string>variable.other.constant.mgs</string>
+      </dict>
+      <key>generic_string_naive</key>
+      <dict>
+        <key>match</key>
+        <string>[-A-Za-z0-9_.#$]+|(['"])[^`]*?\1</string>
+        <key>name</key>
+        <string>string.variable.mgs</string>
+      </dict>
+      <key>generic_bool</key>
+      <dict>
+        <key>match</key>
+        <string>\b(true|false|on|off|glitched|unglitched)\b</string>
+        <key>name</key>
+        <string>constant.language.mgs</string>
+      </dict>
+      <key>var_node</key>
+      <dict>
+        <key>begin</key>
+        <string>\b(const!)\s*(\()</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.function</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>mega.block.mgs punctuation.section.block.begin.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\)</string>
+        <key>name</key>
+        <string>mega.block.mgs punctuation.section.block.end.mgs</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#comment_node</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>=</string>
+            <key>name</key>
+            <string>keyword.operator.mgs</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#generic_var</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#generic_numberish</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#generic_bool</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#generic_string_naive</string>
+          </dict>
+        </array>
+      </dict>
+      <key>entity_specifier_string_pair</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>\b(entity)\s+(['"])(%PLAYER%|%SELF%)(\2)</string>
             <key>captures</key>
             <dict>
               <key>0</key>
@@ -319,15 +386,112 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>support.type.mgs</string>
-              </dict>
-              <key>5</key>
-              <dict>
-                <key>name</key>
-                <string>support.type.mgs</string>
+                <string>variable.language.mgs</string>
               </dict>
             </dict>
           </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(entity)\s+(\$[-A-Za-z0-9_.#$]+)\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(entity)\s+(([-A-Za-z0-9_.#$]+)|(['"])([^`]*?)\4)\s</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>geometry_specifier_string_pair</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>\b(geometry)\s+(['"])(%PATH%)(\2)</string>
+            <key>captures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(geometry)\s+(\$[-A-Za-z0-9_.#$]+)\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(geometry)\s+(([-A-Za-z0-9_.#$]+)|(['"])([^`]*?)\4)\s</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>name_specifier_string_pair</key>
+      <dict>
+        <key>patterns</key>
+        <array>
           <dict>
             <key>match</key>
             <string>\b(name)\s+(['"])(%[^%]+%)(\2)</string>
@@ -346,18 +510,13 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>punctuation.definition.variable.mgs variable.language.mgs</string>
-              </dict>
-              <key>4</key>
-              <dict>
-                <key>name</key>
-                <string>string.variable.mgs</string>
+                <string>variable.language.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(emote)\s+([0-9]+)\b</string>
+            <string>\b(name)\s+(\$[-A-Za-z0-9_.#$]+)\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -368,13 +527,13 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>constant.numeric.integer.mgs</string>
+                <string>variable.other.constant.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(name|portrait|border_tileset)\s+(([-A-Za-z0-9_.#$]+)|(['"])[^`]*?\4)\s</string>
+            <string>\b(name)\s+(([-A-Za-z0-9_.#$]+)|(['"])([^`]*?)\4)\s</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -389,9 +548,15 @@
               </dict>
             </dict>
           </dict>
+        </array>
+      </dict>
+      <key>dialog_misc_specifier_string_pair</key>
+      <dict>
+        <key>patterns</key>
+        <array>
           <dict>
             <key>match</key>
-            <string>\b(alignment)\s+(TR|BR|TL|BL|TOP_RIGHT|BOTTOM_RIGHT|TOP_LEFT|BOTTOM_LEFT)\b</string>
+            <string>\b(portrait|border_tileset)\s+(\$[-A-Za-z0-9_.#$]+)\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -400,21 +565,80 @@
                 <string>variable.parameter.mgs support.variable.mgs</string>
               </dict>
               <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(portrait|border_tileset)\s+(([-A-Za-z0-9_.#$]+)|(['"])([^`]*?)\4)\s</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>dialog_parameter</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#entity_specifier_string_pair</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#name_specifier_string_pair</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#dialog_misc_specifier_string_pair</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;=alignment|emote)\s+\$[-A-Za-z0-9_.#$]+\b</string>
+            <key>name</key>
+            <string>variable.other.constant.mgs</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(?&lt;=\balignment)\s+(TR|BR|TL|BL|TOP_RIGHT|BOTTOM_RIGHT|TOP_LEFT|BOTTOM_LEFT)\b</string>
+            <key>name</key>
+            <string>constant.language.mgs</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b([0-9]+)\b</string>
+            <key>name</key>
+            <string>constant.numeric.integer.mgs</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(entity|name|portrait|alignment|border_tileset|emote)\b</string>
+            <key>name</key>
+            <string>variable.parameter.mgs support.variable.mgs</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(wrap)\s+(messages|serial)(\s+to)?\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
               <dict>
                 <key>name</key>
                 <string>constant.language.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\b(wrap)\s+(messages|serial)(\s+to)?\s+([0-9]+)\b</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.control.assignment.mgs</string>
               </dict>
               <key>2</key>
               <dict>
@@ -425,11 +649,6 @@
               <dict>
                 <key>name</key>
                 <string>keyword.operator.mgs</string>
-              </dict>
-              <key>4</key>
-              <dict>
-                <key>name</key>
-                <string>constant.numeric.integer.mgs</string>
               </dict>
             </dict>
           </dict>
@@ -473,7 +692,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#dialog_parameter</string>
+            <string>#dialog_head</string>
           </dict>
           <dict>
             <key>include</key>
@@ -494,10 +713,6 @@
             <string>:</string>
             <key>name</key>
             <string>keyword.control.mgs</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#dialog_bareword_identifier</string>
           </dict>
         </array>
       </dict>
@@ -551,53 +766,6 @@
           </dict>
         </array>
       </dict>
-      <key>dialog_bareword_identifier</key>
-      <dict>
-        <key>match</key>
-        <string>\b[-A-Za-z0-9_.#$]+\b</string>
-        <key>name</key>
-        <string>support.type.mgs</string>
-      </dict>
-      <key>dialog_node</key>
-      <dict>
-        <key>begin</key>
-        <string>\b(dialog)(\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4))\s*({)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>constant.language.mgs</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>variable.parameter.mgs support.variable.mgs</string>
-          </dict>
-          <key>5</key>
-          <dict>
-            <key>name</key>
-            <string>mega.block.mgs punctuation.section.block.begin.mgs</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>}</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>mega.block.mgs punctuation.section.block.end.mgs</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#dialog_body</string>
-          </dict>
-        </array>
-      </dict>
       <key>show_dialog_node</key>
       <dict>
         <key>begin</key>
@@ -643,6 +811,183 @@
           </dict>
         </array>
       </dict>
+      <key>dialog_node</key>
+      <dict>
+        <key>begin</key>
+        <string>\b(dialog)(\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4))\s*({)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>constant.language.mgs</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>variable.parameter.mgs support.variable.mgs</string>
+          </dict>
+          <key>5</key>
+          <dict>
+            <key>name</key>
+            <string>mega.block.mgs punctuation.section.block.begin.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>}</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>mega.block.mgs punctuation.section.block.end.mgs</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#dialog_body</string>
+          </dict>
+        </array>
+      </dict>
+      <key>dialog_head</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#comment_node</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#dialog_head_entity</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#dialog_head_name</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#dialog_head_simple</string>
+          </dict>
+        </array>
+      </dict>
+      <key>dialog_head_entity</key>
+      <dict>
+        <key>begin</key>
+        <string>entity\s+((\$[-A-Za-z0-9_.#$]+\b)|[-0-9A-Za-z_$#]+\b|(['"])((%PLAYER%|%SELF%)|[^`]*?)\3)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>support.type.mgs</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>variable.other.constant.mgs</string>
+          </dict>
+          <key>5</key>
+          <dict>
+            <key>name</key>
+            <string>variable.language.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?=")</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>mega.block.mgs punctuation.section.block.end.mgs</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#dialog_parameter</string>
+          </dict>
+        </array>
+      </dict>
+      <key>dialog_head_name</key>
+      <dict>
+        <key>begin</key>
+        <string>name\s+((\$[-A-Za-z0-9_.#$]+\b)|[-0-9A-Za-z_$#]+\b|(['"])((%[^%]+%)|[^`]*?)\3)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>support.type.mgs</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>variable.other.constant.mgs</string>
+          </dict>
+          <key>5</key>
+          <dict>
+            <key>name</key>
+            <string>variable.language.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?=")</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>mega.block.mgs punctuation.section.block.end.mgs</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#dialog_parameter</string>
+          </dict>
+        </array>
+      </dict>
+      <key>dialog_head_simple</key>
+      <dict>
+        <key>begin</key>
+        <string>((\$[-A-Za-z0-9_.#$]+)|(\b[-0-9A-Za-z_$#]+))\b</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>variable.other.constant.mgs</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>support.type.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?=")</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>mega.block.mgs punctuation.section.block.end.mgs</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#dialog_parameter</string>
+          </dict>
+        </array>
+      </dict>
       <key>if_then</key>
       <dict>
         <key>begin</key>
@@ -656,7 +1001,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(\bthen\b)|\n</string>
+        <string>\bthen\b|\n</string>
         <key>endCaptures</key>
         <dict>
           <key>0</key>
@@ -678,8 +1023,167 @@
         <key>patterns</key>
         <array>
           <dict>
+            <key>include</key>
+            <string>#condition_subjects</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#condition_predicates</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#condition_compounds</string>
+          </dict>
+        </array>
+      </dict>
+      <key>condition_compounds</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
             <key>match</key>
-            <string>\b(button)(\s+(MEM0|MEM1|MEM2|MEM3|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|XOR|ADD|SUB|PAGE|LJOY_CENTER|LJOY_UP|LJOY_DOWN|LJOY_LEFT|LJOY_RIGHT|RJOY_CENTER|RJOY_UP|RJOY_DOWN|RJOY_LEFT|RJOY_RIGHT|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY))?\b</string>
+            <string>\b(interact_script|tick_script|lookScript)(\s+is(\s+not)?)\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.function.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(direction)\s+(is\s+(not\s+)?)((north|south|east|west)|(\$[-A-Za-z0-9_.#$]+))\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>constant.language.mgs</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(path)\s+(is\s+(not\s+)?)(['"])(%PATH%)(\4)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mgs</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(name|type|entity_type|path|warp\s+state)\s+(is\s+(not\s+)?)((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+)|(['"])[^`]*?\7)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)\s+is\s+(not\s+)?((\$[-A-Za-z0-9_.#$]+)|([0-9]+))</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.integer.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>condition_subjects</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>\b(button|flag|variable|geometry)\s+(\$[-A-Za-z0-9_.#$]+)\b</string>
             <key>captures</key>
             <dict>
               <key>0</key>
@@ -690,35 +1194,34 @@
               <key>2</key>
               <dict>
                 <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(button)(\s+(MEM0|MEM1|MEM2|MEM3|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|XOR|ADD|SUB|PAGE|LJOY_CENTER|LJOY_UP|LJOY_DOWN|LJOY_LEFT|LJOY_RIGHT|RJOY_CENTER|RJOY_UP|RJOY_DOWN|RJOY_LEFT|RJOY_RIGHT|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY))?\b</string>
+            <key>captures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
                 <string>constant.language.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
-            <key>match</key>
-            <string>\b(entity)\s+((['"])(%PLAYER%|%SELF%)\3)</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>string.variable.mgs</string>
-              </dict>
-              <key>4</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.definition.variable.mgs variable.language.mgs</string>
-              </dict>
-            </dict>
+            <key>include</key>
+            <string>#entity_specifier_string_pair</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(flag|variable|entity|geometry)\s+((([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\5))?</string>
+            <string>\b(flag|variable|geometry)\s+((([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\5))?</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -733,32 +1236,21 @@
               </dict>
             </dict>
           </dict>
+        </array>
+      </dict>
+      <key>condition_predicates</key>
+      <dict>
+        <key>patterns</key>
+        <array>
           <dict>
             <key>match</key>
-            <string>\b(interact_script|tick_script|lookScript)\s+is\s+(not\s+)?([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4)</string>
+            <string>\b(is(\s+not)?)\s+(true|false|on|off|glitched|unglitched)\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.function.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\b(direction)\s+is\s+(not\s+)?(north|south|east|west)</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
+                <string>keyword.operator.logical.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -769,7 +1261,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\bis\s+(not\s+)?(true|false|on|off|glitched|unglitched)\b</string>
+            <string>\b(is(\s+not)?)\s+(currently\s+pressed|inside)\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -777,7 +1269,7 @@
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>2</key>
+              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>constant.language.mgs</string>
@@ -786,7 +1278,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\bis\s+(not\s+)?(currently\s+pressed|inside)\b</string>
+            <string>\b(is(\s+not)?)\s+*((==|&lt;=|&lt;|&gt;|&gt;=)\s*)?([0-9]+)\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -794,29 +1286,12 @@
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>constant.language.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\bis\s+(not\s+)?((==|&lt;=|&lt;|&gt;|&gt;=)\s+)?([0-9]+)\b</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
+              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
-              </dict>
-              <key>4</key>
+              <key>5</key>
               <dict>
                 <key>name</key>
                 <string>constant.numeric.integer.mgs</string>
@@ -825,37 +1300,10 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\bis\s+(not\s+)?((==|&lt;=|&lt;|&gt;|&gt;=)\s+)?((([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\7))</string>
+            <string>\b(is(\s+not)?)\s*((==|&lt;=|&lt;|&gt;|&gt;=)\s*)?(\$[-A-Za-z0-9_.#$]+)\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
-              </dict>
-              <key>4</key>
-              <dict>
-                <key>name</key>
-                <string>string.variable.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\b(name|type|entity_type|path|warp\s+state)\s+is\s+(not\s+)?(([-A-Za-z0-9_.#$]+)|(['"])[^`]*?\5)</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>2</key>
               <dict>
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
@@ -863,21 +1311,21 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>string.variable.mgs</string>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(x|y|primary_id|secondary_id|primary_id_type|animation|animationFrame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)\s+is\s+(not\s+)?([0-9]+)</string>
+            <string>\b(is(\s+not)?)\s*((==|&lt;=|&lt;|&gt;|&gt;=)\s*)?([-A-Za-z0-9_.#$]+\b|(['"])[^`]*?\6)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>2</key>
               <dict>
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
@@ -885,7 +1333,12 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>constant.numeric.integer.mgs</string>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
               </dict>
             </dict>
           </dict>
@@ -915,15 +1368,15 @@
         <string>\b(if|else\s+if)\s*(\()</string>
         <key>beginCaptures</key>
         <dict>
-          <key>0</key>
+          <key>1</key>
           <dict>
             <key>name</key>
             <string>keyword.control.conditional.mgs</string>
           </dict>
-          <key>1</key>
+          <key>2</key>
           <dict>
             <key>name</key>
-            <string>meta.parens.mgs punctuation.section.parens.begin</string>
+            <string>meta.parens.mgs punctuation.section.parens.begin.mgs</string>
           </dict>
         </dict>
         <key>end</key>
@@ -933,7 +1386,7 @@
           <key>0</key>
           <dict>
             <key>name</key>
-            <string>meta.parens.mgs punctuation.section.parens.end</string>
+            <string>meta.parens.mgs punctuation.section.parens.end.mgs</string>
           </dict>
         </dict>
         <key>patterns</key>
@@ -957,15 +1410,10 @@
       <key>zigzag_body</key>
       <dict>
         <key>begin</key>
-        <string>(\{)</string>
+        <string>\{</string>
         <key>beginCaptures</key>
         <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.control.conditional.mgs</string>
-          </dict>
-          <key>2</key>
+          <key>0</key>
           <dict>
             <key>name</key>
             <string>mega.block.mgs punctuation.section.block.begin.mgs</string>
@@ -1050,17 +1498,74 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#show_dialog_node</string>
+            <string>#if_then</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#if_then</string>
+            <string>#show_dialog_node</string>
+          </dict>
+          <dict>
+            <key>comment</key>
+            <string>SCRIPT STRINGS</string>
+            <key>match</key>
+            <string>\b(then\s+)?(goto)(\s+script)?\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control.mgs</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(copy)\s+(?=(entity|geometry|flag|variable|map))</string>
+            <key>name</key>
+            <string>constant.language.mgs</string>
+          </dict>
+          <dict>
+            <key>comment</key>
+            <string>SCRIPT STRINGS</string>
+            <key>match</key>
+            <string>\b(copy)(\s+script)?\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>constant.language.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>comment</key>
+            <string>SCRIPT STRINGS</string>
+            <key>match</key>
+            <string>(?&lt;=goto|copy|script)\s+(((['"])[^`]*?\3)|[-A-Za-z0-9_.#$]+\b)</string>
+            <key>name</key>
+            <string>entity.name.function.mgs</string>
           </dict>
           <dict>
             <key>name</key>
             <string>constant.language.mgs</string>
             <key>match</key>
-            <string>\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|load|set|fade\s+in|fade\s+out|load|erase|save|open|close|wait|block|shake)\b</string>
+            <string>\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|load|set|fade\s+in|fade\s+out|load|erase|save|open|close|wait|block|shake|show)\b</string>
           </dict>
           <dict>
             <key>name</key>
@@ -1069,14 +1574,22 @@
             <string>\b(load)\b</string>
           </dict>
           <dict>
+            <key>include</key>
+            <string>#entity_specifier_string_pair</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#geometry_specifier_string_pair</string>
+          </dict>
+          <dict>
             <key>name</key>
             <string>variable.parameter.mgs support.variable.mgs</string>
             <key>match</key>
-            <string>\b(animation|slot|camera|player\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b</string>
+            <string>\b(animation|camera|player\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(to\s+)?(true|false|on|off|glitched|unglitched)\b</string>
+            <string>\b(to\s+)?((true|false|on|off|glitched|unglitched)|(\$[-A-Za-z0-9_.#$]+))\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1084,22 +1597,27 @@
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>2</key>
+              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>constant.language.mgs</string>
               </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
             </dict>
           </dict>
           <dict>
-            <key>name</key>
-            <string>constant.language.mgs</string>
             <key>match</key>
             <string>\b(north|south|east|west)\b</string>
+            <key>name</key>
+            <string>constant.language.mgs</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(name|type|path)(\s+to)?\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4)?</string>
+            <string>\b(name|type|path|warp\s+state)(\s+to)?\s+((\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)?</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1117,11 +1635,16 @@
                 <key>name</key>
                 <string>string.variable.mgs</string>
               </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
             </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(x|y|primary_id|secondary_id|primary_id_type|animation|animationFrame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)(\s+to)?\s+([0-9]]+)?</string>
+            <string>\b(interact_script|tick_script)(\s+to)?\s+((\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)?</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1137,17 +1660,72 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>constant.numeric.integer.mgs</string>
+                <string>entity.name.function.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
-            <key>include</key>
-            <string>#script_constants</string>
+            <key>match</key>
+            <string>\b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)(\s+to)?\s+(([0-9]]+)|(\$[-A-Za-z0-9_.#$]+))?\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.logical.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.integer.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(to|from)\s+(#[0-9A-F]+)?\b</string>
+            <string>\b(slot)\s+(([0-2])|([0-9]+)|(\$[-A-Za-z0-9_.#$]+))?\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.integer.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>invalid.illegal.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(to|from)\s+((#[0-9A-F]+)|(\$[-A-Za-z0-9_.#$]+))?\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1155,12 +1733,21 @@
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>2</key>
+              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>constant.numeric.integer.mgs</string>
               </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
             </dict>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#generic_numberish</string>
           </dict>
           <dict>
             <key>match</key>
@@ -1175,107 +1762,8 @@
             </dict>
           </dict>
           <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>begin</key>
-                <string>(copy\s+)?(entity|geometry)\s+(")</string>
-                <key>beginCaptures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>constant.language.mgs</string>
-                  </dict>
-                  <key>2</key>
-                  <dict>
-                    <key>name</key>
-                    <string>variable.parameter.mgs support.variable.mgs</string>
-                  </dict>
-                  <key>3</key>
-                  <dict>
-                    <key>name</key>
-                    <string>string.quoted.double.mgs punctuation.definition.string.begin.mgs</string>
-                  </dict>
-                </dict>
-                <key>end</key>
-                <string>"</string>
-                <key>endCaptures</key>
-                <dict>
-                  <key>0</key>
-                  <dict>
-                    <key>name</key>
-                    <string>string.quoted.double.mgs punctuation.definition.string.end.mgs</string>
-                  </dict>
-                </dict>
-                <key>patterns</key>
-                <array>
-                  <dict>
-                    <key>name</key>
-                    <string>punctuation.definition.variable.mgs variable.language.mgs</string>
-                    <key>match</key>
-                    <string>(%PLAYER%|%PATH%|%SELF%)</string>
-                  </dict>
-                  <dict>
-                    <key>name</key>
-                    <string>string.quoted.double.mgs string.variable.mgs</string>
-                    <key>match</key>
-                    <string>[^"]</string>
-                  </dict>
-                </array>
-              </dict>
-              <dict>
-                <key>begin</key>
-                <string>(copy\s+)?(entity|geometry)\s+(')</string>
-                <key>beginCaptures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>constant.language.mgs</string>
-                  </dict>
-                  <key>2</key>
-                  <dict>
-                    <key>name</key>
-                    <string>variable.parameter.mgs support.variable.mgs</string>
-                  </dict>
-                  <key>3</key>
-                  <dict>
-                    <key>name</key>
-                    <string>string.quoted.double.mgs punctuation.definition.string.begin.mgs</string>
-                  </dict>
-                </dict>
-                <key>end</key>
-                <string>'</string>
-                <key>endCaptures</key>
-                <dict>
-                  <key>0</key>
-                  <dict>
-                    <key>name</key>
-                    <string>string.quoted.single.mgs punctuation.definition.string.end.mgs</string>
-                  </dict>
-                </dict>
-                <key>patterns</key>
-                <array>
-                  <dict>
-                    <key>name</key>
-                    <string>punctuation.definition.variable.mgs variable.language.mgs</string>
-                    <key>match</key>
-                    <string>(%PLAYER%|%PATH%|%SELF%)</string>
-                  </dict>
-                  <dict>
-                    <key>name</key>
-                    <string>string.quoted.double.mgs string.variable.mgs</string>
-                    <key>match</key>
-                    <string>[^']</string>
-                  </dict>
-                </array>
-              </dict>
-            </array>
-          </dict>
-          <dict>
             <key>match</key>
-            <string>\b(map tick_script)(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))</string>
+            <string>\b(map\s+tick_script)(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1297,15 +1785,10 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(copy\s+)?(flag|variable|map|geometry|entity)\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))?</string>
+            <string>\b(serial\s+connect(\s+message)?)(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\6))?</string>
             <key>captures</key>
             <dict>
               <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>constant.language.mgs</string>
-              </dict>
-              <key>2</key>
               <dict>
                 <key>name</key>
                 <string>variable.parameter.mgs support.variable.mgs</string>
@@ -1313,73 +1796,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>string.variable.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\b(then\s+)?(goto)\s+(script\s+)?(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\6))</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.control.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.control.mgs</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>4</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.function.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\b(copy)\s+(script\s+)?(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>constant.language.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.function.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\b(warp\s+state|serial\s+connect(\s+message)?)(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\6))?</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>variable.parameter.mgs support.variable.mgs</string>
+                <string>keyword.operator.mgs</string>
               </dict>
               <key>4</key>
               <dict>
@@ -1390,18 +1807,23 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(flag|geometry|map|variable|entity|dialog|serial\s+dialog)\s+((([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\5))?</string>
+            <string>\b(flag|map|variable|(serial\s+)?dialog)\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\6)?</string>
             <key>captures</key>
             <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
               <key>1</key>
               <dict>
                 <key>name</key>
                 <string>variable.parameter.mgs support.variable.mgs</string>
               </dict>
-              <key>3</key>
+              <key>4</key>
               <dict>
                 <key>name</key>
-                <string>string.variable.mgs</string>
+                <string>variable.other.constant.mgs</string>
               </dict>
             </dict>
           </dict>
@@ -1429,9 +1851,14 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(mutate)\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4))</string>
+            <string>\b(mutate)\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))</string>
             <key>captures</key>
             <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
               <key>1</key>
               <dict>
                 <key>name</key>
@@ -1440,13 +1867,13 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>string.variable.mgs</string>
+                <string>variable.other.constant.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(interact_script|tick_script|lookScript)\s+(to\s+)?([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4)</string>
+            <string>\b((interact|tick|look)_script)\s+(to\s+)?([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1457,13 +1884,18 @@
               <key>3</key>
               <dict>
                 <key>name</key>
+                <string>keyword.operator.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
                 <string>entity.name.function.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?|==|&lt;=|&lt;|&gt;|&gt;=)\s+([0-9]+)\b</string>
+            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?|==|&lt;=|&lt;|&gt;|&gt;=)\s+(([0-9]+)|(\$[-A-Za-z0-9_.#$]+))\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1471,16 +1903,21 @@
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>2</key>
+              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>constant.numeric.integer.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
               </dict>
             </dict>
           </dict>
           <dict>
             <key>match</key>
-            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?|==|&lt;=|&lt;|&gt;|&gt;=)\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\3)</string>
+            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?|==|&lt;=|&lt;|&gt;|&gt;=)\s+([-A-Za-z0-9_.#$]+\b|(['"])[^`]*?\3)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1494,6 +1931,10 @@
                 <string>string.variable.mgs</string>
               </dict>
             </dict>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#generic_numberish</string>
           </dict>
         </array>
       </dict>
@@ -1506,7 +1947,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.control.assignment.mgs</string>
+            <string>constant.language.mgs</string>
           </dict>
           <key>2</key>
           <dict>
@@ -1536,37 +1977,6 @@
             <string>#script_body</string>
           </dict>
         </array>
-      </dict>
-      <key>script_constants</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>name</key>
-            <string>constant.numeric.integer.mgs</string>
-            <key>match</key>
-            <string>([0-9]+(ms|px)?)</string>
-          </dict>
-          <dict>
-            <key>name</key>
-            <string>constant.numeric.integer.mgs</string>
-            <key>match</key>
-            <string>(-?[0-9]+)</string>
-          </dict>
-          <dict>
-            <key>name</key>
-            <string>constant.numeric.integer.mgs</string>
-            <key>match</key>
-            <string>\b((once|twice|thrice)|([0-9]+x?))</string>
-          </dict>
-        </array>
-      </dict>
-      <key>script_variables</key>
-      <dict>
-        <key>name</key>
-        <string>string.variable.mgs variable.parameter.mgs</string>
-        <key>match</key>
-        <string>#[0-9A-F]+</string>
       </dict>
     </dict>
     <key>scopeName</key>
