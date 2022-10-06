@@ -2,6 +2,10 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-10-05 (v0.4.1)
+
+- Fixed package and publisher name.
+
 ## 2022-10-05 (v0.4.0)
 
 - Support for the `const!` macro

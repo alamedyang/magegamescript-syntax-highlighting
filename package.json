@@ -2,8 +2,8 @@
     "name": "magegamescript-colors",
     "displayName": "MageGameScript Colors",
     "description": "Syntax highlighting for MageGameScript",
-    "version": "0.4.0",
-    "publisher": "Goat and Bird",
+    "version": "0.4.1",
+    "publisher": "goat-and-bird",
     "author": {
         "name": "alamedyang"
     },
