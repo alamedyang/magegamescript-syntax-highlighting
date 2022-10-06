@@ -54,7 +54,7 @@
           <key>0</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.comment</string>
+            <string>punctuation.definition.comment.mgs</string>
           </dict>
         </dict>
         <key>end</key>
@@ -64,16 +64,14 @@
           <key>0</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.comment</string>
+            <string>punctuation.definition.comment.mgs</string>
           </dict>
         </dict>
         <key>name</key>
-        <string>comment.block</string>
+        <string>comment.block.mgs</string>
         <key>patterns</key>
         <array>
           <dict>
-            <key>name</key>
-            <string>comment.block</string>
             <key>match</key>
             <string>.+?</string>
           </dict>
@@ -88,7 +86,7 @@
           <key>0</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.comment</string>
+            <string>punctuation.definition.comment.mgs</string>
           </dict>
         </dict>
         <key>end</key>
@@ -99,16 +97,14 @@
           <key>0</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.comment</string>
+            <string>punctuation.definition.comment.mgs</string>
           </dict>
         </dict>
         <key>name</key>
-        <string>comment.line.double-slash</string>
+        <string>comment.line.double-slash.mgs</string>
         <key>patterns</key>
         <array>
           <dict>
-            <key>name</key>
-            <string>comment.block</string>
             <key>match</key>
             <string>.+?</string>
           </dict>
@@ -123,7 +119,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type.mgs</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <key>3</key>
           <dict>
@@ -185,7 +181,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type.mgs</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <key>3</key>
           <dict>
@@ -234,7 +230,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>support.type.mgs</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <key>3</key>
           <dict>
@@ -286,7 +282,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b([0-9]+(ms|px|x)?|once|twice|thrice)\b</string>
+            <string>\b([0-9]+(s|ms|px|pix|x)?|once|twice|thrice)\b</string>
             <key>name</key>
             <string>constant.numeric.integer.mgs</string>
           </dict>
@@ -322,7 +318,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function</string>
+            <string>entity.name.function.mgs</string>
           </dict>
           <key>2</key>
           <dict>
@@ -344,7 +340,7 @@
             <key>match</key>
             <string>=</string>
             <key>name</key>
-            <string>keyword.operator.mgs</string>
+            <string>keyword.operator.assignment.mgs</string>
           </dict>
           <dict>
             <key>include</key>
@@ -638,7 +634,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>constant.language.mgs</string>
+                <string>keyword.other.mgs</string>
               </dict>
               <key>2</key>
               <dict>
@@ -648,7 +644,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
             </dict>
           </dict>
@@ -750,13 +746,13 @@
             <key>match</key>
             <string>[%][^%]+?[%]</string>
             <key>name</key>
-            <string>punctuation.definition.variable.mgs variable.language.mgs</string>
+            <string>variable.language.mgs</string>
           </dict>
           <dict>
             <key>match</key>
             <string>\$[^\$]+?\$</string>
             <key>name</key>
-            <string>punctuation.definition.variable.mgs variable.language.mgs</string>
+            <string>variable.language.mgs</string>
           </dict>
           <dict>
             <key>match</key>
@@ -775,7 +771,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.language.mgs</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <key>2</key>
           <dict>
@@ -820,7 +816,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.language.mgs</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <key>2</key>
           <dict>
@@ -909,6 +905,10 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#comment_node</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#dialog_parameter</string>
           </dict>
         </array>
@@ -949,6 +949,10 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#comment_node</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#dialog_parameter</string>
           </dict>
         </array>
@@ -982,6 +986,10 @@
         </dict>
         <key>patterns</key>
         <array>
+          <dict>
+            <key>include</key>
+            <string>#comment_node</string>
+          </dict>
           <dict>
             <key>include</key>
             <string>#dialog_parameter</string>
@@ -1042,7 +1050,7 @@
         <array>
           <dict>
             <key>match</key>
-            <string>\b(interact_script|tick_script|lookScript)(\s+is(\s+not)?)\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)</string>
+            <string>\b(interact_script|tick_script|look_script)(\s+is(\s+not)?)\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1150,7 +1158,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)\s+is\s+(not\s+)?((\$[-A-Za-z0-9_.#$]+)|([0-9]+))</string>
+            <string>\b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)\s+(is\s+(not\s+))?((\$[-A-Za-z0-9_.#$]+)|([0-9]+))</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1163,12 +1171,12 @@
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>4</key>
+              <key>5</key>
               <dict>
                 <key>name</key>
                 <string>variable.other.constant.mgs</string>
               </dict>
-              <key>5</key>
+              <key>6</key>
               <dict>
                 <key>name</key>
                 <string>constant.numeric.integer.mgs</string>
@@ -1532,7 +1540,7 @@
             <key>match</key>
             <string>\b(copy)\s+(?=(entity|geometry|flag|variable|map))</string>
             <key>name</key>
-            <string>constant.language.mgs</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <dict>
             <key>comment</key>
@@ -1544,7 +1552,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>constant.language.mgs</string>
+                <string>keyword.other.mgs</string>
               </dict>
               <key>2</key>
               <dict>
@@ -1563,7 +1571,7 @@
           </dict>
           <dict>
             <key>name</key>
-            <string>constant.language.mgs</string>
+            <string>keyword.other.mgs</string>
             <key>match</key>
             <string>\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|load|set|fade\s+in|fade\s+out|load|erase|save|open|close|wait|block|shake|show)\b</string>
           </dict>
@@ -1595,7 +1603,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1628,7 +1636,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1655,7 +1663,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1682,7 +1690,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>4</key>
               <dict>
@@ -1704,7 +1712,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>variable.parameter.mgs support.variable.</string>
+                <string>variable.parameter.mgs support.variable.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1731,7 +1739,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1757,7 +1765,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
             </dict>
           </dict>
@@ -1774,7 +1782,7 @@
               <key>2</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1796,7 +1804,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>4</key>
               <dict>
@@ -1835,7 +1843,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>constant.language.mgs</string>
+                <string>keyword.other.mgs</string>
               </dict>
               <key>2</key>
               <dict>
@@ -1862,7 +1870,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>constant.language.mgs</string>
+                <string>keyword.other.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1884,7 +1892,7 @@
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>4</key>
               <dict>
@@ -1895,13 +1903,13 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?|==|&lt;=|&lt;|&gt;|&gt;=)\s+(([0-9]+)|(\$[-A-Za-z0-9_.#$]+))\b</string>
+            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?)\s+(([0-9]+)|(\$[-A-Za-z0-9_.#$]+))\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>3</key>
               <dict>
@@ -1917,13 +1925,13 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?|==|&lt;=|&lt;|&gt;|&gt;=)\s+([-A-Za-z0-9_.#$]+\b|(['"])[^`]*?\3)</string>
+            <string>(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\+|-|\*|\/|%|\?)\s+([-A-Za-z0-9_.#$]+\b|(['"])[^`]*?\3)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.operator.logical.mgs</string>
+                <string>keyword.operator.assignment.mgs</string>
               </dict>
               <key>2</key>
               <dict>
@@ -1931,10 +1939,6 @@
                 <string>string.variable.mgs</string>
               </dict>
             </dict>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generic_numberish</string>
           </dict>
         </array>
       </dict>
@@ -1947,7 +1951,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>constant.language.mgs</string>
+            <string>keyword.other.mgs</string>
           </dict>
           <key>2</key>
           <dict>
