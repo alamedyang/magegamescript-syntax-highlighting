@@ -5,9 +5,9 @@ All notable changes to the "magegamescript-colors" extension will be documented 
 ## 2022-10-06 (v0.4.2)
 
 - Added package icon (drawn by @CorfidBizna).
-- Color decisions charged or polished:
-	- `parameters` and `settings` now colored in line with general action keywords
-	- Operator and logical operator keywords now entirely distinct
+- Color decisions changed or polished:
+	- `parameters` and `settings` now colored like general action keywords
+	- Assignment and logical operator keywords now entirely distinct
 	- Action keywords now `keyword.other` instead of `constant.language` (more accurate scope)
 - Fixes
 	- Found some number suffixes I missed (`pix` and `s`)
