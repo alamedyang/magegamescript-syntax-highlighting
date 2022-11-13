@@ -3,8 +3,10 @@
 	"name": "MageGameScript",
 	"patterns": [
 		{ "include": "#comment_node" },
+		{ "include": "#serial_settings_node" },
 		{ "include": "#dialog_settings_node" },
 		{ "include": "#dialog_node" },
+		{ "include": "#serial_node" },
 		{ "include": "#script_node" },
 		{ "include": "#var_node" }
 	],
@@ -47,10 +49,29 @@
 				}
 			]
 		},
+		"serial_settings_node": {
+			"begin": "(settings)(\\s+for)?\\s+(serial)(\\s+dialog)?\\s*({)",
+			"beginCaptures": {
+				"1": { "name": "storage.type.mgs" },
+				"3": { "name": "variable.parameter.mgs support.variable.mgs" },
+				"4": { "name": "variable.parameter.mgs support.variable.mgs" },
+				"5": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
+				}
+			},
+			"patterns": [
+				{ "include": "#comment_node" },
+				{ "include": "#serial_wrap" }
+			]
+		},
 		"dialog_settings_node": {
 			"begin": "(settings)(\\s+for)?\\s+(dialog)\\s*({)",
 			"beginCaptures": {
-				"1": { "name": "keyword.other.mgs" },
+				"1": { "name": "storage.type.mgs" },
 				"3": { "name": "variable.parameter.mgs support.variable.mgs" },
 				"4": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
@@ -62,12 +83,6 @@
 			},
 			"patterns": [
 				{ "include": "#comment_node" },
-				{ "include": "#dialog_settings_block_body" }
-			]
-		},
-		"dialog_settings_block_body": {
-			"patterns": [
-				{ "include": "#comment_node" },
 				{ "include": "#dialog_settings_individual_parameters_node" },
 				{ "include": "#dialog_settings_global_parameters_node" }
 			]
@@ -75,7 +90,7 @@
 		"dialog_settings_individual_parameters_node": {
 			"begin": "\\b(parameters)(\\s+for)?\\s+(label|entity)\\s+(([^\\s'\"]+)|(['\"])[^`]*?\\6)\\s*({)",
 			"beginCaptures": {
-				"1": { "name": "keyword.other.mgs" },
+				"1": { "name": "storage.type.mgs" },
 				"3": { "name": "variable.parameter.mgs support.variable.mgs" },
 				"4": { "name": "support.type.mgs" },
 				"7": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
@@ -92,9 +107,9 @@
 		"dialog_settings_global_parameters_node": {
 			"begin": "\\b(parameters\\s+)?(for\\s+)?(global\\s+)?(defaults?)?\\s*({)",
 			"beginCaptures": {
-				"1": { "name": "keyword.other.mgs" },
+				"1": { "name": "storage.type.mgs" },
 				"3": { "name": "variable.parameter.mgs support.variable.mgs" },
-				"4": { "name": "keyword.other.mgs" },
+				"4": { "name": "storage.type.mgs" },
 				"5": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
 			"end": "}",
@@ -268,9 +283,9 @@
 					"name": "variable.parameter.mgs support.variable.mgs"
 				},
 				{
-					"match": "\\b(wrap)\\s+(messages|serial)(\\s+to)?\\b",
+					"match": "\\b(wrap)(\\s+messages)(\\s+to)?\\b",
 					"captures": {
-						"1": { "name": "keyword.other.mgs" },
+						"1": { "name": "storage.type.mgs" },
 						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"3": { "name": "keyword.operator.assignment.mgs" }
 					}
@@ -293,17 +308,13 @@
 				{ "include": "#dialog_message" },
 				{ "include": "#dialog_option_goto" },
 				{
-					"match": ">",
-					"name": "keyword.control.mgs"
-				},
-				{
-					"match": ":",
+					"match": ">|:",
 					"name": "keyword.control.mgs"
 				}
 			]
 		},
 		"dialog_message": {
-			"begin": "(?<!\\\\)(?:\\\\{2})*\\K\"",
+			"begin": "\"",
 			"beginCaptures": {
 				"0": { "name": "string.quoted.double.mgs string.variable.mgs" }
 			},
@@ -311,9 +322,10 @@
 			"endCaptures": {
 				"0": { "name": "string.quoted.double.mgs string.variable.mgs" }
 			},
+			"name": "constant.character.escape.mgs",
 			"patterns": [
 				{
-					"match": "\\\\[n\"$%]",
+					"match": "\\\\[nt\"$%\\\\]",
 					"name": "constant.character.escape.mgs"
 				},
 				{
@@ -330,10 +342,139 @@
 				}
 			]
 		},
+		"serial_message": {
+			"begin": "\"",
+			"beginCaptures": {
+				"0": { "name": "string.quoted.double.mgs string.variable.mgs" }
+			},
+			"end": "(?<!\\\\)(?:\\\\{2})*\\K\"",
+			"endCaptures": {
+				"0": { "name": "string.quoted.double.mgs string.variable.mgs" }
+			},
+			"name": "constant.character.escape.mgs",
+			"patterns": [
+				{
+					"match": "(<)(((\/|reset)|bold|dim|(bg-)?(black|red|green|yellow|blue|magenta|cyan|white|k|r|g|y|b|m|c|w)))(>)",
+					"captures": {
+						"1": { "name": "punctuation.definition.tag.begin.mgs" },
+						"2": { "name": "entity.name.tag.mgs" },
+						"4": { "name": "punctuation.definition.tag.mgs" },
+						"7": { "name": "punctuation.definition.tag.end.mgs" }
+					}
+				},
+				{
+					"match": "\\\\[nt\"\\\\]",
+					"name": "constant.character.escape.mgs"
+				},
+				{
+					"match": ".+?",
+					"name": "string.variable.mgs"
+				}
+			]
+		},
+		"serial_message_underscore": {
+			"begin": "(_)\\s+(\")",
+			"beginCaptures": {
+				"1": { "name": "keyword.control.mgs" },
+				"2": { "name": "string.quoted.double.mgs string.variable.mgs" }
+			},
+			"end": "(?<!\\\\)(?:\\\\{2})*\\K\"",
+			"endCaptures": {
+				"0": { "name": "string.quoted.double.mgs string.variable.mgs" }
+			},
+			"name": "constant.character.escape.mgs",
+			"patterns": [
+				{
+					"match": "\\\\[t\"\\\\]",
+					"name": "constant.character.escape.mgs"
+				},
+				{
+					"match": ".+?",
+					"name": "string.variable.mgs"
+				}
+			]
+		},
+		"set_serial_connect_node": {
+			"begin": "\\b(set)(\\s+serial\\s+connect(\\s+message)?)(\\s+to)?(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\8)))?\\s*({)",
+			"beginCaptures": {
+				"1": { "name": "storage.type.mgs" },
+				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+				"4": { "name": "keyword.operator.assignment.mgs" },
+				"5": { "name": "string.quoted.double.mgs string.variable.mgs" },
+				"9": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
+				}
+			},
+			"patterns": [
+				{ "include": "#serial_body" }
+			]
+		},
+		"show_serial_node": {
+			"begin": "\\b(show|concat)\\s+(serial\\s+dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6)))?\\s*({)",
+			"beginCaptures": {
+				"1": { "name": "storage.type.mgs" },
+				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+				"3": { "name": "string.quoted.double.mgs string.variable.mgs" },
+				"7": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
+				}
+			},
+			"patterns": [
+				{ "include": "#serial_body" }
+			]
+		},
+		"serial_node": {
+			"begin": "\\b(serial\\s+dialog)(\\s+([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4))\\s*({)",
+			"beginCaptures": {
+				"1": { "name": "storage.type.mgs" },
+				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+				"5": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "mega.block.mgs punctuation.section.block.end.mgs"
+				}
+			},
+			"patterns": [
+				{ "include": "#serial_body" }
+			]
+		},
+		"serial_wrap": {
+				"match": "\\b(wrap)(\\s+messages)?(\\s+to)?\\s+((\\$[-A-Za-z0-9_.#$]+)|([0-9]+))\\b",
+				"captures": {
+					"1": { "name": "storage.type.mgs" },
+					"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+					"3": { "name": "keyword.operator.assignment.mgs" },
+					"5": { "name": "variable.other.constant.mgs" },
+					"6": { "name": "constant.numeric.integer.mgs" }
+				}
+			},
+		"serial_body": {
+			"patterns": [
+				{ "include": "#comment_node" },
+				{ "include": "#serial_wrap" },
+				{ "include": "#serial_message" },
+				{ "include": "#serial_message_underscore" },
+				{ "include": "#dialog_option_goto" },
+				{
+					"match": "_|:|#",
+					"name": "keyword.control.mgs"
+				}
+			]
+		},
 		"show_dialog_node": {
 			"begin": "\\b(show)\\s+(dialog)(\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6)))?\\s*({)",
 			"beginCaptures": {
-				"1": { "name": "keyword.other.mgs" },
+				"1": { "name": "storage.type.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
 				"3": { "name": "string.quoted.double.mgs string.variable.mgs" },
 				"7": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
@@ -351,7 +492,7 @@
 		"dialog_node": {
 			"begin": "\\b(dialog)(\\s+([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4))\\s*({)",
 			"beginCaptures": {
-				"1": { "name": "keyword.other.mgs" },
+				"1": { "name": "storage.type.mgs" },
 				"2": { "name": "variable.parameter.mgs support.variable.mgs" },
 				"5": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},
@@ -485,7 +626,7 @@
 					}
 				},
 				{
-					"match": "\\b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)\\s+(is\\s+(not\\s+))?((\\$[-A-Za-z0-9_.#$]+)|([0-9]+))",
+					"match": "\\b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)(\\s+is(\\s+not)?)\\s+((\\$[-A-Za-z0-9_.#$]+)|([0-9]+))",
 					"captures": {
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"2": { "name": "keyword.operator.logical.mgs" },
@@ -619,15 +760,35 @@
 				{ "include": "#script_body" }
 			]
 		},
+		"serial_verb_registration": {
+			"patterns": [
+				{ "include": "#comment_node" },
+				{
+					"match": "(\\+)\\s*((\\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\\b)|(['\"])[^`]*?\\5)",
+					"captures": {
+						"0": { "name": "string.variable.mgs" },
+						"1": { "name": "keyword.operator.assignment.mgs" },
+						"3": { "name": "variable.other.constant.mgs" }
+					}
+				},
+				{
+					"match": "default|fail",
+					"name": "constant.language.mgs"
+				},
+				{ "include": "#dialog_option_goto" }
+			]
+		},
 		"script_body": {
 			"patterns": [
 				{ "include": "#comment_node" },
 				{ "include": "#zigzag" },
 				{ "include": "#if_then" },
 				{ "include": "#show_dialog_node" },
+				{ "include": "#set_serial_connect_node" },
+				{ "include": "#show_serial_node" },
 				{
 					"comment": "SCRIPT STRINGS",
-					"match": "\\b(then\\s+)?(goto)(\\s+script)?\\b",
+					"match": "\\b(then\\s+)?(goto)(\\s+script(?!-))?\\b",
 					"captures": {
 						"1": { "name": "keyword.control.mgs" },
 						"2": { "name": "keyword.control.mgs" },
@@ -636,13 +797,13 @@
 				},
 				{
 					"match": "\\b(copy)\\s+(?=(entity|geometry|flag|variable|map))",
-					"name": "keyword.other.mgs"
+					"name": "storage.type.mgs"
 				},
 				{
 					"comment": "SCRIPT STRINGS",
-					"match": "\\b(copy)(\\s+script)?\\b",
+					"match": "\\b(copy)(\\s+script(?!-))?\\b",
 					"captures": {
-						"1": { "name": "keyword.other.mgs" },
+						"1": { "name": "storage.type.mgs" },
 						"2": { "name": "variable.parameter.mgs support.variable.mgs" }
 					}
 				},
@@ -652,18 +813,18 @@
 					"name": "entity.name.function.mgs"
 				},
 				{
-					"name": "keyword.other.mgs",
-					"match": "\\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|load|set|fade\\s+in|fade\\s+out|load|erase|save|open|close|wait|block|shake|show)\\b"
+					"name": "keyword.control.mgs",
+					"match": "\\b(load)\\s*(?=map)\\b"
 				},
 				{
-					"name": "keyword.control.mgs",
-					"match": "\\b(load)\\b"
+					"name": "storage.type.mgs",
+					"match": "\\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|set|fade\\s+in|fade\\s+out|load|erase|save|open|close|wait|block|shake|show)\\b"
 				},
 				{ "include": "#entity_specifier_string_pair" },
 				{ "include": "#geometry_specifier_string_pair" },
 				{
 					"name": "variable.parameter.mgs support.variable.mgs",
-					"match": "\\b(animation|camera|player\\s+control|hex(\\s+(dialog\\s+mode|control|clipboard|editor))?)\\b"
+					"match": "\\b(animation|camera|(player|serial)\\s+control|hex(\\s+(dialog\\s+mode|control|clipboard|editor))?)\\b"
 				},
 				{
 					"match": "\\b(to\\s+)?((true|false|on|off|glitched|unglitched)|(\\$[-A-Za-z0-9_.#$]+))\\b",
@@ -714,7 +875,7 @@
 					}
 				},
 				{
-					"match": "\\b(to|from)\\s+((#[0-9A-F]+)|(\\$[-A-Za-z0-9_.#$]+))?\\b",
+					"match": "\\b(to|from)\\s+((#[0-9A-F]+|black|white)|(\\$[-A-Za-z0-9_.#$]+))?\\b",
 					"captures": {
 						"1": { "name": "keyword.operator.assignment.mgs" },
 						"3": { "name": "constant.numeric.integer.mgs" },
@@ -753,9 +914,9 @@
 					}
 				},
 				{
-					"match": "\\b(show)\\s+((serial\\s+)?dialog)\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6))",
+					"match": "\\b(show|concat)\\s+((serial\\s+)?dialog)\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\6))",
 					"captures": {
-						"1": { "name": "keyword.other.mgs" },
+						"1": { "name": "storage.type.mgs" },
 						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"4": { "name": "string.variable.mgs" }
 					}
@@ -764,7 +925,7 @@
 					"match": "\\b(mutate)\\s+((\\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))",
 					"captures": {
 						"0": { "name": "string.variable.mgs" },
-						"1": { "name": "keyword.other.mgs" },
+						"1": { "name": "storage.type.mgs" },
 						"3": { "name": "variable.other.constant.mgs" }
 					}
 				},
@@ -796,7 +957,7 @@
 		"script_node": {
 			"begin": "(script\\s+)?(((([-A-Za-z0-9_.#$]+)|((['\"])[^`]*?\\7))))\\s*({)",
 			"beginCaptures": {
-				"1": { "name": "keyword.other.mgs" },
+				"1": { "name": "storage.type.mgs" },
 				"2": { "name": "entity.name.function.mgs" },
 				"8": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
 			},

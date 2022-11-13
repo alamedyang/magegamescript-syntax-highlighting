@@ -2,6 +2,28 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-11-12 (v0.5.0)
+
+NEW! Serial dialog syntax:
+
+- `serial dialog {}`
+- `settings for serial dialog {}`
+- `set serial connect message {}`
+- `show serial dialog {}`
+- `serial dialog` contents:
+	- serial dialog options (`_` and `#`)
+	- style tags inside messages and multiple choice option labels (e.g. `<bold>`)
+- Anticipated MGE features:
+	- `concat serial dialog {}`
+	- `set serial control`
+
+Other polish:
+
+- `load` now `keyword.control` when before `map` (but nothing else)
+- Backslashes can now be escaped in dialog messages
+- Misc bug fixes
+- Action keywords are now `storage.type` instead of `keyword.other`, which improves contrast in many themes
+
 ## 2022-10-06 (v0.4.2)
 
 - Added package icon (drawn by @CorfidBizna).
@@ -70,7 +92,7 @@ All notable changes to the "magegamescript-colors" extension will be documented 
 
 - Update to MGS language v2
 
-## 2022-07-23s (v0.1.2)
+## 2022-07-23 (v0.1.2)
 
 - Script name strings now yellow; bug fixes
 

@@ -1,0 +1,790 @@
+/* ---------- COLOR SPECTRUM TEST ---------- */
+
+// `_` is used for a wildcard strings when possible.
+// Some additional words are inserted when syntax color patterns require it; these are not necessarily noted.
+
+
+/* ---------- COMMENTS ---------- */
+
+// punctuation.definition.comment.mgs for `/*` and `*/`
+// comment.block.mgs for the interior
+
+// punctuation.definition.comment.mgs for `//` (and `\n|$` I guess lol)
+// comment.line.double-slash.mgs for the interior
+
+
+/* ---------- SCRIPT NAMES & MACROS ---------- */
+
+// entity.name.function.mgs
+// ≈ Function definitions and calls, macros
+
+const!() // TODO: specify the macro a bit better; is there a better scope for this?
+
+// `scriptName` should also be this color in all below:
+script scriptName {}
+scriptName {
+	copy scriptName
+	goto scriptName
+	goto script scriptName
+	interact_script to scriptName
+	map tick_script to scriptName
+	tick_script to scriptName
+	look_script to scriptName
+	if (interact_script is scriptName) {}
+	if (interact_script is not scriptName) {}
+	if (tick_script is scriptName) {}
+	if (tick_script is not scriptName) {}
+}
+
+/* ---------- CONTROL WORDS ---------- */
+
+// keyword.control.mgs
+// = MGS script jumps
+
+// Should be this color:
+// `goto` `if` `else` `then`
+
+_ {
+	goto _
+	if ( _ ) { _ } else if ( _ ) { _ } else { _ }
+	if _ then goto _
+}
+
+// Should be this color:
+// `goto` `:`
+
+dialog - { // `>`
+	Identifier "..."
+	>"...":s
+	> "..." : goto s
+	> "..." : goto script s
+}
+serial dialog _ { // `_`
+	_"...":s
+	_ "..." : goto s
+	_ "..." : goto script s
+}
+serial dialog _ { // `#`
+	#"...":s
+	# "..." : goto s
+	# "..." : goto script s
+}
+
+
+/* ---------- CONSTANTS ---------- */
+
+// variable.other.constant.mgs
+// = "compile-time" constants
+
+// `$varName` should be this color in all below:
+
+const! (
+	$varName = _
+)
+
+_ {
+	entity $varName
+	geometry $varName
+	slot $varName
+	flag $varName
+	map $varName
+	variable $varName
+	dialog $varName // TODO: remove?
+	serial dialog $varName // TODO: remove?
+	mutate $varName
+
+	// TODO: shouldn't $varName on it's own work in this spot? (see the boolean stuff)
+	to $varName // TODO: this pattern seems to be working from the (to|from) match and not the boolean one! (maybe that's okay)
+	from $varName
+
+	// "set" actions
+	name $varName
+	name to $varName
+	// ^^ etc: type, path, warp state
+
+	primary_id to $varName
+	// ^^ etc: all the other entity fields
+
+	// TODO: remove these?
+	interact_script $varName
+	interact_script to $varName
+	tick_script $varName
+	tick_script to $varName
+	
+	SET $varName
+	= $varName
+	// ^^ etc: all the other operations
+
+	// condition subjects
+	if (entity $varName)
+	if (button $varName)
+	if (flag $varName)
+	if (variable $varName)
+	if (geometry $varName)
+	
+	// condition predicates
+	if (direction is $varName)
+	if (direction is not $varName)
+	if (path is $varName)
+	if (path is not $varName)
+	// ^^ same category: type, entity_type, name, warp state
+	if (primary_id is $varName)
+	if (primary_id is not $varName)
+	// ^^ same category: all the other entity fields
+	if (is $varName)
+	if (is not $varName)
+	if (is <= $varName)
+	if (is not <= $varName)
+}
+settings dialog {
+	default {
+		name $varName
+		emote $varName
+		entity $varName
+		portrait $varName
+		alignment $varName
+		border_tileset $varName
+	}
+}
+dialog _ {
+	entity $varname "_"
+	name $varname "_"
+	$varName "_"
+	_
+	name $varName
+	emote $varName
+	entity $varName
+	portrait $varName
+	alignment $varName
+	border_tileset $varName
+	"_"
+}
+
+
+/* ---------- ACTION KEYWORDS ---------- */
+
+// storage.type.mgs
+// ≈ wanting to approximate the "let _" in JS
+// = keywords that aren't control words
+
+settings dialog { // settings
+	default {} // default
+	parameters for entity _ { // parameters
+		wrap messages to 42 // wrap
+	}
+}
+settings serial dialog { // settings
+	wrap 60 // wrap
+}
+
+_ {
+	// Should be this color: the first word in each
+	show dialog _ {}
+	show dialog {}
+	show dialog _
+	show serial dialog _ {}
+	show serial dialog {}
+	show serial dialog _
+	set serial connect _ {}
+	set serial connect {}
+	set serial connect _
+	copy entity _
+	copy geometry _
+	copy flag _
+	copy variable _
+	copy map _
+	copy script _
+	copy _
+	mutate _
+	// all of these:
+	load erase save open close wait block
+	shake show make walk loop turn rotate
+	teleport pan loop play load set
+	fade in fade out
+}
+// everything before the `_`:
+script _ {}
+dialog _ {}
+serial dialog _ {}
+
+/* ---------- LANGUAGE CONSTANTS ---------- */
+
+// constant.language.mgs
+// = Language-defined terms like `null` or `true`
+
+// Booleans: true/false/on/off/glitched/unglitched
+const! (
+	$_ = true
+)
+_ {
+	to true
+	if (is true) {}
+	if (is not true) {}
+	open hex editor // open
+	close hex editor // close
+}
+
+// Alignment values
+settings dialog {
+	parameters for entity _ {
+		alignment BOTTOM_LEFT
+		alignment TOP_LEFT
+		alignment BOTTOM_RIGHT
+		alignment TOP_RIGHT
+		alignment BL
+		alignment TL
+		alignment BR
+		alignment TR
+	}
+}
+dialog _ {
+	_
+	alignment BOTTOM_LEFT
+	alignment BL
+	// etc
+	"_"
+}
+
+// Cardinal directions
+_ {
+	north south east west
+	if (direction is north) {}
+	if (direction is not north) {}
+}
+
+// Button names
+_ {
+	if (button ANY) {}
+	if (button CIRCLE) {}
+	if (button MEM0) {}
+	if (button BIT8) {}
+	// etc
+}
+
+// Specific states
+_ {
+	if (is currently pressed) {}
+	if (is not currently pressed) {}
+	if (is inside) {}
+	if (is not inside) {}
+}
+
+
+/* ---------- STYLE TAG NAMES ---------- */
+
+// entity.name.tag.mgs
+// = xml tag names
+
+// Should be this color:
+// Things inside the `<>`
+
+serial dialog _ {
+	"<black>_<k>"
+	"<red>_<r>"
+	"<green>_<g>"
+	"<yellow>_<y>"
+	"<blue>_<b>"
+	"<magenta>_<m>"
+	"<cyan>_<c>"
+	"<white>_<w>"
+	"<bg-black>_<bg-k>"
+	"<bg-red>_<bg-r>"
+	"<bg-green>_<bg-g>"
+	"<bg-yellow>_<bg-y>"
+	"<bg-blue>_<bg-b>"
+	"<bg-magenta>_<bg-m>"
+	"<bg-cyan>_<bg-c>"
+	"<bg-white>_<bg-w>"
+	"<bold>_<dim>"
+}
+
+
+/* ---------- STYLE TAG BRACKETS ---------- */
+
+// punctuation.definition.tag.mgs
+// (adding .begin or .end as appropriate)
+// = xml tag brackets
+
+// Should be this color:
+// The `<>`
+
+serial dialog _ {
+	"<black>_<k>"
+	"<red>_<r>"
+	"<green>_<g>"
+	"<yellow>_<y>"
+	"<blue>_<b>"
+	"<magenta>_<m>"
+	"<cyan>_<c>"
+	"<white>_<w>"
+	"<bg-black>_<bg-k>"
+	"<bg-red>_<bg-r>"
+	"<bg-green>_<bg-g>"
+	"<bg-yellow>_<bg-y>"
+	"<bg-blue>_<bg-b>"
+	"<bg-magenta>_<bg-m>"
+	"<bg-cyan>_<bg-c>"
+	"<bg-white>_<bg-w>"
+	"<bold>_<dim>"
+}
+
+// Also the insides, in the case of `reset` and `/`
+// (NOTE: These may be a different color)
+
+serial dialog _ {
+	"<reset>_</>"
+}
+
+/* ---------- LANGUAGE VARIABLES ---------- */
+
+// variable.language.mgs
+// = Special keywords that are also variable-ish
+
+// Should be this color:
+// `%PLAYER%`, `%SELF%`, `%PATH%` `%ANYTHING%`, `$NUMBER$`
+// (but not the quotes wrapping them!)
+
+
+settings dialog {
+	parameters label PLAYER {
+		entity "%PLAYER%"
+		entity "%SELF%"
+		name "%ANYTHING%"
+	}
+}
+
+dialog _ {
+	entity "%PLAYER%" "_"
+	entity "%SELF%" "_"
+	name "%ANYTHING%" "_"
+	_ entity "%PLAYER%" "_"
+	_ entity "%SELF%" "_"
+	_ name "%ANYTHING%" "_"
+	_ "__%ANYTHING%__$NUMBER$__"
+}
+
+_ {
+	if (entity "%PLAYER%")
+	if (entity "%SELF%")
+	entity "%PLAYER%"
+	entity "%SELF%"
+	geometry "%PATH%"
+	if (path is "%PATH%")
+	if (path is not "%PATH%")
+}
+
+
+/* ---------- NUMBER(-ish) ---------- */
+
+// constant.numeric.integer.mgs
+// = numbers, including suffixes and prefixes
+// + other number words, like `once` (if appropriate)
+
+settings dialog {
+	default {
+		9000
+	}
+}
+
+const! (
+	$_ = #000
+	$_ = 9000
+	$_ = 9000s
+	$_ = 9000ms
+	$_ = 9000px
+	$_ = 9000pix
+	$_ = 9000x
+	$_ = once
+)
+_ {
+	#000
+	9000
+	9000s
+	9000ms
+	9000px
+	9000pix
+	9000x
+	once
+	twice
+	thrice
+	slot 1 // only 0-2 is valid here
+	primary_id to 9000
+	primary_id to 9000
+	if (primary_id is 9000)
+	if (primary_id is not 9000)
+	if (is 9000)
+	if (is not 9000)
+	if (is <= 9000)
+	if (is not <= 9000)
+	SET 9000
+	= 9000
+	to black
+	to #FF0
+	to #000000
+	from white
+	from #FF0
+	from #000000
+}
+
+
+/* ---------- SPECIAL ---------- */
+
+// support.type.mgs
+// ≈ Classes, or meta types (mostly aiming for a different color :P)
+
+// Should be this color: `PLAYER`
+settings dialog {
+	parameters for label PLAYER {}
+}
+
+// Should be this color: everything before a "_"
+dialog _ {
+	PLAYER "_"
+	entity entityName "_"
+	entity "Entity Name" "_"
+	name nameName "_"
+	name "Name Name" "_"
+}
+
+
+/* ---------- STRINGS ---------- */
+
+// string.variable.mgs
+// = Strings, either wrapped in `"`, `'`, or barewords (in syntactically appropraite moments)
+
+// NOTE: strings that are specifically script names are not included.
+
+const! (
+	$_ = "I am a string"
+	$_ = 'I am a string'
+	$_ = barewordString
+)
+settings dialog {
+	default {
+		entity STRING
+		entity "STRING"
+		entity "%SELF%" // quotes alone
+		entity "%PLAYER%" // quotes alone
+		name STRING
+		name "STRING"
+		name "%ANYTHING%" // quotes alone
+		portrait STRING
+		portrait "STRING"
+		border_tileset STRING
+		border_tileset "STRING"
+	}
+}
+dialog _ {
+	_
+	entity "STRING"
+	entity STRING
+	entity "%PLAYER%" // quotes alone
+	"STRING"
+	> "STRING" : _
+}
+serial dialog _ {
+	"STRING"
+	_ "STRING" : _
+	# "STRING" : _
+}
+_ {
+	entity STRING
+	entity "STRING"
+	entity "%PLAYER%" // quotes alone
+	geometry STRING
+	geometry "STRING"
+	geometry "%PATH%" // quotes alone
+
+	flag STRING
+	flag "STRING"
+	// also map, variable, serial dialog, dialog
+
+	warp state STRING
+	warp state "STRING"
+	warp state to STRING
+	warp state to "STRING"
+	// also name, type, path, serial connect message, serial connect
+	
+	if (entity STRING ) {}
+	if (entity "STRING" ) {}
+	if (entity "%PLAYER%" ) {} // quotes alone
+	if (flag STRING ) {}
+	if (flag "STRING" ) {}
+	if (variable STRING ) {}
+	if (variable "STRING" ) {}
+	if (geometry STRING ) {}
+	if (geometry "STRING" ) {}
+
+	if (path is STRING ) {}
+	if (path is "STRING" ) {}
+	if (path is "%PATH%" ) {} // quotes alone
+	if (path is not STRING ) {}
+	if (path is not "STRING" ) {}
+	if (path is not "%PATH%" ) {} // quotes alone
+
+	if (entity_type is STRING ) {}
+	if (entity_type is "STRING" ) {}
+	if (entity_type is not STRING ) {}
+	if (entity_type is not "STRING" ) {}
+	// plus name, type, warp state
+
+	mutate STRING {}
+	mutate "STRING" {}
+	show dialog STRING
+	show dialog STRING {}
+	show dialog "STRING" {}
+	show serial dialog STRING
+	show serial dialog STRING {}
+	show serial dialog "STRING" {}
+	set serial connect STRING
+	set serial connect STRING {}
+	set serial connect "STRING" {}
+
+	SET STRING
+	SET "STRING"
+	= STRING
+	= "STRING"
+}
+
+
+/* ---------- OPERATORS ---------- */
+
+// keyword.operator.mgs
+// = the normal things: =, <, +
+// but also things like `is` and `is not`
+
+
+// keyword.operator.logical.mgs
+// Should be this color: `is` and `is not`
+
+_ {
+	if ( interact_script is not _ ) {}
+	if ( interact_script is _ ) {}
+	if ( tick_script is not _ ) {}
+	if ( tick_script is _ ) {}
+	if ( direction is not north ) {}
+	if ( direction is north ) {}
+	
+	if ( path is not _ ) {}
+	if ( path is _ ) {}
+	// also name, type, entity_type, warp state
+	
+	if ( primary_id is not 0 ) {}
+	if ( primary_id is 0 ) {}
+	// also all other entity fields
+	
+	if (is not true) {}
+	if (is true) {}
+	if (is not currently pressed) {}
+	if (is currently pressed) {}
+	if (is not inside) {}
+	if (is inside) {}
+	if (is not 000) {}
+	if (is 000) {}
+	if (is not <= 000) {} // also `<=`
+	if (is <= 000) {} // also `<=`
+	
+	if ( _ || _ ) {} // also `||`
+}
+
+// keyword.operator.assignment.mgs
+// Should be this color: `to`, `from`, `=`, `SET`
+
+const! (
+	$_ = _
+)
+settings dialog {
+	defaults {
+		wrap messages to 42
+	}
+}
+settings serial dialog {
+	wrap messages to 60
+	wrap to 60
+}
+_ {
+	to true
+
+	name to _
+	// also for type, path, warp state
+
+	interact_script to _
+	tick_script to _
+	map tick_script to _
+	serial connect to _
+	serial connect message to _
+
+	primary_id to 0
+	// also for all other entity fields
+
+	to #000
+	from #000
+	
+	// this color for all of the following:
+	along follow toward from into over for
+
+	SET 0
+	= 0
+	// also for all the other assignment operators
+
+	set serial connect to _ {}
+	set serial connect to _
+	set serial connect to {}
+}
+
+
+/* ---------- DIALOG MESSAGES (STRINGS XTREME) ---------- */
+
+// + string.quoted.double.mgs for the quotes themselves
+// Includes escaped characters: constant.character.escape.mgs
+// for: \n, \", \$, \%, \\
+
+dialog _ {
+	_ "__\n__\"__\$__\%__\\"
+}
+serial dialog _ {
+	"__\n__\"__\\"
+}
+
+
+/* ---------- SPECIFIERS AND SUPPORT WORDS ---------- */
+
+// variable.parameter.mgs support.variable.mgs
+// words like `entity` and `geometry` that specify the category of string that will follow
+// also entity fields
+// game engine categories of targets for actions, like set _hex editor clipboard_
+// (is this called something better??)
+
+
+// Should be this color:
+settings dialog { //dialog
+	parameters label _ {} //label
+	parameters entity _ {} //entity
+	global defaults { //global
+		// the first word in:
+		entity _
+		name _
+		emote 0
+		portrait _
+		alignment BR
+		border_tileset _
+
+		wrap messages to 0 // messages
+	}
+}
+
+dialog dialogName { // dialogName
+	_
+	// the first word in:
+	entity _
+	name _
+	emote 0
+	portrait _
+	alignment BR
+	border_tileset _
+
+	wrap messages to 0 // messages
+	"_" > "_" : script _ // script
+}
+
+_ {
+	// the first word in:
+	entity _
+	geometry _
+	flag _
+	map _
+	variable _
+	dialog _
+	serial dialog _
+	name to _
+	type to _
+	path to _
+	warp state to _
+	interact_script to _
+	tick_script to _
+	map tick_script to _
+	serial connect to _
+	slot 0
+	primary_id to 0
+	// (also for the rest of the entity fields)
+
+	// the second word in:
+	show serial dialog _
+	show dialog _
+	show dialog {}
+	show dialog _ {}
+
+	// the first word in the parens:
+	if (interact_script is _ ) {}
+	if (tick_script is _ ) {}
+	if (look_script is _ ) {}
+	if (direction is north ) {}
+	if (path is _ ) {}
+	if (name is _ ) {}
+	if (type is _ ) {}
+	if (entity_type is _ ) {}
+	if (warp state is _ ) {}
+	if (flag $_ ) {}
+	if (entity $_ ) {}
+	if (variable $_ ) {}
+	if (geometry $_ ) {}
+	if (button $_ ) {}
+	if (flag _ ) {}
+	if (entity _ ) {}
+	if (variable _ ) {}
+	if (geometry _ ) {}
+	if (button ANY ) {}
+	if (primary_id is 0) {}
+	// (also for the rest of the entity fields)
+
+	// `script`
+	if _ then goto script _
+	goto script _
+	copy script _
+
+	// the following words:
+	animation
+	camera
+	player control
+	hex dialog mode
+	hex control
+	hex clipboard
+	hex editor
+
+}
+
+
+/* ---------- INVALID ---------- */
+
+// invalid.illegal.mgs
+// = known definitely invalid (easily)
+
+_ {
+	slot 9000
+}
+
+
+/* ---------- SPECTRUM TEST ---------- */
+
+// comment
+/* also comment */
+colorless
+scriptName {
+	if (
+		flag flagName is false
+	) {
+		show dialog {
+			Identifier
+			emote 5
+			alignment TOP_RIGHT
+			"What do ya know, %PLAYER%!"
+			"\tSquare roots!"
+		}
+		set flag flagName to $varName
+		show serial dialog {
+			"<red>styled</>"
+		}
+	}
+	goto script scriptName
+	load slot 9001
+}

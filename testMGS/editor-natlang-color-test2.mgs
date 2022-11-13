@@ -1,185 +1,515 @@
-settings for dialog {
-	parameters for global defaults { alignment BL }
-	parameters for label SELF { entity "%SELF%" }
-	parameters for label PLAYER {
-		entity "%PLAYER%"
-		alignment BR
+/* ----- SERIAL DIALOG SETTINGS BLOCK ----- */
+
+settings for serial dialog {
+	wrap to 70
+	wrap messages to 60
+}
+
+const!($var = 20)
+
+settings serial dialog {
+	wrap messages to $var
+	wrap messages to 40
+	wrap messages $var
+	wrap messages 40
+	wrap $var
+	wrap 40
+	wrap to $var
+	wrap to 40
+}
+
+/* ----- SERIAL DIALOG BLOCK ----- */
+
+serial dialog freeWords {
+	wrap messages to 60
+	wrap messages to $var
+	wrap to 60
+	wrap to $var
+	"asdfasdf\nasdasdf\tasdfasdf\\asdfas\"df\\"
+	_ "after dark" : "go to thingie"
+	_ "after<r> dark" : goto "go to thingie"
+	_ "before dark" : goto script "go to thingie"
+	_ "before darkk" : script "go to thingie"
+	_ "dunno" : script "go to thingie"
+	_ "lol" : "go to thingie"
+	// if a valid free response option is not given,
+	// the next action in the script will execute like normal
+	// the `_` options should still be the end of the serial dialog block to make this explicit!
+}
+serial dialog multipleChoice {
+	"asdfasdf\nasdasdf\tasdfasdf\\asdfas\"df"
+	# "Choice <r>#1" : goto "go to thingie"
+	# "Choice #2" : goto script "go to thingie"
+	# "Choice #3" : script "go to thingie"
+	# "Choice #4" : "go to thingie"
+	// numbered choices are a script dead-end;
+	// one of these options MUST be chosen
+}
+
+/* --- SHOW SERIAL DIALOG --- */
+
+STUFF {
+	concat serial dialog serialDialogName // with auto linebreak disabled
+	show serial dialog serialDialogName // with auto linebreak enabled
+
+	// with the block contents, too: (same contents as above)
+
+	// with name
+	concat serial dialog asdfasdf { "asdfasdf\\" }
+	show serial dialog asdfasdf {
+		"asdfasdfasdf\\"
+		"asdfasdfasasdfasdfdf"
+		_ "after d<r>ark" : goto "go to thingie"
+		_ "before\tdark" : goto script "go to thingie"
 	}
-}
-
-show_dialog-bender-start {
-	if (entity "%SELF%" is glitched) {// glitched Bender
-		show dialog {
-			SELF emote 1
-			"I speak binary fluently, kid! A little trick like this won't slow me down!"
-		}
-	} else { // unglitched Bender
-		// normal dialog; turn off bender's handler and make him face the player
-		copy set-bender-handler-off
-		copy face-player
-		/* ----- puzzle was solved(?) ----- */
-		if (flag storyflag-bender is true) { // SOLVED
-			if (entity Bender type is bender) { // and he's still bender
-				copy bite-my-shiny-metal-ass
-				show dialog {
-					SELF emote 1 "Ooh, yeah!"
-					PLAYER "It's shiny. I'll give you that."
-				}
-			} else { // but he's not bender
-				show dialog { SELF "Yeah, yeah, you're a real comedian, kid. Now turn me back!" }
-			}
-			// bender handler set (loiter)
-			copy set-bender-handler-none
-		} else { // NOT SOLVED
-			if (entity Bender type is bender) { // but he's bender now
-				if (flag bender-backstory is false) { // if you HAVEN'T heard his backstory before
-					show dialog {
-						SELF "Hey, my ass! It's back!"
-					}
-					copy bite-my-shiny-metal-ass
-					show dialog {
-						SELF emote 1
-						"Hee hee hee!"
-						"Hey, everyone! %Bender%'s ass is back!"
-				
-						SELF
-						"...."
-						"Don't look so smug, kid. It had nothing to do with you."
-						"I'm sure my ass came home on its own!"
-					}
-				} else { // if you HAVE heard his backstory before
-					show dialog {
-						SELF "Hey, you did it! My ass is back!"
-					}
-					copy bite-my-shiny-metal-ass
-					show dialog {
-						SELF emote 1 "Hee hee hee!"
-						"Hey, everyone! %Bender%'s ass is back!"
-						PLAYER "...."
-						SELF "...."
-						PLAYER "Well?"
-						SELF "Well, what?"
-						PLAYER "You said you'd give me a reward!"
-						SELF "I did! You got a front row seat to me, %Bender%, showing off my shiny metal ass!"
-						"That's the greatest reward there is!"
-						PLAYER "I don't know why I assumed you'd be friendly."
-						SELF "Well, you know what they say about assumptions."
-						SELF emote 1 "They make a shiny ass... and they give it to me, %Bender%."
-					}
-				}
-				// You solved the puzzle though! Setting puzzle state:
-				set flag bender-backstory to true
-				set flag storyflag-bender to true // why not lol
-				copy calculate-hint-tracking-series
-				if (variable hint-tracking-check is 5) {
-					// if the hint series is the same, reset hint
-					copy set-hint-none
-				}
-				copy set-bender-handler-none
-			} else { // he's not bender now
-				if (flag bender-backstory is true) { // you've heard the backstory
-					if (entity Bender type is "bender_sadbutt") { // he is sadbutt
-						copy bite-my-shiny-metal-ass-sad
-						show dialog {
-							SELF "...Oh, right. My ass. Someone bit it off."
-							"So what's the holdup? I know you can fix it!"
-							"I'll reward you! Just hurry it up!"
-						}
-					} else { // he's not bender OR sadbutt
-						show dialog {
-							SELF "Come on! That doesn't look anything like me, half-assed or full-assed."
-						}
-					}
-				} else { // you haven't heard the backstory
-					if (entity Bender type is bender_sadbutt) { // if bender is sadbutt
-						show dialog {
-							PLAYER "Oh! You look friendly!"
-							SELF "Well, I'm not!"
-						}
-						copy bite-my-shiny-metal-ass-sad
-						show dialog {
-							SELF "Aww, man... I forgot! Someone bit my shiny metal ass!"
-							"Why would someone do such a horrible thing to an innocent robot?!"
-							"Life's not the same without my ass! How else am I supposed to taunt everyone stupid-looking?"
-						}
-						// branch briefly depending on whether the player looks like bender...
-						if (entity "%PLAYER%" type is "bender_sadbutt" || entity "%PLAYER%" type is bender) {
-							show dialog { SELF "Hey, you, strangely-handsome-looking kid! You're the one with the magic whatsit!" }
-						} else {
-							show dialog { SELF "Hey, you, kid! You're the one with the magic whatsit!" }
-						}
-						// ...and continue
-						show dialog {
-							SELF "Can't you fix this with your whatever powers?"
-							"I'll give you a great reward! Just get my ass back!"
-						}
-					} else { // bender is NOT sadbutt
-						show dialog {
-							SELF name "????"
-							SELF "Hey, you! Bite my --\nAhhh!"
-							"Aaaargh, this is terrible! My ass is even more missing than before!"
-							"First someone bit it off, and now it's an entirely different kind of ass!"
-							"I feel like this is your fault somehow!"
-							"Hurry up and fix it, kid!"
-						}
-					}
-				}
-				// You've now heard his backstory; set hinteger to Bender
-				set flag bender-backstory to true
-				copy set-hint-bender
-				// Turn on bender's look handler again
-				copy set-bender-handler-on
-				// Reset interact_script
-			}
-		}
+	// no name
+	concat serial dialog { "asdfa\"sdf" }
+	show serial dialog {
+		"asdfasdfasdf"
+		"asdfasdfasasdfasdfdf"
+		# "type res\nponse" : goto "go to thingie"
+		# "type res<r>ponse2" : goto script "go to thingie"
 	}
-	// reset
-	set entity "%SELF%" interact_script to show_dialog-bender-start
+	// message colors
+	show serial dialog { // `dialog` optional?
+		"<k>BLACK</> or <black>BLACK<reset>, alternately <bg-k>BG</> or <bg-black>BG</>"
+		"<r>RED</> or <red>RED<reset>, alternately <bg-r>BG</> or <bg-red>BG</>"
+		"<g>GREEN</> or <green>GREEN<reset>, alternately <bg-g>BG</> or <bg-green>BG</>"
+		"<y>YELLOW</> or <yellow>YELLOW<reset>, alternately <bg-y>BG</> or <bg-yellow>BG</>"
+		"<b>BLUE</> or <blue>BLUE<reset>, alternately <bg-b>BG</> or <bg-blue>BG</>"
+		"<m>MAGENTA</> or <magenta>MAGENTA<reset>, alternately <bg-m>BG</> or <bg-magenta>BG</>"
+		"<c>CYAN</> or <cyan>CYAN<reset>, alternately <bg-c>BG</> or <bg-cyan>BG</>"
+		"<w>WHITE</> or <white>WHITE<reset>, alternately <bg-w>BG</> or <bg-white>BG</>"
+		"Also you can set the 'color' to <bold>bold</> (or <dim>dim</>)! You must use the whole word 'bold' in the tag though...."
+		"You can set multiples tags back-to-back, but you can't reset a specific one -- just all of them."
+		"That doll is <bg-k><r>evil</>! <bg-k><r><bold>EVIL</>!!!"
+		"Is this a <r><bold>r<y>a<g>i<c>n<b>b<m>o<r>w</>?"
+		"color will replace another color, but not bold"
+	}
+
+	// set connect message action
+	set serial connect message to serial_dialog-map-action_testing-on_connect
+	
+	// set connect message (with message)
+	set serial connect message to {
+		// otherwise the same as the normal ones? (options allowed??) (sure)
+		"asdfasdfasdfas\"dfasdf"
+		"asdfasdf\tasdfasdfasdf"
+		"asdfasdfasd\nfasdfasdf"
+		"asdfasdfasdfasdfasdf\\"
+	}
+	set serial connect message to adsfasdfasdf {
+		"Hi"
+	}
+
+	// without 'to'
+	set serial connect message serial_dialog-map-action_testing-on_connect
+	set serial connect message adsfasdfasdf { "bar" }
+	set serial connect message { "foo" }
 }
 
-/* ---- Bender on_tick handlers --- */
+/* ----- SERIAL CONTROL ----- */
 
-set-bender-handler-off {
-	set entity "Bob Austin" tick_script to null_script
-	set entity Bender tick_script to null_script
-}
-set-bender-handler-on {
-	set entity Bender tick_script to face-player
-	set entity "Bob Austin" tick_script to handler-bender-timer
-}
-set-bender-handler-none {
-	set entity "Bob Austin" tick_script to null_script
-	set entity Bender tick_script to on_tick-bender-loiter
+script TESTIE {
+	set serial control off
+	set serial control on
 }
 
-handler-bender-timer {
-	wait 2800ms
-	play entity Bender animation 2 once
-	wait 3900ms
-	play entity Bender animation 2 once
-}
+/* ----- EXAMPLE CRAZY CONCAT STUFF ----- */
 
-/* ---- Bender choreography --- */
+draw-serial-map {
+	set serial control off
+	// ROW 0
+	concat serial dialog {"-------------------------------\n"}
 
-bite-my-shiny-metal-ass {
-	set player control to off
-	wait 300ms
-	play entity "%SELF%" animation 3 once
-	set player control to on
-}
+	// ROW 1
+	concat serial dialog {"|  "}
+	if (flag ch2-seen-room-99 is true) {
+		concat serial dialog {"/----\\"}
+	} else {
+		concat serial dialog {"      "}
+	}
+	concat serial dialog {"      "}
+	if (flag ch2-seen-room-14 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	concat serial dialog {"       M A P  |\n"}
 
-bite-my-shiny-metal-ass-sad {
-	set player control to off
-	wait 300ms
-	play entity "%SELF%" animation 3 once
-	set player control to on
-}
+	// ROW 2
+	concat serial dialog {"|  "}
+	if (flag ch2-seen-room-99 is true) {
+		concat serial dialog {"|."}
+		if (flag ch2-in-room is 99) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"..|"}
+	} else {
+		concat serial dialog {"      "}
+	}
+	concat serial dialog {"     "}
+	if (flag ch2-seen-room-14 is true) {
+		concat serial dialog {"/.\\"}
+	} else {
+		concat serial dialog {"   "}
+	}
+	concat serial dialog {"             |\n"}
 
-on_tick-bender-loiter {
-	turn entity "%SELF%" south
-	wait 1200ms
-	turn entity "%SELF%" east
-	wait 1400ms
-	turn entity "%SELF%" north
-	wait 2000ms
+	// ROW 3
+	concat serial dialog {"|  "}
+	if (flag ch2-seen-room-99 is true) {
+		concat serial dialog {"------"}
+	} else {
+		concat serial dialog {"      "}
+	}
+	concat serial dialog {"   "}
+	if (flag ch2-seen-room-14 is true) {
+		concat serial dialog {"/.."}
+		if (flag ch2-in-room is 14) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"..\\"}
+	} else {
+		concat serial dialog {"       "}
+	}
+	concat serial dialog {"           |\n"}
+
+	// ROW 4
+	concat serial dialog {"|           "}
+	if (flag ch2-seen-room-14 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-14 is true || flag ch2-seen-room-13 is true) {
+		concat serial dialog {"-----"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	if (flag ch2-seen-room-14 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	concat serial dialog {"           |\n"}
+
+	// ROW 5
+	concat serial dialog {"|            "}
+	if (flag ch2-seen-room-13 is true) {
+		concat serial dialog {"|...|"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"   "}
+	if (flag ch2-seen-room-33 is true) {
+		concat serial dialog {"----"}
+	} else {
+		concat serial dialog {"    "}
+	}
+	if (flag ch2-seen-room-33 is true || flag ch2-seen-room-34 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-34 is true) {
+		concat serial dialog {"--"}
+	} else {
+		concat serial dialog {"  "}
+	}
+	concat serial dialog {"  |\n"}
+
+	// ROW 6
+	concat serial dialog {"|   "}
+	if (flag ch2-seen-room-23 is true) {
+		concat serial dialog {"-----"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"    "}
+	if (flag ch2-seen-room-13 is true) {
+		concat serial dialog {"|."}
+		if (flag ch2-in-room is 13) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {".|"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"   "}
+	if (flag ch2-seen-room-33 is true) {
+		concat serial dialog {"|."}
+		if (flag ch2-in-room is 33) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"."}
+	} else {
+		concat serial dialog {"    "}
+	}
+	if (flag ch2-seen-room-33 is true || flag ch2-seen-room-34 is true) {
+		concat serial dialog {"|"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-34 is true) {
+		if (flag ch2-in-room is 34) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"|"}
+	} else {
+		concat serial dialog {"  "}
+	}
+	concat serial dialog {"  |\n"}
+
+	// ROW 7
+	concat serial dialog {"|  "}
+	if (flag ch2-seen-room-23 is true) {
+		concat serial dialog {"/.."}
+		if (flag ch2-in-room is 23) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"..\\"}
+	} else {
+		concat serial dialog {"       "}
+	}
+	concat serial dialog {"   "}
+	if (flag ch2-seen-room-13 is true) {
+		concat serial dialog {"|...|"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"   "}
+	if (flag ch2-seen-room-33 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-33 is true || flag ch2-seen-room-32 is true) {
+		concat serial dialog {"---"}
+	} else {
+		concat serial dialog {"   "}
+	}
+	if (flag ch2-seen-room-33 is true || flag ch2-seen-room-32 is true || flag ch2-seen-room-34 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-32 is true || flag ch2-seen-room-34 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-34 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	concat serial dialog {"  |\n"}
+
+	// ROW 8
+	concat serial dialog {"|  "}
+	if (flag ch2-seen-room-23 is true) {
+		concat serial dialog {"\\...../"}
+	} else {
+		concat serial dialog {"       "}
+	}
+	concat serial dialog {"   "}
+	if (flag ch2-seen-room-13 is true) {
+		concat serial dialog {"|...|"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"    "}
+	if (flag ch2-seen-room-32 is true) {
+		concat serial dialog {"|."}
+		if (flag ch2-in-room is 32) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {".|"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"   |\n"}
+
+	// ROW 9
+	concat serial dialog {"|   "}
+	if (flag ch2-seen-room-22 is true || flag ch2-seen-room-23 is true) {
+		concat serial dialog {"-----"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"    "}
+	if (flag ch2-seen-room-12 is true || flag ch2-seen-room-13 is true) {
+		concat serial dialog {"----"}
+	} else {
+		concat serial dialog {"    "}
+	}
+	if (flag ch2-seen-room-12 is true || flag ch2-seen-room-13 is true || flag ch2-seen-room-31 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-31 is true) {
+		concat serial dialog {"----"}
+	} else {
+		concat serial dialog {"    "}
+	}
+	if (flag ch2-seen-room-31 is true || flag ch2-seen-room-32 is true) {
+		concat serial dialog {"-----"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"   |\n"}
+
+	// ROW 10
+	concat serial dialog {"|   "}
+	if (flag ch2-seen-room-22 is true) {
+		concat serial dialog {"|."}
+		if (flag ch2-in-room is 22) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {".|"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	concat serial dialog {"    "}
+	if (flag ch2-seen-room-12 is true) {
+		concat serial dialog {"|."}
+		if (flag ch2-in-room is 12) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"."}
+	} else {
+		concat serial dialog {"    "}
+	}
+	if (flag ch2-seen-room-12 is true || flag ch2-seen-room-31 is true) {
+		concat serial dialog {"|"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-31 is true) {
+		concat serial dialog {"..."}
+		if (flag ch2-in-room is 31) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"....|"}
+	} else {
+		concat serial dialog {"         "}
+	}
+	concat serial dialog {"   |\n"}
+
+	// ROW 11
+	concat serial dialog {"|   "}
+	if (flag ch2-seen-room-22 is true || flag ch2-seen-room-21 is true) {
+		concat serial dialog {"-----"}
+	} else {
+		concat serial dialog {"     "}
+	}
+	if (flag ch2-seen-room-21 is true) {
+		concat serial dialog {"----"}
+	} else {
+		concat serial dialog {"    "}
+	}
+	if (flag ch2-seen-room-11 is true || flag ch2-seen-room-12 is true || flag ch2-seen-room-21 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-11 is true || flag ch2-seen-room-12 is true) {
+		concat serial dialog {"---"}
+	} else {
+		concat serial dialog {"   "}
+	}
+	if (flag ch2-seen-room-11 is true || flag ch2-seen-room-12 is true || flag ch2-seen-room-31 is true) {
+		concat serial dialog {"-"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-31 is true) {
+		concat serial dialog {"---------"}
+	} else {
+		concat serial dialog {"         "}
+	}
+	concat serial dialog {"   |\n"}
+
+	// ROW 12
+	concat serial dialog {"|   "}
+	if (flag ch2-seen-room-21 is true) {
+		concat serial dialog {"|..."}
+		if (flag ch2-in-room is 21) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {"...."}
+	} else {
+		concat serial dialog {"         "}
+	}
+	if (flag ch2-seen-room-21 is true || flag ch2-seen-room-11 is true) {
+		concat serial dialog {"|"}
+	} else {
+		concat serial dialog {" "}
+	}
+	if (flag ch2-seen-room-11 is true) {
+		concat serial dialog {"."}
+		if (flag ch2-in-room is 11) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+		concat serial dialog {".|"}
+	} else {
+		concat serial dialog {"    "}
+	}
+	concat serial dialog {"            |\n"}
+
+	// ROW 13
+	concat serial dialog {"|   "}
+	if (flag ch2-seen-room-21 is true) {
+		concat serial dialog {"-------"}
+	} else {
+		concat serial dialog {"       "}
+	}
+	concat serial dialog {"---------          |\n"}
+
+	// ROW 14
+	concat serial dialog {"|          |..."}
+	if (flag ch2-seen-room-1 is true) {
+		if (flag ch2-in-room is 1) {
+			concat serial dialog {"@"}
+		} else {
+			concat serial dialog {"."}
+		}
+	} else {
+		concat serial dialog {" "}
+	}
+	concat serial dialog {"...|          |\n"}
+
+	// ROW 15
+	concat serial dialog {"|          ---------          |\n"}
+
+	// ROW 16
+	concat serial dialog {"-------------------------------\n"}
+	set serial control on
+	goto null_script
 }

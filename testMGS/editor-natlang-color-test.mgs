@@ -100,7 +100,7 @@ logic-entities {
 	if entity "Entity Name" name is not "Checked Name" then
 		goto "script-do-if-NOT-entity-name"
 	if entity "Entity Name" x is 0 then
-		goto script cript-do-if-entity-x
+		goto script script-do-if-entity-x
 	if entity "Entity Name" x is not 0 then
 		goto "script-do-if-entity-x"
 	if entity "Entity Name" interact_script is name-of-checked-script-interact then

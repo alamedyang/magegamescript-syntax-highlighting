@@ -607,7 +607,7 @@ alfonso-ch1-storyflag-count-done {
 		show dialog {
 			SELF "Oh, my! You're getting a lot of work done! Marvelous!"
 		}
-	} else if ( variable chapter1-storyflag-tally is <= 10) {
+	} else if (variable chapter1-storyflag-tally is <= 10) {
 		show dialog {
 			SELF "Wow! You're nearly done!"
 		}
