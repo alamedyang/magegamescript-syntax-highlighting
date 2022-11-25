@@ -655,20 +655,6 @@ repository:
             patterns:
                   - include: "#comment_node"
                   - include: "#script_body"
-      serial_verb_registration:
-            patterns:
-                  - include: "#comment_node"
-                  - match: (\+)\s*((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\5)
-                    captures:
-                          "0":
-                                name: string.variable.mgs
-                          "1":
-                                name: keyword.operator.assignment.mgs
-                          "3":
-                                name: variable.other.constant.mgs
-                  - match: default|fail
-                    name: constant.language.mgs
-                  - include: "#dialog_option_goto"
       script_body:
             patterns:
                   - include: "#comment_node"
@@ -695,17 +681,39 @@ repository:
                                 name: storage.type.mgs
                           "2":
                                 name: variable.parameter.mgs support.variable.mgs
+                  - match: (->)(\s*script\b)?
+                    captures:
+                          "1":
+                                name: keyword.operator.assignment.mgs
+                          "2":
+                                name: variable.parameter.mgs support.variable.mgs
                   - comment: SCRIPT STRINGS
-                    match: (?<=goto|copy|script)\s+(((['"])[^`]*?\3)|[-A-Za-z0-9_.#$]+\b)
+                    match: (?<=goto|copy|script|->)\s+(((['"])[^`]*?\3)|[-A-Za-z0-9_.#$]+\b)
                     name: entity.name.function.mgs
                   - name: keyword.control.mgs
                     match: \b(load)\s*(?=map)\b
+                  - match: \b(mutate)\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))?
+                    captures:
+                          "0":
+                                name: string.variable.mgs
+                          "1":
+                                name: storage.type.mgs
+                          "3":
+                                name: variable.other.constant.mgs
+                  - match: \b(wait|block)\s+((\$[-A-Za-z0-9_.#$]+)|([0-9]+(ms|s)?))\b
+                    captures:
+                          "0":
+                                name: constant.numeric.integer.mgs
+                          "1":
+                                name: storage.type.mgs
+                          "3":
+                                name: variable.other.constant.mgs
                   - name: storage.type.mgs
                     match: \b(make|walk|loop|turn|rotate|teleport|pan|loop|play|set|fade\s+in|fade\s+out|load|erase|save|open|close|wait|block|shake|show)\b
                   - include: "#entity_specifier_string_pair"
                   - include: "#geometry_specifier_string_pair"
                   - name: variable.parameter.mgs support.variable.mgs
-                    match: \b(animation|camera|(player|serial)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b
+                    match: \b(fail(ure)?|animation|camera|(player|serial)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b
                   - match: \b(to\s+)?((true|false|on|off|glitched|unglitched)|(\$[-A-Za-z0-9_.#$]+))\b
                     captures:
                           "1":
@@ -793,6 +801,26 @@ repository:
                                 name: variable.parameter.mgs support.variable.mgs
                           "4":
                                 name: variable.other.constant.mgs
+                  - match: \b((un)?register)(\s+command)?\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\7)?
+                    captures:
+                          "0":
+                                name: string.variable.mgs
+                          "1":
+                                name: storage.type.mgs
+                          "3":
+                                name: variable.parameter.mgs support.variable.mgs
+                          "5":
+                                name: variable.other.constant.mgs
+                  - match: (\+\s*)(arg\s+)?((\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)?
+                    captures:
+                          "1":
+                                name: keyword.operator.assignment.mgs
+                          "2":
+                                name: variable.parameter.mgs support.variable.mgs
+                          "3":
+                                name: string.variable.mgs
+                          "4":
+                                name: variable.other.constant.mgs
                   - match: \b(show|concat)\s+((serial\s+)?dialog)\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\6))
                     captures:
                           "1":
@@ -801,14 +829,6 @@ repository:
                                 name: variable.parameter.mgs support.variable.mgs
                           "4":
                                 name: string.variable.mgs
-                  - match: \b(mutate)\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))
-                    captures:
-                          "0":
-                                name: string.variable.mgs
-                          "1":
-                                name: storage.type.mgs
-                          "3":
-                                name: variable.other.constant.mgs
                   - match: \b((interact|tick|look)_script)\s+(to\s+)?([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4)
                     captures:
                           "1":

@@ -1843,48 +1843,6 @@
           </dict>
         </array>
       </dict>
-      <key>serial_verb_registration</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#comment_node</string>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>(\+)\s*((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\5)</string>
-            <key>captures</key>
-            <dict>
-              <key>0</key>
-              <dict>
-                <key>name</key>
-                <string>string.variable.mgs</string>
-              </dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.operator.assignment.mgs</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>variable.other.constant.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>default|fail</string>
-            <key>name</key>
-            <string>constant.language.mgs</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#dialog_option_goto</string>
-          </dict>
-        </array>
-      </dict>
       <key>script_body</key>
       <dict>
         <key>patterns</key>
@@ -1963,10 +1921,27 @@
             </dict>
           </dict>
           <dict>
+            <key>match</key>
+            <string>(-&gt;)(\s*script\b)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.assignment.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
             <key>comment</key>
             <string>SCRIPT STRINGS</string>
             <key>match</key>
-            <string>(?&lt;=goto|copy|script)\s+(((['"])[^`]*?\3)|[-A-Za-z0-9_.#$]+\b)</string>
+            <string>(?&lt;=goto|copy|script|-&gt;)\s+(((['"])[^`]*?\3)|[-A-Za-z0-9_.#$]+\b)</string>
             <key>name</key>
             <string>entity.name.function.mgs</string>
           </dict>
@@ -1975,6 +1950,50 @@
             <string>keyword.control.mgs</string>
             <key>match</key>
             <string>\b(load)\s*(?=map)\b</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(mutate)\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))?</string>
+            <key>captures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage.type.mgs</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>\b(wait|block)\s+((\$[-A-Za-z0-9_.#$]+)|([0-9]+(ms|s)?))\b</string>
+            <key>captures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>constant.numeric.integer.mgs</string>
+              </dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage.type.mgs</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
           </dict>
           <dict>
             <key>name</key>
@@ -1994,7 +2013,7 @@
             <key>name</key>
             <string>variable.parameter.mgs support.variable.mgs</string>
             <key>match</key>
-            <string>\b(animation|camera|(player|serial)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b</string>
+            <string>\b(fail(ure)?|animation|camera|(player|serial)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b</string>
           </dict>
           <dict>
             <key>match</key>
@@ -2238,6 +2257,60 @@
           </dict>
           <dict>
             <key>match</key>
+            <string>\b((un)?register)(\s+command)?\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\b)|(['"])[^`]*?\7)?</string>
+            <key>captures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>storage.type.mgs</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>5</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\+\s*)(arg\s+)?((\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.assignment.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>string.variable.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
             <string>\b(show|concat)\s+((serial\s+)?dialog)\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\6))</string>
             <key>captures</key>
             <dict>
@@ -2255,28 +2328,6 @@
               <dict>
                 <key>name</key>
                 <string>string.variable.mgs</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>\b(mutate)\s+((\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))</string>
-            <key>captures</key>
-            <dict>
-              <key>0</key>
-              <dict>
-                <key>name</key>
-                <string>string.variable.mgs</string>
-              </dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>storage.type.mgs</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>variable.other.constant.mgs</string>
               </dict>
             </dict>
           </dict>

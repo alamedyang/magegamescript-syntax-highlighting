@@ -24,6 +24,7 @@ const!() // TODO: specify the macro a bit better; is there a better scope for th
 script scriptName {}
 scriptName {
 	copy scriptName
+	copy script scriptName
 	goto scriptName
 	goto script scriptName
 	interact_script to scriptName
@@ -34,6 +35,10 @@ scriptName {
 	if (interact_script is not scriptName) {}
 	if (tick_script is scriptName) {}
 	if (tick_script is not scriptName) {}
+	register _ -> scriptName
+	register _ -> script scriptName
+	register _ + _ -> scriptName
+	register _ + _ -> script scriptName
 }
 
 /* ---------- CONTROL WORDS ---------- */
@@ -55,19 +60,19 @@ _ {
 
 dialog - { // `>`
 	Identifier "..."
-	>"...":s
-	> "..." : goto s
-	> "..." : goto script s
+	>"...":_
+	> "..." : goto _
+	> "..." : goto script _
 }
 serial dialog _ { // `_`
-	_"...":s
-	_ "..." : goto s
-	_ "..." : goto script s
+	_"...":_
+	_ "..." : goto _
+	_ "..." : goto script _
 }
 serial dialog _ { // `#`
-	#"...":s
-	# "..." : goto s
-	# "..." : goto script s
+	#"...":_
+	# "..." : goto _
+	# "..." : goto script _
 }
 
 
@@ -92,6 +97,7 @@ _ {
 	dialog $varName // TODO: remove?
 	serial dialog $varName // TODO: remove?
 	mutate $varName
+	wait $varName
 
 	// TODO: shouldn't $varName on it's own work in this spot? (see the boolean stuff)
 	to $varName // TODO: this pattern seems to be working from the (to|from) match and not the boolean one! (maybe that's okay)
@@ -114,6 +120,14 @@ _ {
 	SET $varName
 	= $varName
 	// ^^ etc: all the other operations
+
+	// serial commands
+	register $varName -> _
+	register $varName + $varName -> _
+	register $varName + arg $varName -> _
+	register command $varName -> _
+	register command $varName + arg $varName -> _
+	// also `unregister`
 
 	// condition subjects
 	if (entity $varName)
@@ -196,6 +210,8 @@ _ {
 	copy script _
 	copy _
 	mutate _
+	register _
+	unregister _
 	// all of these:
 	load erase save open close wait block
 	shake show make walk loop turn rotate
@@ -220,8 +236,6 @@ _ {
 	to true
 	if (is true) {}
 	if (is not true) {}
-	open hex editor // open
-	close hex editor // close
 }
 
 // Alignment values
@@ -329,7 +343,7 @@ serial dialog _ {
 }
 
 // Also the insides, in the case of `reset` and `/`
-// (NOTE: These may be a different color)
+// (NOTE: These may be a different color from the brackets)
 
 serial dialog _ {
 	"<reset>_</>"
@@ -343,6 +357,8 @@ serial dialog _ {
 // Should be this color:
 // `%PLAYER%`, `%SELF%`, `%PATH%` `%ANYTHING%`, `$NUMBER$`
 // (but not the quotes wrapping them!)
+
+// TODO: doesn't work in all themes
 
 
 settings dialog {
@@ -407,6 +423,10 @@ _ {
 	once
 	twice
 	thrice
+	wait 1ms
+	wait 1s
+	block 1ms
+	block 1s
 	slot 1 // only 0-2 is valid here
 	primary_id to 9000
 	primary_id to 9000
@@ -544,6 +564,19 @@ _ {
 	SET "STRING"
 	= STRING
 	= "STRING"
+
+	register "STRING" -> _
+	register STRING + STRING -> _
+	register STRING + arg STRING -> _
+	register command "STRING" -> _
+	register command STRING + STRING -> _
+	register command STRING + arg STRING -> _
+	unregister "STRING"
+	unregister STRING + STRING
+	unregister STRING + arg STRING
+	unregister command "STRING"
+	unregister command STRING + STRING
+	unregister command STRING + arg STRING
 }
 
 
@@ -630,6 +663,10 @@ _ {
 	set serial connect to _ {}
 	set serial connect to _
 	set serial connect to {}
+
+	// `+` and `->`
+	register _ -> _
+	register _ + _ -> _
 }
 
 
@@ -709,10 +746,14 @@ _ {
 	// (also for the rest of the entity fields)
 
 	// the second word in:
-	show serial dialog _
 	show dialog _
 	show dialog {}
 	show dialog _ {}
+
+	// the second + third word in:
+	show serial dialog _
+	show serial dialog {}
+	show serial dialog _ {}
 
 	// the first word in the parens:
 	if (interact_script is _ ) {}
@@ -742,6 +783,12 @@ _ {
 	goto script _
 	copy script _
 
+	// `command` and `arg`
+	register command _
+	register command _ + arg _
+	unregister command _
+	unregister command _ + arg _
+
 	// the following words:
 	animation
 	camera
@@ -750,7 +797,8 @@ _ {
 	hex control
 	hex clipboard
 	hex editor
-
+	fail
+	failure
 }
 
 

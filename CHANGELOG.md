@@ -2,6 +2,11 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2022-11-24 (v0.5.1)
+
+- Syntax for registering and unregistering serial commands
+- Better `wait` and `block` behavior
+
 ## 2022-11-12 (v0.5.0)
 
 NEW! Serial dialog syntax:
