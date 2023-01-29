@@ -212,9 +212,10 @@ _ {
 	mutate _
 	register _
 	unregister _
+	save
 	// all of these:
-	load erase save open close wait block
-	shake show make walk loop turn rotate
+	load erase open close wait block
+	shake make walk loop turn rotate
 	teleport pan loop play load set
 	fade in fade out
 }
@@ -355,7 +356,7 @@ serial dialog _ {
 // = Special keywords that are also variable-ish
 
 // Should be this color:
-// `%PLAYER%`, `%SELF%`, `%PATH%` `%ANYTHING%`, `$NUMBER$`
+// `%PLAYER%`, `%SELF%`, `%ENTITY_PATH%` `%ANYTHING%`, `$NUMBER$`
 // (but not the quotes wrapping them!)
 
 // TODO: doesn't work in all themes
@@ -379,14 +380,18 @@ dialog _ {
 	_ "__%ANYTHING%__$NUMBER$__"
 }
 
+serial dialog _ {
+	"__$NUMBER$__"
+}
+
 _ {
 	if (entity "%PLAYER%")
 	if (entity "%SELF%")
 	entity "%PLAYER%"
 	entity "%SELF%"
-	geometry "%PATH%"
-	if (path is "%PATH%")
-	if (path is not "%PATH%")
+	geometry "%ENTITY_PATH%"
+	if (path is "%ENTITY_PATH%")
+	if (path is not "%ENTITY_PATH%")
 }
 
 
@@ -444,6 +449,9 @@ _ {
 	from white
 	from #FF0
 	from #000000
+	+ 100
+	// but not:
+	+ 100 ->
 }
 
 
@@ -513,7 +521,7 @@ _ {
 	entity "%PLAYER%" // quotes alone
 	geometry STRING
 	geometry "STRING"
-	geometry "%PATH%" // quotes alone
+	geometry "%ENTITY_PATH%" // quotes alone
 
 	flag STRING
 	flag "STRING"
@@ -537,10 +545,10 @@ _ {
 
 	if (path is STRING ) {}
 	if (path is "STRING" ) {}
-	if (path is "%PATH%" ) {} // quotes alone
+	if (path is "%ENTITY_PATH%" ) {} // quotes alone
 	if (path is not STRING ) {}
 	if (path is not "STRING" ) {}
-	if (path is not "%PATH%" ) {} // quotes alone
+	if (path is not "%ENTITY_PATH%" ) {} // quotes alone
 
 	if (entity_type is STRING ) {}
 	if (entity_type is "STRING" ) {}
@@ -548,8 +556,8 @@ _ {
 	if (entity_type is not "STRING" ) {}
 	// plus name, type, warp state
 
-	mutate STRING {}
-	mutate "STRING" {}
+	mutate STRING
+	mutate "STRING"
 	show dialog STRING
 	show dialog STRING {}
 	show dialog "STRING" {}
@@ -564,6 +572,9 @@ _ {
 	SET "STRING"
 	= STRING
 	= "STRING"
+	+ 100 ->
+	// but not:
+	+ 100
 
 	register "STRING" -> _
 	register STRING + STRING -> _
@@ -726,6 +737,8 @@ dialog dialogName { // dialogName
 
 _ {
 	// the first word in:
+	set flag asdfasdf to true
+	set entity Bob x to 1000
 	entity _
 	geometry _
 	flag _
@@ -746,6 +759,7 @@ _ {
 	// (also for the rest of the entity fields)
 
 	// the second word in:
+	save slot
 	show dialog _
 	show dialog {}
 	show dialog _ {}

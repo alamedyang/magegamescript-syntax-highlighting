@@ -505,7 +505,7 @@ show_dialog-jackob-start {
 		}
 	}
 	// RESET
-	if (entity Bob path is not "%PATH%")
+	if (entity Bob path is not "%ENTITY_PATH%")
 	set entity "%SELF%" interact_script to show_dialog-jackob-start	
 }
 show_dialog-jackob-hint-hackbook {

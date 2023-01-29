@@ -2,6 +2,17 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2023-01-28 (v0.5.2)
+
+Bugs fixed:
+
+- incorrect term for an entity's assigned path (is `%PATH%` but should be `%ENTITY_PATH%`)
+- `slot` in `save slot` not colored
+- variable values (`$asdf$`) not colored in serial dialogs
+- `mutate varName + $number` uses string color for `$number` (crosstalk with `register verb + arg`)
+- `show dialog $string` and `show dialog {}` (and equiv. `serial dialog`) using differing colors in specific themes
+- many string specifiers using the wrong colors in specific themes (due to nested scope selectors)
+
 ## 2022-11-24 (v0.5.1)
 
 - Syntax for registering and unregistering serial commands

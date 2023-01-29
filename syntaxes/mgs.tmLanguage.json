@@ -170,9 +170,10 @@
 				{
 					"match": "\\b(entity)\\s+(['\"])(%PLAYER%|%SELF%)(\\2)",
 					"captures": {
-						"0": { "name": "string.variable.mgs" },
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
-						"3": { "name": "variable.language.mgs" }
+						"2": { "name": "string.variable.mgs" },
+						"3": { "name": "variable.language.mgs" },
+						"4": { "name": "string.variable.mgs" }
 					}
 				},
 				{
@@ -194,11 +195,12 @@
 		"geometry_specifier_string_pair": {
 			"patterns": [
 				{
-					"match": "\\b(geometry)\\s+(['\"])(%PATH%)(\\2)",
+					"match": "\\b(geometry)\\s+(['\"])(%ENTITY_PATH%)(\\2)",
 					"captures": {
-						"0": { "name": "string.variable.mgs" },
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
-						"3": { "name": "variable.language.mgs" }
+						"2": { "name": "string.variable.mgs" },
+						"3": { "name": "variable.language.mgs" },
+						"4": { "name": "string.variable.mgs" }
 					}
 				},
 				{
@@ -222,9 +224,10 @@
 				{
 					"match": "\\b(name)\\s+(['\"])(%[^%]+%)(\\2)",
 					"captures": {
-						"0": { "name": "string.variable.mgs" },
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
-						"3": { "name": "variable.language.mgs" }
+						"2": { "name": "string.variable.mgs" },
+						"3": { "name": "variable.language.mgs" },
+						"4": { "name": "string.variable.mgs" }
 					}
 				},
 				{
@@ -365,6 +368,10 @@
 				{
 					"match": "\\\\[nt\"\\\\]",
 					"name": "constant.character.escape.mgs"
+				},
+				{
+					"match": "\\$[^\\$]+?\\$",
+					"name": "variable.language.mgs"
 				},
 				{
 					"match": ".+?",
@@ -607,7 +614,7 @@
 					}
 				},
 				{
-					"match": "\\b(path)\\s+(is\\s+(not\\s+)?)(['\"])(%PATH%)(\\4)",
+					"match": "\\b(path)\\s+(is\\s+(not\\s+)?)(['\"])(%ENTITY_PATH%)(\\4)",
 					"captures": {
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"2": { "name": "keyword.operator.logical.mgs" },
@@ -641,14 +648,14 @@
 				{
 					"match": "\\b(button|flag|variable|geometry)\\s+(\\$[-A-Za-z0-9_.#$]+)\\b",
 					"captures": {
-						"0": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"2": { "name": "variable.other.constant.mgs" }
 					}
 				},
 				{
 					"match": "\\b(button)(\\s+(MEM0|MEM1|MEM2|MEM3|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|XOR|ADD|SUB|PAGE|LJOY_CENTER|LJOY_UP|LJOY_DOWN|LJOY_LEFT|LJOY_RIGHT|RJOY_CENTER|RJOY_UP|RJOY_DOWN|RJOY_LEFT|RJOY_RIGHT|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY))?\\b",
 					"captures": {
-						"0": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"3": { "name": "constant.language.mgs" }
 					}
 				},
@@ -808,28 +815,35 @@
 				{
 					"match": "\\b(mutate)\\s+((\\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))?",
 					"captures": {
-						"0": { "name": "string.variable.mgs" },
 						"1": { "name": "storage.type.mgs" },
+						"2": { "name": "string.variable.mgs" },
 						"3": { "name": "variable.other.constant.mgs" }
 					}
 				},
 				{
 					"match": "\\b(wait|block)\\s+((\\$[-A-Za-z0-9_.#$]+)|([0-9]+(ms|s)?))\\b",
 					"captures": {
-						"0": { "name": "constant.numeric.integer.mgs" },
 						"1": { "name": "storage.type.mgs" },
+						"2": { "name": "constant.numeric.integer.mgs" },
 						"3": { "name": "variable.other.constant.mgs" }
 					}
 				},
 				{
-					"name": "storage.type.mgs",
-					"match": "\\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|set|fade\\s+in|fade\\s+out|load|erase|save|open|close|wait|block|shake|show)\\b"
+					"match": "\\b(save)(\\s+slot)?\\b",
+					"captures": {
+						"1": { "name": "storage.type.mgs" },
+						"2": { "name": "variable.parameter.mgs support.variable.mgs" }
+					}
+				},
+				{
+					"match": "\\b(make|walk|loop|turn|rotate|teleport|pan|loop|play|set|fade\\s+in|fade\\s+out|load|erase|open|close|wait|block|shake)\\b",
+					"name": "storage.type.mgs"
 				},
 				{ "include": "#entity_specifier_string_pair" },
 				{ "include": "#geometry_specifier_string_pair" },
 				{
-					"name": "variable.parameter.mgs support.variable.mgs",
-					"match": "\\b(fail(ure)?|animation|camera|(player|serial)\\s+control|hex(\\s+(dialog\\s+mode|control|clipboard|editor))?)\\b"
+					"match": "\\b(fail(ure)?|animation|camera|(player|serial)\\s+control|hex(\\s+(dialog\\s+mode|control|clipboard|editor))?)\\b",
+					"name": "variable.parameter.mgs support.variable.mgs"
 				},
 				{
 					"match": "\\b(to\\s+)?((true|false|on|off|glitched|unglitched)|(\\$[-A-Za-z0-9_.#$]+))\\b",
@@ -913,27 +927,51 @@
 				{
 					"match": "\\b(flag|map|variable|(serial\\s+)?dialog)\\s+((\\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\\b)|(['\"])[^`]*?\\6)?",
 					"captures": {
-						"0": { "name": "string.variable.mgs" },
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "string.variable.mgs" },
 						"4": { "name": "variable.other.constant.mgs" }
 					}
 				},
 				{
 					"match": "\\b((un)?register)(\\s+command)?\\s+((\\$[-A-Za-z0-9_.#$]+)|([-A-Za-z0-9_.#$]+\\b)|(['\"])[^`]*?\\7)?",
 					"captures": {
-						"0": { "name": "string.variable.mgs" },
 						"1": { "name": "storage.type.mgs" },
 						"3": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"4": { "name": "string.variable.mgs" },
 						"5": { "name": "variable.other.constant.mgs" }
 					}
 				},
 				{
-					"match": "(\\+\\s*)(arg\\s+)?((\\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5)?",
+					"match": "(\\+\\s*)(arg\\s+)((\\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5)",
 					"captures": {
 						"1": { "name": "keyword.operator.assignment.mgs" },
 						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"3": { "name": "string.variable.mgs" },
 						"4": { "name": "variable.other.constant.mgs" }
+					}
+				},
+				{
+					"match": "(\\+\\s*)(arg\\s+)?((\\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5)?\\s*(?=->)",
+					"captures": {
+						"1": { "name": "keyword.operator.assignment.mgs" },
+						"2": { "name": "variable.parameter.mgs support.variable.mgs" },
+						"3": { "name": "string.variable.mgs" },
+						"4": { "name": "variable.other.constant.mgs" }
+					}
+				},
+				{
+					"match": "(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+(([0-9]+)|(\\$[-A-Za-z0-9_.#$]+))\\s*(?!->)",
+					"captures": {
+						"1": { "name": "keyword.operator.assignment.mgs" },
+						"3": { "name": "constant.numeric.integer.mgs" },
+						"4": { "name": "variable.other.constant.mgs" }
+					}
+				},
+				{
+					"match": "(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+([-A-Za-z0-9_.#$]+\\b|(['\"])[^`]*?\\3)\\s*(?!->)",
+					"captures": {
+						"1": { "name": "keyword.operator.assignment.mgs" },
+						"2": { "name": "string.variable.mgs" }
 					}
 				},
 				{
@@ -950,21 +988,6 @@
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"3": { "name": "keyword.operator.assignment.mgs" },
 						"4": { "name": "entity.name.function.mgs" }
-					}
-				},
-				{
-					"match": "(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+(([0-9]+)|(\\$[-A-Za-z0-9_.#$]+))\\b",
-					"captures": {
-						"1": { "name": "keyword.operator.assignment.mgs" },
-						"3": { "name": "constant.numeric.integer.mgs" },
-						"4": { "name": "variable.other.constant.mgs" }
-					}
-				},
-				{
-					"match": "(SET|ADD|SUB|MUL|DIV|MOD|RNG|set|add|sub|mul|div|mod|rng|=|\\+|-|\\*|\\/|%|\\?)\\s+([-A-Za-z0-9_.#$]+\\b|(['\"])[^`]*?\\3)",
-					"captures": {
-						"1": { "name": "keyword.operator.assignment.mgs" },
-						"2": { "name": "string.variable.mgs" }
 					}
 				}
 			]

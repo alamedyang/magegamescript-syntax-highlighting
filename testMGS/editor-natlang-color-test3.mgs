@@ -90,10 +90,10 @@ script testie {
 
 	if (path is not string) {}
 	if (path is not "%LOL%") {}
-	if (path is not "%PATH%") {}
+	if (path is not "%ENTITY_PATH%") {}
 	if (path is string) {}
 	if (path is "%LOL%") {}
-	if (path is "%PATH%") {}
+	if (path is "%ENTITY_PATH%") {}
 
 //(name|type|entity_type|path|warp\\s+state)
 	if (name is not $varname) {}
