@@ -31,10 +31,22 @@ scriptName {
 	map tick_script to scriptName
 	tick_script to scriptName
 	look_script to scriptName
+	on_interact to scriptName
+	map on_tick to scriptName
+	on_tick to scriptName
+	on_look to scriptName
 	if (interact_script is scriptName) {}
 	if (interact_script is not scriptName) {}
 	if (tick_script is scriptName) {}
 	if (tick_script is not scriptName) {}
+	if (look_script is scriptName) {}
+	if (look_script is not scriptName) {}
+	if (on_interact is scriptName) {}
+	if (on_interact is not scriptName) {}
+	if (on_tick is scriptName) {}
+	if (on_tick is not scriptName) {}
+	if (on_look is scriptName) {}
+	if (on_look is not scriptName) {}
 	register _ -> scriptName
 	register _ -> script scriptName
 	register _ + _ -> scriptName
@@ -116,6 +128,14 @@ _ {
 	interact_script to $varName
 	tick_script $varName
 	tick_script to $varName
+	look_script $varName
+	look_script to $varName
+	on_interact $varName
+	on_interact to $varName
+	on_tick $varName
+	on_tick to $varName
+	on_look $varName
+	on_look to $varName
 	
 	SET $varName
 	= $varName
@@ -212,9 +232,13 @@ _ {
 	mutate _
 	register _
 	unregister _
-	save
+	save slot
+	close serial dialog
+	close dialog
+	open hex editor
+	close hex editor
 	// all of these:
-	load erase open close wait block
+	load erase wait block
 	shake make walk loop turn rotate
 	teleport pan loop play load set
 	fade in fade out
@@ -265,6 +289,14 @@ _ {
 	north south east west
 	if (direction is north) {}
 	if (direction is not north) {}
+}
+
+// Dialog state
+_ {
+	if (dialog is open) {}
+	if (dialog is closed) {}
+	if (serial dialog is open) {}
+	if (serial dialog is closed) {}
 }
 
 // Button names
@@ -606,8 +638,18 @@ _ {
 	if ( interact_script is _ ) {}
 	if ( tick_script is not _ ) {}
 	if ( tick_script is _ ) {}
+	if ( look_script is not _ ) {}
+	if ( look_script is _ ) {}
+	if ( on_interact is not _ ) {}
+	if ( on_interact is _ ) {}
+	if ( on_tick is not _ ) {}
+	if ( on_tick is _ ) {}
+	if ( on_look is not _ ) {}
+	if ( on_look is _ ) {}
 	if ( direction is not north ) {}
 	if ( direction is north ) {}
+	if ( serial dialog is open ) {}
+	if ( serial dialog is closed ) {}
 	
 	if ( path is not _ ) {}
 	if ( path is _ ) {}
@@ -654,6 +696,10 @@ _ {
 
 	interact_script to _
 	tick_script to _
+	look_script to _
+	on_interact to _
+	on_tick to _
+	on_look to _
 	map tick_script to _
 	serial connect to _
 	serial connect message to _
@@ -752,10 +798,15 @@ _ {
 	warp state to _
 	interact_script to _
 	tick_script to _
+	look_script to _
+	on_interact to _
+	on_tick to _
+	on_look to _
 	map tick_script to _
 	serial connect to _
 	slot 0
 	primary_id to 0
+	relative_direction to 4
 	// (also for the rest of the entity fields)
 
 	// the second word in:
@@ -773,6 +824,9 @@ _ {
 	if (interact_script is _ ) {}
 	if (tick_script is _ ) {}
 	if (look_script is _ ) {}
+	if (on_interact is _ ) {}
+	if (on_tick is _ ) {}
+	if (on_look is _ ) {}
 	if (direction is north ) {}
 	if (path is _ ) {}
 	if (name is _ ) {}

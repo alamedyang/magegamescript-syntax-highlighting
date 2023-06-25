@@ -18,6 +18,17 @@ Bugs fixed:
 - Syntax for registering and unregistering serial commands
 - Better `wait` and `block` behavior
 
+## 2023-06-24 (v0.6.0)
+
+New actions, new keywords!
+
+- removed `hackable_state` entity fields
+- added entity field `relative_direction`
+- added `on_look` (etc) as a synonym of `look_script` (etc)
+- new condition: `if (dialog is _) {}` (`open`/`closed`) (also for `serial dialog`)
+- new actions: `close dialog` and `close serial dialog`
+- new ANSI tag: `<bell>`
+
 ## 2022-11-12 (v0.5.0)
 
 NEW! Serial dialog syntax:

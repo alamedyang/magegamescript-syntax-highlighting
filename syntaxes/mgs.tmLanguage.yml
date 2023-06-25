@@ -298,7 +298,7 @@ repository:
                         name: string.quoted.double.mgs string.variable.mgs
             name: constant.character.escape.mgs
             patterns:
-                  - match: (<)(((/|reset)|bold|dim|(bg-)?(black|red|green|yellow|blue|magenta|cyan|white|k|r|g|y|b|m|c|w)))(>)
+                  - match: (<)(((/|reset|bell)|bold|dim|(bg-)?(black|red|green|yellow|blue|magenta|cyan|white|k|r|g|y|b|m|c|w)))(>)
                     captures:
                           "1":
                                 name: punctuation.definition.tag.begin.mgs
@@ -506,13 +506,13 @@ repository:
                   - include: "#condition_compounds"
       condition_compounds:
             patterns:
-                  - match: \b(interact_script|tick_script|look_script)(\s+is(\s+not)?)\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)
+                  - match: \b((on_(interact|tick|look))|((interact|tick|look)_script))(\s+is(\s+not)?)\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)
                     captures:
                           "1":
                                 name: variable.parameter.mgs support.variable.mgs
-                          "2":
+                          "6":
                                 name: keyword.operator.logical.mgs
-                          "4":
+                          "8":
                                 name: entity.name.function.mgs
                   - match: \b(direction)\s+(is\s+(not\s+)?)((north|south|east|west)|(\$[-A-Za-z0-9_.#$]+))\b
                     captures:
@@ -521,6 +521,16 @@ repository:
                           "2":
                                 name: keyword.operator.logical.mgs
                           "5":
+                                name: constant.language.mgs
+                          "6":
+                                name: variable.other.constant.mgs
+                  - match: \b((serial\s+)?dialog)\s+(is\s+)((open|closed)|(\$[-A-Za-z0-9_.#$]+))\b
+                    captures:
+                          "1":
+                                name: variable.parameter.mgs support.variable.mgs
+                          "3":
+                                name: keyword.operator.logical.mgs
+                          "4":
                                 name: constant.language.mgs
                           "6":
                                 name: variable.other.constant.mgs
@@ -546,7 +556,7 @@ repository:
                                 name: string.variable.mgs
                           "5":
                                 name: variable.other.constant.mgs
-                  - match: \b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)(\s+is(\s+not)?)\s+((\$[-A-Za-z0-9_.#$]+)|([0-9]+))
+                  - match: \b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame)(\s+is(\s+not)?)\s+((\$[-A-Za-z0-9_.#$]+)|([0-9]+))
                     captures:
                           "1":
                                 name: variable.parameter.mgs support.variable.mgs
@@ -722,7 +732,19 @@ repository:
                                 name: storage.type.mgs
                           "2":
                                 name: variable.parameter.mgs support.variable.mgs
-                  - match: \b(make|walk|loop|turn|rotate|teleport|pan|loop|play|set|fade\s+in|fade\s+out|load|erase|open|close|wait|block|shake)\b
+                  - match: \b(open|close)(\s+hex(\s+editor)?)?\b
+                    captures:
+                          "1":
+                                name: storage.type.mgs
+                          "2":
+                                name: variable.parameter.mgs support.variable.mgs
+                  - match: \b(close)(\s+(serial\s+)?dialog)\b
+                    captures:
+                          "1":
+                                name: storage.type.mgs
+                          "2":
+                                name: variable.parameter.mgs support.variable.mgs
+                  - match: \b(make|walk|loop|turn|rotate|teleport|pan|loop|play|set|fade\s+in|fade\s+out|load|erase|wait|block|shake)\b
                     name: storage.type.mgs
                   - include: "#entity_specifier_string_pair"
                   - include: "#geometry_specifier_string_pair"
@@ -748,17 +770,17 @@ repository:
                                 name: string.variable.mgs
                           "4":
                                 name: variable.other.constant.mgs
-                  - match: \b(interact_script|tick_script)(\s+to)?\s+((\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)?
+                  - match: \b(((interact|tick|look)_script)|(on_(interact|tick|look)))(\s+to)?\s+((\$[-A-Za-z0-9_.#$]+)|[-A-Za-z0-9_.#$]+|(['"])[^`]*?\5)?
                     captures:
                           "1":
                                 name: variable.parameter.mgs support.variable.mgs
-                          "2":
+                          "6":
                                 name: keyword.operator.assignment.mgs
-                          "3":
+                          "7":
                                 name: entity.name.function.mgs
-                          "4":
+                          "8":
                                 name: variable.other.constant.mgs
-                  - match: \b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|hackable_state_a|hackable_state_b|hackable_state_c|hackable_state_d|hackable_state_au2|hackable_state_cu2|hackable_state_au4)(\s+to)?\s+(([0-9]]+)|(\$[-A-Za-z0-9_.#$]+))?\b
+                  - match: \b(x|y|primary_id|secondary_id|primary_id_type|animation|animation_frame|relative_direction)(\s+to)?\s+(([0-9]]+)|(\$[-A-Za-z0-9_.#$]+))?\b
                     captures:
                           "1":
                                 name: variable.parameter.mgs support.variable.mgs
@@ -791,13 +813,13 @@ repository:
                     captures:
                           "1":
                                 name: keyword.operator.assignment.mgs
-                  - match: \b(map\s+tick_script)(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))
+                  - match: \b(map\s+(tick_script|on_tick))(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))
                     captures:
                           "1":
                                 name: variable.parameter.mgs support.variable.mgs
-                          "2":
-                                name: keyword.operator.assignment.mgs
                           "3":
+                                name: keyword.operator.assignment.mgs
+                          "4":
                                 name: entity.name.function.mgs
                   - match: \b(serial\s+connect(\s+message)?)(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\6))?
                     captures:
