@@ -2,6 +2,23 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2023-09-17 (v0.7.0)
+
+- relative entity names (`%PLAYER%`) are now colored within serial dialog messages
+- colors for `debug mode` in condition statements
+- colors for `lights control`, specifier `light`, and the fixed names for the lights themselves
+
+## 2023-06-24 (v0.6.0)
+
+New actions, new keywords!
+
+- removed `hackable_state` entity fields
+- added entity field `relative_direction`
+- added `on_look` (etc) as a synonym of `look_script` (etc)
+- new condition: `if (dialog is _) {}` (`open`/`closed`) (also for `serial dialog`)
+- new actions: `close dialog` and `close serial dialog`
+- new ANSI tag: `<bell>`
+
 ## 2023-01-28 (v0.5.2)
 
 Bugs fixed:
@@ -17,17 +34,6 @@ Bugs fixed:
 
 - Syntax for registering and unregistering serial commands
 - Better `wait` and `block` behavior
-
-## 2023-06-24 (v0.6.0)
-
-New actions, new keywords!
-
-- removed `hackable_state` entity fields
-- added entity field `relative_direction`
-- added `on_look` (etc) as a synonym of `look_script` (etc)
-- new condition: `if (dialog is _) {}` (`open`/`closed`) (also for `serial dialog`)
-- new actions: `close dialog` and `close serial dialog`
-- new ANSI tag: `<bell>`
 
 ## 2022-11-12 (v0.5.0)
 

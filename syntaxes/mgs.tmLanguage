@@ -711,7 +711,7 @@
       <key>dialog_option_goto</key>
       <dict>
         <key>match</key>
-        <string>(:)\s*(goto\s)?(script\s)?(((['"])[^`]*?\6)|[-A-Za-z0-9_.#$]+)</string>
+        <string>(:)\s*(goto\s+)?(script\s+)?(((['"])[^`]*?\6)|[-A-Za-z0-9_.#$]+)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -758,9 +758,20 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>&gt;|:</string>
-            <key>name</key>
-            <string>keyword.control.mgs</string>
+            <string>(&gt;)(\s*\$[-A-Za-z0-9_.#$]+)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mgs</string>
+              </dict>
+            </dict>
           </dict>
         </array>
       </dict>
@@ -874,6 +885,12 @@
             <string>\\[nt"\\]</string>
             <key>name</key>
             <string>constant.character.escape.mgs</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>[%][^%]+?[%]</string>
+            <key>name</key>
+            <string>variable.language.mgs</string>
           </dict>
           <dict>
             <key>match</key>
@@ -1471,7 +1488,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b((serial\s+)?dialog)\s+(is\s+)((open|closed)|(\$[-A-Za-z0-9_.#$]+))\b</string>
+            <string>\b(((serial\s+)?dialog)|debug\s+mode)\s+(is\s+)((open|closed|on|off|true|false)|(\$[-A-Za-z0-9_.#$]+))\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1479,17 +1496,17 @@
                 <key>name</key>
                 <string>variable.parameter.mgs support.variable.mgs</string>
               </dict>
-              <key>3</key>
+              <key>4</key>
               <dict>
                 <key>name</key>
                 <string>keyword.operator.logical.mgs</string>
               </dict>
-              <key>4</key>
+              <key>5</key>
               <dict>
                 <key>name</key>
                 <string>constant.language.mgs</string>
               </dict>
-              <key>6</key>
+              <key>7</key>
               <dict>
                 <key>name</key>
                 <string>variable.other.constant.mgs</string>
@@ -2101,6 +2118,28 @@
             <string>storage.type.mgs</string>
           </dict>
           <dict>
+            <key>match</key>
+            <string>\b(light)(\s+(ANY|(LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ALL))|(\$[-A-Za-z0-9_.#$]+)))?\b</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.parameter.mgs support.variable.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>constant.language.mgs</string>
+              </dict>
+              <key>6</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.constant.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
             <key>include</key>
             <string>#entity_specifier_string_pair</string>
           </dict>
@@ -2110,7 +2149,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(fail(ure)?|animation|camera|(player|serial)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b</string>
+            <string>\b(fail(ure)?|animation|camera|(player|serial|lights)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b</string>
             <key>name</key>
             <string>variable.parameter.mgs support.variable.mgs</string>
           </dict>

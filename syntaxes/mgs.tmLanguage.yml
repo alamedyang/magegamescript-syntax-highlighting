@@ -250,7 +250,7 @@ repository:
                           "3":
                                 name: keyword.operator.assignment.mgs
       dialog_option_goto:
-            match: (:)\s*(goto\s)?(script\s)?(((['"])[^`]*?\6)|[-A-Za-z0-9_.#$]+)
+            match: (:)\s*(goto\s+)?(script\s+)?(((['"])[^`]*?\6)|[-A-Za-z0-9_.#$]+)
             captures:
                   "1":
                         name: keyword.control.mgs
@@ -266,8 +266,12 @@ repository:
                   - include: "#dialog_head"
                   - include: "#dialog_message"
                   - include: "#dialog_option_goto"
-                  - match: ">|:"
-                    name: keyword.control.mgs
+                  - match: (>)(\s*\$[-A-Za-z0-9_.#$]+)?
+                    captures:
+                          "1":
+                                name: keyword.control.mgs
+                          "2":
+                                name: variable.language.mgs
       dialog_message:
             begin: '"'
             beginCaptures:
@@ -310,6 +314,8 @@ repository:
                                 name: punctuation.definition.tag.end.mgs
                   - match: \\[nt"\\]
                     name: constant.character.escape.mgs
+                  - match: "[%][^%]+?[%]"
+                    name: variable.language.mgs
                   - match: \$[^\$]+?\$
                     name: variable.language.mgs
                   - match: .+?
@@ -524,15 +530,15 @@ repository:
                                 name: constant.language.mgs
                           "6":
                                 name: variable.other.constant.mgs
-                  - match: \b((serial\s+)?dialog)\s+(is\s+)((open|closed)|(\$[-A-Za-z0-9_.#$]+))\b
+                  - match: \b(((serial\s+)?dialog)|debug\s+mode)\s+(is\s+)((open|closed|on|off|true|false)|(\$[-A-Za-z0-9_.#$]+))\b
                     captures:
                           "1":
                                 name: variable.parameter.mgs support.variable.mgs
-                          "3":
-                                name: keyword.operator.logical.mgs
                           "4":
+                                name: keyword.operator.logical.mgs
+                          "5":
                                 name: constant.language.mgs
-                          "6":
+                          "7":
                                 name: variable.other.constant.mgs
                   - match: \b(path)\s+(is\s+(not\s+)?)(['"])(%ENTITY_PATH%)(\4)
                     captures:
@@ -746,9 +752,17 @@ repository:
                                 name: variable.parameter.mgs support.variable.mgs
                   - match: \b(make|walk|loop|turn|rotate|teleport|pan|loop|play|set|fade\s+in|fade\s+out|load|erase|wait|block|shake)\b
                     name: storage.type.mgs
+                  - match: \b(light)(\s+(ANY|(LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ALL))|(\$[-A-Za-z0-9_.#$]+)))?\b
+                    captures:
+                          "1":
+                                name: variable.parameter.mgs support.variable.mgs
+                          "2":
+                                name: constant.language.mgs
+                          "6":
+                                name: variable.other.constant.mgs
                   - include: "#entity_specifier_string_pair"
                   - include: "#geometry_specifier_string_pair"
-                  - match: \b(fail(ure)?|animation|camera|(player|serial)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b
+                  - match: \b(fail(ure)?|animation|camera|(player|serial|lights)\s+control|hex(\s+(dialog\s+mode|control|clipboard|editor))?)\b
                     name: variable.parameter.mgs support.variable.mgs
                   - match: \b(to\s+)?((true|false|on|off|glitched|unglitched)|(\$[-A-Za-z0-9_.#$]+))\b
                     captures:

@@ -68,13 +68,13 @@ _ {
 }
 
 // Should be this color:
-// `goto` `:`
-
+// `goto` `:` -- and, before a dialog message, the following:
 dialog - { // `>`
 	Identifier "..."
 	>"...":_
 	> "..." : goto _
 	> "..." : goto script _
+	> $var : goto script _
 }
 serial dialog _ { // `_`
 	_"...":_
@@ -237,6 +237,10 @@ _ {
 	close dialog
 	open hex editor
 	close hex editor
+	close dialog
+	close serial dialog
+	set lights control on
+	turn light ANY on
 	// all of these:
 	load erase wait block
 	shake make walk loop turn rotate
@@ -247,6 +251,7 @@ _ {
 script _ {}
 dialog _ {}
 serial dialog _ {}
+
 
 /* ---------- LANGUAGE CONSTANTS ---------- */
 
@@ -291,12 +296,14 @@ _ {
 	if (direction is not north) {}
 }
 
-// Dialog state
+// Dialog + other state
 _ {
 	if (dialog is open) {}
 	if (dialog is closed) {}
 	if (serial dialog is open) {}
 	if (serial dialog is closed) {}
+	if (debug mode is on) {}
+	if (debug mode is off) {}
 }
 
 // Button names
@@ -306,6 +313,27 @@ _ {
 	if (button MEM0) {}
 	if (button BIT8) {}
 	// etc
+}
+
+// Light names
+_ {
+	turn light LED_MEM0
+	turn light LED_MEM1
+	turn light LED_MEM2
+	turn light LED_MEM3
+	turn light LED_BIT1
+	turn light LED_BIT2
+	turn light LED_BIT4
+	turn light LED_BIT8
+	turn light LED_BIT16
+	turn light LED_BIT32
+	turn light LED_BIT64
+	turn light LED_BIT128
+	turn light LED_XOR
+	turn light LED_ADD
+	turn light LED_SUB
+	turn light LED_PAGE
+	turn light ANY
 }
 
 // Specific states
@@ -375,12 +403,13 @@ serial dialog _ {
 	"<bold>_<dim>"
 }
 
-// Also the insides, in the case of `reset` and `/`
-// (NOTE: These may be a different color from the brackets)
+// Also the insides, in the case of `reset`, `bell`, and `/`
+// (NOTE: These may be a different color from the brackets, depending on theme)
 
 serial dialog _ {
-	"<reset>_</>"
+	"<reset>_</>_<bell>"
 }
+
 
 /* ---------- LANGUAGE VARIABLES ---------- */
 
@@ -392,7 +421,6 @@ serial dialog _ {
 // (but not the quotes wrapping them!)
 
 // TODO: doesn't work in all themes
-
 
 settings dialog {
 	parameters label PLAYER {
@@ -413,7 +441,7 @@ dialog _ {
 }
 
 serial dialog _ {
-	"__$NUMBER$__"
+	"__%ANYTHING%__$NUMBER$__"
 }
 
 _ {
@@ -783,10 +811,9 @@ dialog dialogName { // dialogName
 
 _ {
 	// the first word in:
-	set flag asdfasdf to true
-	set entity Bob x to 1000
 	entity _
 	geometry _
+	light ANY
 	flag _
 	map _
 	variable _
@@ -810,6 +837,8 @@ _ {
 	// (also for the rest of the entity fields)
 
 	// the second word in:
+	set flag _ to true
+	set entity _ x to 1000
 	save slot
 	show dialog _
 	show dialog {}
@@ -865,6 +894,7 @@ _ {
 	hex control
 	hex clipboard
 	hex editor
+	lights control
 	fail
 	failure
 }
