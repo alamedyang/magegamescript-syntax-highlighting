@@ -2,6 +2,16 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2023-10-13 (v0.8.0)
+
+- new "macro" `include!()`
+- new constructions `for` and `while`
+- new keywords `return`, `break`, `continue`, `pause`, `unpause`
+- new action `goto index _`, `goto label _` (standalone and `CHECK_` versions)
+- new parameters for map: `on_load`, `on_command`
+- removed `tick_script` (etc) variants (now these are only in the `on_tick` (etc) form)
+- bug fix: light keyword `ALL` (was `ANY`) (oopsie)
+
 ## 2023-09-17 (v0.7.0)
 
 - relative entity names (`%PLAYER%`) are now colored within serial dialog messages

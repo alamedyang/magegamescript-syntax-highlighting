@@ -13,5 +13,6 @@ const functionName = function (args) {
 }
 
 const fatArrow = () => {
+	label: while (false) { var unreachable; }
 	const unusedConst = /^#[0-9A-Z]{6}\b/g;
 }

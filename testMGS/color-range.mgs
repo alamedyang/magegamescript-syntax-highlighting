@@ -18,6 +18,8 @@
 // entity.name.function.mgs
 // ≈ Function definitions and calls, macros
 
+
+include!("asdfasdf.mgs")
 const!() // TODO: specify the macro a bit better; is there a better scope for this?
 
 // `scriptName` should also be this color in all below:
@@ -27,20 +29,11 @@ scriptName {
 	copy script scriptName
 	goto scriptName
 	goto script scriptName
-	interact_script to scriptName
-	map tick_script to scriptName
-	tick_script to scriptName
-	look_script to scriptName
+	map on_tick to scriptName
 	on_interact to scriptName
 	map on_tick to scriptName
 	on_tick to scriptName
 	on_look to scriptName
-	if (interact_script is scriptName) {}
-	if (interact_script is not scriptName) {}
-	if (tick_script is scriptName) {}
-	if (tick_script is not scriptName) {}
-	if (look_script is scriptName) {}
-	if (look_script is not scriptName) {}
 	if (on_interact is scriptName) {}
 	if (on_interact is not scriptName) {}
 	if (on_tick is scriptName) {}
@@ -62,9 +55,19 @@ scriptName {
 // `goto` `if` `else` `then`
 
 _ {
+	goto label "_"
+	goto index $_
+	goto script _
+	goto index 0
 	goto _
 	if ( _ ) { _ } else if ( _ ) { _ } else { _ }
 	if _ then goto _
+	while ( _ ) {
+		break
+		continue
+		return
+	}
+	for ( ; _ ; ) { _ }
 }
 
 // Should be this color:
@@ -100,6 +103,8 @@ const! (
 )
 
 _ {
+	goto index $varName
+	goto label $varName
 	entity $varName
 	geometry $varName
 	slot $varName
@@ -124,12 +129,6 @@ _ {
 	// ^^ etc: all the other entity fields
 
 	// TODO: remove these?
-	interact_script $varName
-	interact_script to $varName
-	tick_script $varName
-	tick_script to $varName
-	look_script $varName
-	look_script to $varName
 	on_interact $varName
 	on_interact to $varName
 	on_tick $varName
@@ -245,7 +244,7 @@ _ {
 	load erase wait block
 	shake make walk loop turn rotate
 	teleport pan loop play load set
-	fade in fade out
+	fade in fade out pause unpause
 }
 // everything before the `_`:
 script _ {}
@@ -542,6 +541,7 @@ dialog _ {
 
 // NOTE: strings that are specifically script names are not included.
 
+include!("STRING.mgs")
 const! (
 	$_ = "I am a string"
 	$_ = 'I am a string'
@@ -662,12 +662,6 @@ _ {
 // Should be this color: `is` and `is not`
 
 _ {
-	if ( interact_script is not _ ) {}
-	if ( interact_script is _ ) {}
-	if ( tick_script is not _ ) {}
-	if ( tick_script is _ ) {}
-	if ( look_script is not _ ) {}
-	if ( look_script is _ ) {}
 	if ( on_interact is not _ ) {}
 	if ( on_interact is _ ) {}
 	if ( on_tick is not _ ) {}
@@ -722,13 +716,10 @@ _ {
 	name to _
 	// also for type, path, warp state
 
-	interact_script to _
-	tick_script to _
-	look_script to _
 	on_interact to _
 	on_tick to _
 	on_look to _
-	map tick_script to _
+	map on_tick to _
 	serial connect to _
 	serial connect message to _
 
@@ -823,13 +814,10 @@ _ {
 	type to _
 	path to _
 	warp state to _
-	interact_script to _
-	tick_script to _
-	look_script to _
 	on_interact to _
 	on_tick to _
 	on_look to _
-	map tick_script to _
+	map on_tick to _
 	serial connect to _
 	slot 0
 	primary_id to 0
@@ -843,16 +831,19 @@ _ {
 	show dialog _
 	show dialog {}
 	show dialog _ {}
-
-	// the second + third word in:
+	
+	// the second + ≈third word in:
+	pause map on_tick
+	pause map on_command
+	pause map on_load
+	pause entity _ on_tick
+	pause entity _ on_interact
+	pause entity _ on_look
 	show serial dialog _
 	show serial dialog {}
 	show serial dialog _ {}
 
 	// the first word in the parens:
-	if (interact_script is _ ) {}
-	if (tick_script is _ ) {}
-	if (look_script is _ ) {}
 	if (on_interact is _ ) {}
 	if (on_tick is _ ) {}
 	if (on_look is _ ) {}
@@ -875,10 +866,14 @@ _ {
 	if (primary_id is 0) {}
 	// (also for the rest of the entity fields)
 
-	// `script`
+	// `script` and `label` and `index`
 	if _ then goto script _
 	goto script _
 	copy script _
+	goto label "_"
+	goto index $_
+	goto script _
+	goto index 0
 
 	// `command` and `arg`
 	register command _
@@ -888,6 +883,7 @@ _ {
 
 	// the following words:
 	animation
+	current_animation
 	camera
 	player control
 	hex dialog mode
@@ -897,6 +893,16 @@ _ {
 	lights control
 	fail
 	failure
+}
+
+
+/* ---------- LABEL ---------- */
+
+// entity.name.label.mgs
+// = goto jump label
+
+_ {
+	continue:
 }
 
 
@@ -916,6 +922,7 @@ _ {
 /* also comment */
 colorless
 scriptName {
+	label:
 	if (
 		flag flagName is false
 	) {
