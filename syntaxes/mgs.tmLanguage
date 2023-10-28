@@ -438,6 +438,41 @@
           </dict>
         </array>
       </dict>
+      <key>debugprint_node</key>
+      <dict>
+        <key>begin</key>
+        <string>\b(debug!)\s*(\()</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.function.mgs</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>mega.block.mgs punctuation.section.block.begin.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\)</string>
+        <key>name</key>
+        <string>mega.block.mgs punctuation.section.block.end.mgs</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#serial_message</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\b[-A-Za-z0-9_.#$]+\b)</string>
+            <key>name</key>
+            <string>variable.parameter.mgs support.variable.mgs</string>
+          </dict>
+        </array>
+      </dict>
       <key>entity_specifier_string_pair</key>
       <dict>
         <key>patterns</key>
@@ -555,7 +590,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(geometry)\s+(([-A-Za-z0-9_.#$]+)|(['"])([^`]*?)\4)\s</string>
+            <string>\b(geometry)\s+(([-A-Za-z0-9_.#$]+)|(['"])([^`]*?)\4)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -2128,6 +2163,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#debugprint_node</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#while</string>
           </dict>
           <dict>
@@ -2383,7 +2422,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(light)(\s+(ANY|(LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ANY))|(\$[-A-Za-z0-9_.#$]+)))?\b</string>
+            <string>\b(light)(\s+(ALL|(LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ANY))|(\$[-A-Za-z0-9_.#$]+)))?\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -2593,7 +2632,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(map\s+(on_tick|on_load|on_command))(\s+to)?\s+(([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))?</string>
+            <string>\b(map\s+(on_tick|on_load|on_command))(\s+to)?(\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))?</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -2801,7 +2840,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(on_(interact|tick|look))\s+(to\s+)?([-A-Za-z0-9_.#$]+|(['"])[^`]*?\4)</string>
+            <string>\b(on_(interact|tick|look))(\s+to)?(\s+([-A-Za-z0-9_.#$]+|(['"])[^`]*?\5))?</string>
             <key>captures</key>
             <dict>
               <key>1</key>

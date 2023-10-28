@@ -25,6 +25,8 @@ const!() // TODO: specify the macro a bit better; is there a better scope for th
 // `scriptName` should also be this color in all below:
 script scriptName {}
 scriptName {
+	debug!("_") // TODO: specify the macro a bit better; is there a better scope for this?
+	debug!(_)
 	copy scriptName
 	copy script scriptName
 	goto scriptName
@@ -55,11 +57,11 @@ scriptName {
 // `goto` `if` `else` `then`
 
 _ {
-	goto label "_"
-	goto index $_
-	goto script _
-	goto index 0
-	goto _
+	goto label "_",
+	goto index $_,
+	goto script _,
+	goto index 0,
+	goto _,
 	if ( _ ) { _ } else if ( _ ) { _ } else { _ }
 	if _ then goto _
 	while ( _ ) {
@@ -239,7 +241,7 @@ _ {
 	close dialog
 	close serial dialog
 	set lights control on
-	turn light ANY on
+	turn light ALL on
 	// all of these:
 	load erase wait block
 	shake make walk loop turn rotate
@@ -332,7 +334,7 @@ _ {
 	turn light LED_ADD
 	turn light LED_SUB
 	turn light LED_PAGE
-	turn light ANY
+	turn light ALL
 }
 
 // Specific states
@@ -804,7 +806,7 @@ _ {
 	// the first word in:
 	entity _
 	geometry _
-	light ANY
+	light ALL
 	flag _
 	map _
 	variable _
@@ -893,6 +895,9 @@ _ {
 	lights control
 	fail
 	failure
+
+	// the inside of:
+	debug!(serialDialogName)
 }
 
 
@@ -924,7 +929,7 @@ colorless
 scriptName {
 	label:
 	if (
-		flag flagName is false
+		flag flagName is false;
 	) {
 		show dialog {
 			Identifier
@@ -933,11 +938,11 @@ scriptName {
 			"What do ya know, %PLAYER%!"
 			"\tSquare roots!"
 		}
-		set flag flagName to $varName
+		set flag flagName to $varName;
 		show serial dialog {
 			"<red>styled</>"
 		}
 	}
-	goto script scriptName
-	load slot 9001
+	goto script scriptName;
+	load slot 9001;
 }

@@ -2,6 +2,14 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2023-10-28 (v0.9.0)
+
+- new "macro" `debug!()`
+	- contents are equivalent to `show serial dialog {}`
+	- anticipating engine feature: if not a quoted string, contents refer to a serial dialog name
+- *actually* fixed `ALL` light keyword this time (oopsie-doopsie)
+- bug fixes involving patterns failing when snug against a `;` (instead of whitespace)
+
 ## 2023-10-13 (v0.8.0)
 
 - new "macro" `include!()`

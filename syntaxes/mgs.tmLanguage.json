@@ -181,6 +181,22 @@
 				{ "include": "#generic_string_naive" }
 			]
 		},
+		"debugprint_node": {
+			"begin": "\\b(debug!)\\s*(\\()",
+			"beginCaptures": {
+				"1": { "name": "entity.name.function.mgs" },
+				"2": { "name": "mega.block.mgs punctuation.section.block.begin.mgs" }
+			},
+			"end": "\\)",
+			"name": "mega.block.mgs punctuation.section.block.end.mgs",
+			"patterns": [
+				{ "include": "#serial_message" },
+				{
+					"match": "(\\b[-A-Za-z0-9_.#$]+\\b)",
+					"name": "variable.parameter.mgs support.variable.mgs"
+				}
+			]
+		},
 		"entity_specifier_string_pair": {
 			"patterns": [
 				{
@@ -227,7 +243,7 @@
 					}
 				},
 				{
-					"match": "\\b(geometry)\\s+(([-A-Za-z0-9_.#$]+)|(['\"])([^`]*?)\\4)\\s",
+					"match": "\\b(geometry)\\s+(([-A-Za-z0-9_.#$]+)|(['\"])([^`]*?)\\4)",
 					"captures": {
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"2": { "name": "string.variable.mgs" }
@@ -877,6 +893,7 @@
 						"2": { "name": "keyword.operator.assignment.mgs" }
 					}
 				},
+				{ "include": "#debugprint_node" },
 				{ "include": "#while" },
 				{ "include": "#for" },
 				{ "include": "#zigzag" },
@@ -985,7 +1002,7 @@
 					"name": "keyword.control.loop.mgs"
 				},
 				{
-					"match": "\\b(light)(\\s+(ANY|(LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ANY))|(\\$[-A-Za-z0-9_.#$]+)))?\\b",
+					"match": "\\b(light)(\\s+(ALL|(LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ANY))|(\\$[-A-Za-z0-9_.#$]+)))?\\b",
 					"captures": {
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"2": { "name": "constant.language.mgs" },
@@ -1062,7 +1079,7 @@
 					}
 				},
 				{
-					"match": "\\b(map\\s+(on_tick|on_load|on_command))(\\s+to)?\\s+(([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))?",
+					"match": "\\b(map\\s+(on_tick|on_load|on_command))(\\s+to)?(\\s+([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))?",
 					"captures": {
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"3": { "name": "keyword.operator.assignment.mgs" },
@@ -1136,7 +1153,7 @@
 					}
 				},
 				{
-					"match": "\\b(on_(interact|tick|look))\\s+(to\\s+)?([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\4)",
+					"match": "\\b(on_(interact|tick|look))(\\s+to)?(\\s+([-A-Za-z0-9_.#$]+|(['\"])[^`]*?\\5))?",
 					"captures": {
 						"1": { "name": "variable.parameter.mgs support.variable.mgs" },
 						"3": { "name": "keyword.operator.assignment.mgs" },
