@@ -145,9 +145,7 @@ _ {
 	// serial commands
 	register $varName -> _
 	register $varName + $varName -> _
-	register $varName + arg $varName -> _
 	register command $varName -> _
-	register command $varName + arg $varName -> _
 	// also `unregister`
 
 	// condition subjects
@@ -203,8 +201,7 @@ dialog _ {
 // = keywords that aren't control words
 
 settings dialog { // settings
-	default {} // default
-	parameters for entity _ { // parameters
+	default { // default
 		wrap messages to 42 // wrap
 	}
 }
@@ -271,7 +268,7 @@ _ {
 
 // Alignment values
 settings dialog {
-	parameters for entity _ {
+	entity _ {
 		alignment BOTTOM_LEFT
 		alignment TOP_LEFT
 		alignment BOTTOM_RIGHT
@@ -424,7 +421,7 @@ serial dialog _ {
 // TODO: doesn't work in all themes
 
 settings dialog {
-	parameters label PLAYER {
+	label PLAYER {
 		entity "%PLAYER%"
 		entity "%SELF%"
 		name "%ANYTHING%"
@@ -521,9 +518,15 @@ _ {
 // support.type.mgs
 // ≈ Classes, or meta types (mostly aiming for a different color :P)
 
-// Should be this color: `PLAYER`
 settings dialog {
-	parameters for label PLAYER {}
+	// Should be this color: the second word
+	label PLAYER {}
+	entity Cleo {}
+	entity "Guardian Bob" {}
+	entity "%ABSOLUTENAME%" {}
+	entity "%PLAYER%" {} // quotes only
+	entity "%SELF%" {} // quotes only
+	label "INVALID" {} // but not this
 }
 
 // Should be this color: everything before a "_"
@@ -640,16 +643,12 @@ _ {
 
 	register "STRING" -> _
 	register STRING + STRING -> _
-	register STRING + arg STRING -> _
 	register command "STRING" -> _
 	register command STRING + STRING -> _
-	register command STRING + arg STRING -> _
 	unregister "STRING"
 	unregister STRING + STRING
-	unregister STRING + arg STRING
 	unregister command "STRING"
 	unregister command STRING + STRING
-	unregister command STRING + arg STRING
 }
 
 
@@ -704,7 +703,7 @@ const! (
 	$_ = _
 )
 settings dialog {
-	defaults {
+	default {
 		wrap messages to 42
 	}
 }
@@ -773,9 +772,8 @@ serial dialog _ {
 
 // Should be this color:
 settings dialog { //dialog
-	parameters label _ {} //label
-	parameters entity _ {} //entity
-	global defaults { //global
+	label _ {} //label
+	entity _ { //entity
 		// the first word in:
 		entity _
 		name _
@@ -877,11 +875,9 @@ _ {
 	goto script _
 	goto index 0
 
-	// `command` and `arg`
+	// `command`
 	register command _
-	register command _ + arg _
 	unregister command _
-	unregister command _ + arg _
 
 	// the following words:
 	animation
@@ -894,7 +890,6 @@ _ {
 	hex editor
 	lights control
 	fail
-	failure
 
 	// the inside of:
 	debug!(serialDialogName)
@@ -928,9 +923,7 @@ _ {
 colorless
 scriptName {
 	label:
-	if (
-		flag flagName is false;
-	) {
+	if (flag flagName is false) {
 		show dialog {
 			Identifier
 			emote 5
@@ -942,6 +935,7 @@ scriptName {
 		show serial dialog {
 			"<red>styled</>"
 		}
+		turn player control off;
 	}
 	goto script scriptName;
 	load slot 9001;

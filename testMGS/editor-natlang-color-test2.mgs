@@ -127,29 +127,21 @@ script REG {
 	// command, script, is_fail=false
 	register "map" -> serialMapScript
 	register $command -> serialMapScript
-	register command "map" -> serialMapScript
-	register command $command -> serialMapScript
 
 	// UNREGISTER_SERIAL_DIALOG_COMMAND
 	// command, is_fail=false
 	unregister "map"
 	unregister $command
-	unregister command "map"
-	unregister command $command
 	
 	// REGISTER_SERIAL_DIALOG_COMMAND
 	// command, script, is_fail=true
 	register "map" fail -> failScript
 	register $command fail -> failScript
-	register command "map" fail -> failScript
-	register command $command fail -> failScript
 	
 	// UNREGISTER_SERIAL_DIALOG_COMMAND
 	// command, is_fail=true
 	unregister "map" fail
 	unregister $command fail
-	unregister command "map" fail
-	unregister command $command fail
 
 	// REGISTER_SERIAL_DIALOG_COMMAND_ARGUMENT
 	// command, argument, script
@@ -157,18 +149,6 @@ script REG {
 	register "map" + $argument -> castleScript
 	register $command + "castle" -> castleScript
 	register $command + $argument -> castleScript
-	register command "map" + "castle" -> castleScript
-	register command "map" + $argument -> castleScript
-	register command $command + "castle" -> castleScript
-	register command $command + $argument -> castleScript
-	register "map" + arg "castle" -> castleScript
-	register "map" + arg $argument -> castleScript
-	register $command + arg "castle" -> castleScript
-	register $command + arg $argument -> castleScript
-	register command "map" + arg "castle" -> castleScript
-	register command "map" + arg $argument -> castleScript
-	register command $command + arg "castle" -> castleScript
-	register command $command + arg $argument -> castleScript
 	
 	// UNREGISTER_SERIAL_DIALOG_COMMAND_ARGUMENT
 	// command, argument
@@ -176,18 +156,6 @@ script REG {
 	unregister "map" + $argument
 	unregister $command + "castle"
 	unregister $command + $argument
-	unregister command "map" + "castle"
-	unregister command "map" + $argument
-	unregister command $command + "castle"
-	unregister command $command + $argument
-	unregister "map" + arg "castle"
-	unregister "map" + arg $argument
-	unregister $command + arg "castle"
-	unregister $command + arg $argument
-	unregister command "map" + arg "castle"
-	unregister command "map" + arg $argument
-	unregister command $command + arg "castle"
-	unregister command $command + arg $argument
 }
 
 /* ----- EXAMPLE CRAZY CONCAT STUFF ----- */

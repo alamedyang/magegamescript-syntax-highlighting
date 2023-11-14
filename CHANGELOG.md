@@ -2,6 +2,16 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2023-11-13 (v0.9.1)
+
+- removing unused and non-useful keywords:
+	- `failure` (now just `fail`, rather than both variants being okay)
+	- `arg` and `command` (implied by their use: `register (command) $STRING + (arg) $STRING`)
+- more bug fixes involving patterns failing when snug against a `;` (instead of whitespace)
+- optional words for dialog settings removed:
+	- `parameters for label labelName` now just `label labelName` etc.
+	- in addition, `global default`/`defaults` now just `default`
+
 ## 2023-10-28 (v0.9.0)
 
 - new "macro" `debug!()`
@@ -17,7 +27,7 @@ All notable changes to the "magegamescript-colors" extension will be documented 
 - new keywords `return`, `break`, `continue`, `pause`, `unpause`
 - new action `goto index _`, `goto label _` (standalone and `CHECK_` versions)
 - new parameters for map: `on_load`, `on_command`
-- removed `tick_script` (etc) variants (now these are only in the `on_tick` (etc) form)
+- removed `on_tick` (etc) variants (now these are only in the `on_tick` (etc) form)
 - bug fix: light keyword `ALL` (was `ANY`) (oopsie)
 
 ## 2023-09-17 (v0.7.0)

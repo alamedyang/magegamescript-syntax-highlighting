@@ -1,22 +1,16 @@
 settings dialog {
-	parameters for entity Player {
-		entity "%PLAYER%"
-	}
-}
-
-settings for dialog {
-	parameters for label Player {
+	label PLAYER {
 		entity "%PLAYER%"
 		emote 1
 		portrait mage-happy
-		border_tileset 4
+		border_tileset tilesetName
 		alignment BR
 		wrap messages to 40
 		/* Saying it the long way (BOTTOM_RIGHT)
 		would be okay, too */
 	}
-	parameters default { wrap messages 42 }
-	parameters for global default {
+	default { wrap messages 42 }
+	default {
 		wrap messages to 40 // 42 is default
 		alignment BOTTOM_LEFT
 		alignment TR
@@ -73,6 +67,7 @@ test-script {
 game-management {
 	block 1ms // asdfasdf
 	wait 100000ms
+	turn on player control
 	set player control on
 	set player control off
 	load map "super-long-map-name"
@@ -103,11 +98,11 @@ logic-entities {
 		goto script script-do-if-entity-x
 	if entity "Entity Name" x is not 0 then
 		goto "script-do-if-entity-x"
-	if entity "Entity Name" interact_script is name-of-checked-script-interact then
+	if entity "Entity Name" on_interact is name-of-checked-script-interact then
 		goto script-do-if-entity-y
-	if entity "Entity Name" interact_script is not "name-of-checked-script-interact" then goto "script-do-if-entity-y"
-	if entity "Entity Name" tick_script is "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
-	if entity "Entity Name" tick_script is not "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
+	if entity "Entity Name" on_interact is not "name-of-checked-script-interact" then goto "script-do-if-entity-y"
+	if entity "Entity Name" on_tick is "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
+	if entity "Entity Name" on_tick is not "name-of-checked-script-tick" then goto "script-do-if-entity-tick"
 	if entity "Entity Name" type is old_man then goto "script-do-if-entity-type"
 	if entity "Entity Name" type is not "some-kind-of-entity-type" then goto "script-do-if-entity-type"
 	if entity "Entity Name" primary_id is 16 then goto "script-do-if-entity-primary_id"
@@ -225,9 +220,9 @@ camera-control {
 controlling-scripts {
 	goto "script-to-run"
 	copy script script-to-copy
-	set map tick_script to "script-map-tick"
-	set entity "Entity Name" interact_script to "script-entity-interact"
-	set entity "Entity Name" tick_script to "script-entity-tick"
+	set map on_tick to "script-map-tick"
+	set entity "Entity Name" on_interact to "script-entity-interact"
+	set entity "Entity Name" on_tick to "script-entity-tick"
 }
 
 controlling-variables {

@@ -52,9 +52,9 @@ const! (
 )
 
 settings for dialog {
-	parameters for global defaults { alignment BL }
-	parameters for label SELF { entity "%SELF%" }
-	parameters for label PLAYER {
+	default { alignment BL }
+	label SELF { entity "%SELF%" }
+	label PLAYER {
 		entity "%PLAYER%"
 		alignment BR
 		wrap messages 42
@@ -94,31 +94,31 @@ hintman-cutscene {
 		Alfonso "Right! Go get 'em!"
 		Bert "Good luck."
 	}
-	set entity Jackob tick_script to return-to-watchspot-jackob
-	wait 200ms /**/ set entity Alfonso tick_script to return-to-watchspot-alfonso
-	wait 150ms /**/ set entity Bert tick_script to return-to-watchspot-bert
+	set entity Jackob on_tick to return-to-watchspot-jackob
+	wait 200ms /**/ set entity Alfonso on_tick to return-to-watchspot-alfonso
+	wait 150ms /**/ set entity Bert on_tick to return-to-watchspot-bert
 }
 
 return-to-watchspot-alfonso {
 	walk entity "%SELF%" to geometry alfonso-waitspot over 500ms
 	turn entity "%SELF%" south
-	set entity "%SELF%" tick_script to null_script
+	set entity "%SELF%" on_tick to null_script
 }
 return-to-watchspot-jackob {
 	walk entity "%SELF%" along geometry hintman-walkback over 800ms
 	turn entity "%SELF%" south
-	set entity "%SELF%" tick_script to null_script
+	set entity "%SELF%" on_tick to null_script
 }
 return-to-watchspot-bert {
 	walk entity "%SELF%" to geometry bert-waitspot over 500ms
 	turn entity "%SELF%" west
-	set entity "%SELF%" tick_script to null_script
+	set entity "%SELF%" on_tick to null_script
 }
 
 show_dialog-bert-start {
 	if (entity "%SELF%" is glitched) {
 		show dialog { SELF "...." "Bczv um jiks." }
-		set entity "%SELF%" interact_script to show_dialog-bert-start
+		set entity "%SELF%" on_interact to show_dialog-bert-start
 	}
 	copy face-player
 	show dialog { SELF "Who needs help?" }
@@ -216,7 +216,7 @@ show_dialog-bert-start {
 	} else {
 		show dialog { SELF "Perhaps the world." }
 	}
-	set entity Bert interact_script to show_dialog-bert-start
+	set entity Bert on_interact to show_dialog-bert-start
 }
 
 calculate-hint-tracking-series {
@@ -506,7 +506,7 @@ show_dialog-jackob-start {
 	}
 	// RESET
 	if (entity Bob path is not "%ENTITY_PATH%")
-	set entity "%SELF%" interact_script to show_dialog-jackob-start	
+	set entity "%SELF%" on_interact to show_dialog-jackob-start	
 }
 show_dialog-jackob-hint-hackbook {
 	if (flag hackbook-endstory is true) {
@@ -564,7 +564,7 @@ show_dialog-jackob-hint-hackbook {
 		set flag hackbook-endstory to true
 	}
 	// RESET
-	set entity "%SELF%" interact_script to show_dialog-jackob-start
+	set entity "%SELF%" on_interact to show_dialog-jackob-start
 }
 
 show_dialog-alfonso-start {
@@ -575,10 +575,10 @@ show_dialog-alfonso-start {
 			goto show_dialog-alfonso-wonthedemo // JUMP
 		}
 		set player control to off
-		set entity Bert tick_script to count-chapter1-storyflags
-		set entity "%SELF%" tick_script to alfonso-ch1-storyflag-count-wait
+		set entity Bert on_tick to count-chapter1-storyflags
+		set entity "%SELF%" on_tick to alfonso-ch1-storyflag-count-wait
 	}
-	set entity "%SELF%" interact_script to show_dialog-alfonso-start
+	set entity "%SELF%" on_interact to show_dialog-alfonso-start
 }
 
 alfonso-ch1-storyflag-count-wait {
@@ -617,15 +617,15 @@ alfonso-ch1-storyflag-count-done {
 		}
 		goto demoend-cutscene // JUMP
 	}
-	set player control to on
-	set entity "%SELF%" tick_script to null_script
+	set player control to on;
+	set entity "%SELF%" on_tick to null_script;
 	// RESET
-	set entity Alfonso interact_script to show_dialog-alfonso-start
+	set entity Alfonso on_interact to show_dialog-alfonso-start;
 }
 
 show_dialog-alfonso-wonthedemo {
 	show dialog dialog-alfonso-wonthedemo {
 		SELF "Congratulations! You fixed the town!"
 	}
-	set entity Alfonso interact_script to show_dialog-alfonso-start
+	set entity Alfonso on_interact to show_dialog-alfonso-start;
 }
