@@ -119,19 +119,6 @@ logic-entities {
 	if entity "Entity Name" direction is not north then goto "script-do-if-entity-direction"
 	if entity "Entity Name" is glitched then goto "script-do-if-entity-is-glitched"
 	if entity "Entity Name" is not glitched then goto "script-do-if-entity-is-NOT-glitched"
-	if entity "Entity Name" hackable_state_a is 1 then goto "script-do-if-entity-is-hackable-a"
-	if entity "Entity Name" hackable_state_a is not 1 then goto "script-do-if-entity-is-hackable-a"
-	if entity "Entity Name" hackable_state_b is 1 then goto "script-do-if-entity-is-hackable-b"
-	if entity "Entity Name" hackable_state_b is not 1 then goto "script-do-if-entity-is-hackable-b"
-	if entity "Entity Name" hackable_state_c is 1 then goto "script-do-if-entity-is-hackable-c"
-	if entity "Entity Name" hackable_state_c is not 1 then goto "script-do-if-entity-is-hackable-c"
-	if entity "Entity Name" hackable_state_d is 1 then goto "script-do-if-entity-is-hackable-d"
-	if entity "Entity Name" hackable_state_d is not 1 then goto "script-do-if-entity-is-hackable-d"
-	if entity "Entity Name" hackable_state_au2 is 1 then goto "script-do-if-entity-is-hackable-a-u2"
-	if entity "Entity Name" hackable_state_au2 is not 1 then goto "script-do-if-entity-is-hackable-a-u2"
-	if entity "Entity Name" hackable_state_cu2 is 1 then goto "script-do-if-entity-is-hackable-c-u2"
-	if entity "Entity Name" hackable_state_cu2 is not 1 then goto "script-do-if-entity-is-hackable-c-u2"
-	if entity "Entity Name" hackable_state_au4 is 1 then goto "script-do-if-entity-is-hackable-a-u4"
 	/* note: expected_bool is missing on purpose -- not enough bytes available! */
 	if entity "Entity Name" path is "some-kind-of-geometry-name" then goto "script-do-if-entity-path"
 	if entity "Entity Name" path is not "some-kind-of-geometry-name" then goto "script-do-if-entity-path"
@@ -177,13 +164,6 @@ set-entity {
 	set entity "Entity Name" primary_id to 1
 	set entity "Entity Name" secondary_id to 2
 	set entity "Entity Name" primary_id_type to 4
-	set entity "Entity Name" hackable_state_a to 128
-	set entity "Entity Name" hackable_state_b to 128
-	set entity "Entity Name" hackable_state_c to 128
-	set entity "Entity Name" hackable_state_d to 128
-	set entity "Entity Name" hackable_state_au2 to 123
-	set entity "Entity Name" hackable_state_cu2 to 2
-	set entity "Entity Name" hackable_state_au4 to 4
 }
 
 entity-choreography-paths {
@@ -251,4 +231,32 @@ controlling-variables {
 
 ch2 {
 	show serial dialog "serial-dialog"
+	alias w = warp;
+	remove alias w;
+	hide command warp;
+	unhide command asdf;
+}
+
+// experimentation:
+ch2-gloria-worry-walk {
+	mutate tempvar ? 4;
+	random!(
+		{ wait 500ms; },
+		{ wait 1100ms; },
+		{ wait 1500ms; },
+		{ wait 2200ms; }
+	)
+	walk entity "%SELF%" to geometry "%ENTITY_PATH%" over $walkspeed
+	turn entity "%SELF%" toward entity Samson;
+	if (
+		entity "%SELF%" path is worry-walk1
+		|| entity "%SELF%" path is worry-walk3
+	) {
+		set entity "%SELF%" path to worry-walk2;
+	} else {
+		random!(
+			{ set entity "%SELF%" path to worry-walk1; },
+			{ set entity "%SELF%" path to worry-walk3; }
+		)
+	}
 }

@@ -2,6 +2,19 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2024-03-12 (v0.10.0)
+
+- corrected color for certain contexts of quoted script names
+- changed instances of multiple scopes to single scopes (improves compatibility)
+- `$_` variables colored correctly more places, and are more consistent across themes
+- `+ 000`: the `000` is now colored like a string before `->` and colored like a number otherwise
+- New language phrases:
+	- `alias _ = _;`
+	- `remove alias _;`
+	- `hide command _;`
+	- `unhide command _;`
+- Updated preview image
+
 ## 2023-11-13 (v0.9.1)
 
 - removing unused and non-useful keywords:

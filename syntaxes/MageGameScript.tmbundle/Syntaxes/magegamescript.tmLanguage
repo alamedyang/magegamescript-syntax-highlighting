@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>$schema</key>
-    <string>https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json</string>
-    <key>name</key>
-    <string>MageGameScript</string>
+	<key>fileTypes</key>
+	<array>
+		<string>mgs</string>
+	</array>
+	<key>name</key>
+	<string>MageGameScript</string>
     <key>patterns</key>
     <array>
       <dict>
@@ -3028,5 +3030,7 @@
     </dict>
     <key>scopeName</key>
     <string>source.mgs</string>
+	<key>uuid</key>
+	<string>4194DE31-F244-45F6-9E5B-E79D74D7C5FF</string>
   </dict>
 </plist>

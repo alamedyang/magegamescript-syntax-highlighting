@@ -113,10 +113,14 @@ _ {
 	flag $varName
 	map $varName
 	variable $varName
+	alias $varName
 	dialog $varName // TODO: remove?
 	serial dialog $varName // TODO: remove?
 	mutate $varName
 	wait $varName
+	light $varName
+	hide command $varName
+	unhide command $varName
 
 	// TODO: shouldn't $varName on it's own work in this spot? (see the boolean stuff)
 	to $varName // TODO: this pattern seems to be working from the (to|from) match and not the boolean one! (maybe that's okay)
@@ -145,7 +149,6 @@ _ {
 	// serial commands
 	register $varName -> _
 	register $varName + $varName -> _
-	register command $varName -> _
 	// also `unregister`
 
 	// condition subjects
@@ -167,7 +170,7 @@ _ {
 	if (is $varName)
 	if (is not $varName)
 	if (is <= $varName)
-	if (is not <= $varName)
+	if (direction is not $varName)
 }
 settings dialog {
 	default {
@@ -230,6 +233,9 @@ _ {
 	mutate _
 	register _
 	unregister _
+	remove alias _
+	hide command _
+	unhide command _
 	save slot
 	close serial dialog
 	close dialog
@@ -581,6 +587,7 @@ serial dialog _ {
 	# "STRING" : _
 }
 _ {
+    turn entity Bob north
 	entity STRING
 	entity "STRING"
 	entity "%PLAYER%" // quotes alone
@@ -590,7 +597,8 @@ _ {
 
 	flag STRING
 	flag "STRING"
-	// also map, variable, serial dialog, dialog
+	alias "STRING"
+	// also map, variable, serial dialog, dialog, alias
 
 	warp state STRING
 	warp state "STRING"
@@ -643,12 +651,8 @@ _ {
 
 	register "STRING" -> _
 	register STRING + STRING -> _
-	register command "STRING" -> _
-	register command STRING + STRING -> _
 	unregister "STRING"
 	unregister STRING + STRING
-	unregister command "STRING"
-	unregister command STRING + STRING
 }
 
 
@@ -763,7 +767,7 @@ serial dialog _ {
 
 /* ---------- SPECIFIERS AND SUPPORT WORDS ---------- */
 
-// variable.parameter.mgs support.variable.mgs
+// variable.parameter.mgs
 // words like `entity` and `geometry` that specify the category of string that will follow
 // also entity fields
 // game engine categories of targets for actions, like set _hex editor clipboard_
@@ -875,10 +879,6 @@ _ {
 	goto script _
 	goto index 0
 
-	// `command`
-	register command _
-	unregister command _
-
 	// the following words:
 	animation
 	current_animation
@@ -926,7 +926,7 @@ scriptName {
 	if (flag flagName is false) {
 		show dialog {
 			Identifier
-			emote 5
+			emote 9000
 			alignment TOP_RIGHT
 			"What do ya know, %PLAYER%!"
 			"\tSquare roots!"
@@ -940,3 +940,81 @@ scriptName {
 	goto script scriptName;
 	load slot 9001;
 }
+
+
+/* ---------- SPECTRUM TEST 2 ---------- */
+
+scriptName {    // script name
+	set         // keyword
+	entity Bob  // identifier + string
+	x to        // propertyName + operator (assignment)
+	9000        // number
+	;           // terminator
+
+	label:               // label
+	while (              // control word
+	flag 'flagName'      // identifier + string
+	is true              /* operator (comparator) + language constant */ ) {}
+	to $SCREAMING_SNAKE  /* operator (assignment) + compile time constant */; show dialog _ {
+
+
+	Identifier // dialog identifier
+	emote      // variable identifier
+	0          // number
+	"string"   // normal string
+	"\n"       /* escaped char */ } show serial dialog {
+
+
+"message"        // normal message
+"<c>...</>"      // xml style styles
+"$v$ ... %e%"    // language constants I think
+"\n\t\\escape!"  // escaped chars
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+on_load-woprhouse {
+	if (flag backdoor-found is false) {
+		turn player control off;
+		walk entity "%PLAYER%" along geometry wopr-walkin over 600ms;
+		wait 400ms;
+		turn player control on;
+		show dialog {
+			PLAYER "Whoa! It looks like I found some kind of back door."
+		}
+		set flag backdoor-found to true;
+	}
+}
+

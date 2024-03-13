@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string></string>
+	<key>description</key>
+	<string>Quick and dirty syntax highlighting from MageGameScript, derived from the VSCode .tmlanguage version.</string>
+	<key>name</key>
+	<string>MageGameScript</string>
+	<key>uuid</key>
+	<string>4E2AD818-2421-4EBF-A248-A45352CB0DED</string>
+</dict>
+</plist>
