@@ -2475,7 +2475,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(close)(\s+(serial\s+)?dialog)\b</string>
+            <string>\b(end)(\s+(serial\s+)?dialog)\b</string>
             <key>captures</key>
             <dict>
               <key>1</key>

@@ -1,0 +1,832 @@
+/* ---------- COLOR SPECTRUM TEST ---------- */
+
+// `_` is used for a wildcard strings when possible.
+// (Just so it's extremely unobtrusive)
+// Some additional words are inserted when syntax color patterns require it; these are not necessarily noted.
+
+
+/* ---------- COMMENTS ---------- */
+
+// punctuation.definition.comment.mgs for `/*` and `*/`
+// comment.block.mgs for the interior
+
+// punctuation.definition.comment.mgs for `//` (and `\n|$` I guess lol)
+// comment.line.double-slash.mgs for the interior
+
+
+/* ---------- JSON COLORS ---------- */
+
+// source.json
+// You get these for free
+
+_ {
+	json[
+		{
+			"asdfasdf": null,
+			"property": "value",
+			"property0": true,
+			"property1": null,
+			"property2": -10,
+			"property3": 1000000,
+			"property4": [5,3,"string",40],
+			"object": {"prop": null}
+		}
+	]
+}
+
+
+/* ---------- SCRIPT NAMES & MACROS ---------- */
+
+// entity.name.function.mgs
+// ≈ Function definitions and calls, macros
+
+// the first word of:
+include "_";
+_ {
+	debug!()
+	print!()
+	println!()
+	json[]
+	rand!()
+	copy!()
+}
+
+// `scriptName` should also be this color in all below:
+script "scriptName" {}
+script scriptName {}
+"scriptName" {}
+scriptName {
+	copy!(scriptName)
+	goto scriptName;
+	goto script scriptName;
+	command _ = scriptName;
+	command _ fail = scriptName;
+	command _ + _ = scriptName;
+	on_tick = scriptName
+	on_look = scriptName
+	on_load = scriptName
+	on_command = scriptName
+	on_interact = scriptName
+	on_tick == scriptName
+	on_look == scriptName
+	on_load == scriptName
+	on_command == scriptName
+	on_interact == scriptName
+	on_tick != scriptName
+	on_look != scriptName
+	on_load != scriptName
+	on_command != scriptName
+	on_interact != scriptName
+	if _ then goto scriptName;
+	if _ then goto script scriptName;
+	command $__ = scriptName;
+	command ___ = scriptName;
+	command "_" = scriptName;
+	command $__ = "scriptName";
+	command ___ = "scriptName";
+	command "_" = "scriptName";
+
+	command $__ fail = scriptName;
+	command ___ fail = scriptName;
+	command "_" fail = scriptName;
+	command $__ fail = "scriptName";
+	command ___ fail = "scriptName";
+	command "_" fail = "scriptName";
+
+	command $__ + ___ = scriptName;
+	command ___ + ___ = scriptName;
+	command "_" + ___ = scriptName;
+	command $__ + ___ = "scriptName";
+	command ___ + ___ = "scriptName";
+	command "_" + ___ = "scriptName";
+	command $__ + "_" = scriptName;
+	command ___ + "_" = scriptName;
+	command "_" + "_" = scriptName;
+	command $__ + "_" = "scriptName";
+	command ___ + "_" = "scriptName";
+	command "_" + "_" = "scriptName";
+	command $__ + $_ = scriptName;
+	command ___ + $_ = scriptName;
+	command "_" + $_ = scriptName;
+	command $__ + $_ = "scriptName";
+	command ___ + $_ = "scriptName";
+	command "_" + $_ = "scriptName";
+}
+
+/* ---------- CONTROL WORDS ---------- */
+
+// keyword.control.mgs
+// = MGS script jumps
+
+// Should be this color:
+// `load` `goto` `if` `else` `then`
+// `while` `break` `continue` `return` `for
+
+_ {
+	load map _;
+	goto label _;
+	goto index $_;
+	goto index 0;
+	goto script _;
+	goto index 0;
+	goto _;
+	if ( _ ) { _ } else if ( _ ) { _ } else { _ }
+	if _ then goto _
+	if _ then goto script _
+	if _ then goto label $_
+	if _ then goto label _
+	if _ then goto index $_
+	if _ then goto index 1
+	while ( _ ) {
+		break;
+		continue;
+		return;
+	}
+	do {} while ()
+	for ( ; _ ; ) { _ }
+}
+
+// Should be this color:
+dialog _ { // `>`
+	Identifier
+	"_"
+	> "_" = _
+	> $var = _
+}
+serial_dialog _ { // `_`
+	"_"
+	_ "_" = _
+	_ $var = _
+}
+serial_dialog _ { // `#`
+	"_"
+	# "_" = _
+	# $var = _
+}
+
+
+/* ---------- CONSTANTS ---------- */
+
+// variable.other.constant.mgs
+// = "compile-time" constants
+
+// `$varName` should be this color in all below:
+
+$varName = _;
+$varName = "_";
+$varName = 0;
+$varName = 0ms;
+$varName = 0px;
+$varName = true;
+$varName = north;
+_ {
+	entity $_
+	map $_
+	geometry $_
+	light $_
+}
+
+/* ---------- ACTION KEYWORDS ---------- */
+
+// storage.type.mgs
+// ≈ wanting to approximate the "let _" in JS
+// = keywords that aren't control words
+
+// Should be this color:
+// The first word in most of these:
+
+script _ {}
+dialog _ {}
+serial_dialog _ {}
+add dialog settings {
+	default {}
+}
+add serial_dialog settings {}
+
+_ {
+	save slot;
+	close dialog;
+	close serial_dialog;
+	wait 1;
+	block 1;
+	load slot 0;
+	erase slot 0;
+	pause player on_look;
+	pause self on_look;
+	pause entity _ on_look;
+	pause entity "_" on_look;
+	unpause player on_look;
+	unpause self on_look;
+	unpause entity _ on_look;
+	unpause entity "_" on_look;
+	pause player on_interact;
+	pause self on_interact;
+	pause entity _ on_interact;
+	pause entity "_" on_interact;
+	unpause player on_interact;
+	unpause self on_interact;
+	unpause entity _ on_interact;
+	unpause entity "_" on_interact;
+	pause player on_tick;
+	pause self on_tick;
+	pause entity _ on_tick;
+	pause entity "_" on_tick;
+	unpause player on_tick;
+	unpause self on_tick;
+	unpause entity _ on_tick;
+	unpause entity "_" on_tick;
+	pause map on_tick;
+	unpause map on_tick;
+	delete command _;
+	delete command _ + _;
+	delete alias _;
+	hide command _;
+	unhide command _;
+	show dialog _;
+	show dialog {};
+	show dialog _ {};
+	show serial_dialog _;
+	show serial_dialog {};
+	show serial_dialog _ {};
+	save close wait block load erase pause unpause delete hide unhide show
+
+	// Second word(s) in
+	camera shake ->
+	camera fade in ->
+	camera fade out ->
+	shake fade in out
+}
+
+/* ---------- LANGUAGE CONSTANTS ---------- */
+
+// constant.language.mgs
+// = Language-defined terms like `null` or `true`
+// Or special single-word targets, shorthands like `player` and `camera`
+// (So not `map`, because that's a sigil most of the time)
+
+add dialog settings {
+	default {
+		alignment BOTTOM_LEFT
+		alignment TOP_LEFT
+		alignment BOTTOM_RIGHT
+		alignment TOP_RIGHT
+		alignment BL
+		alignment TL
+		alignment BR
+		alignment TR
+	}
+}
+dialog _ {
+	_ 
+	alignment BOTTOM_LEFT
+	alignment TOP_LEFT
+	alignment BOTTOM_RIGHT
+	alignment TOP_RIGHT
+	alignment BL
+	alignment TL
+	alignment BR
+	alignment TR
+	"_"
+}
+
+_ {
+	player self camera
+	open close closed true false
+	north south east west down up pressed forever
+	camera =
+	camera ->
+	player position =
+	player position ->
+	self direction =
+
+	// second word in:
+	pause self on_tick;
+	pause player on_tick;
+
+	// all the lights
+	LED_MEM0 LED_MEM1 LED_MEM2 LED_MEM3
+	LED_BIT1 LED_BIT2 LED_BIT4 LED_BIT8
+	LED_BIT16 LED_BIT32 LED_BIT64 LED_BIT128
+	LED_XOR LED_ADD LED_SUB LED_PAGE ALL
+
+	MEM0 MEM1 MEM2 MEM3 XOR ADD SUB PAGE
+	BIT1 BIT2 BIT4 BIT8 BIT16 BIT32 BIT64 BIT128
+	LJOY_CENTER LJOY_UP LJOY_DOWN LJOY_LEFT LJOY_RIGHT
+	RJOY_CENTER RJOY_UP RJOY_DOWN RJOY_LEFT RJOY_RIGHT
+	TRIANGLE X CROSS CIRCLE O SQUARE HAX ANY ALL
+}
+
+
+/* ---------- STYLE TAG NAMES ---------- */
+
+// entity.name.tag.mgs
+// = xml tag names
+
+// Should be this color:
+// Things inside the `<>`
+
+serial_dialog _ {
+	"<black>_<k>"
+	"<red>_<r>"
+	"<green>_<g>"
+	"<yellow>_<y>"
+	"<blue>_<b>"
+	"<magenta>_<m>"
+	"<cyan>_<c>"
+	"<white>_<w>"
+	"<bg-black>_<bg-k>"
+	"<bg-red>_<bg-r>"
+	"<bg-green>_<bg-g>"
+	"<bg-yellow>_<bg-y>"
+	"<bg-blue>_<bg-b>"
+	"<bg-magenta>_<bg-m>"
+	"<bg-cyan>_<bg-c>"
+	"<bg-white>_<bg-w>"
+	"<bold>_<dim>"
+}
+
+
+/* ---------- STYLE TAG BRACKETS ---------- */
+
+// punctuation.definition.tag.mgs
+// (adding .begin or .end as appropriate)
+// = xml tag brackets
+
+// Should be this color:
+// The `<>`
+
+serial_dialog _ {
+	"<black>_<k>"
+	"<red>_<r>"
+	"<green>_<g>"
+	"<yellow>_<y>"
+	"<blue>_<b>"
+	"<magenta>_<m>"
+	"<cyan>_<c>"
+	"<white>_<w>"
+	"<bg-black>_<bg-k>"
+	"<bg-red>_<bg-r>"
+	"<bg-green>_<bg-g>"
+	"<bg-yellow>_<bg-y>"
+	"<bg-blue>_<bg-b>"
+	"<bg-magenta>_<bg-m>"
+	"<bg-cyan>_<bg-c>"
+	"<bg-white>_<bg-w>"
+	"<bold>_<dim>"
+}
+
+// Also the insides, in the case of `reset`, `bell`, and `/`
+// (NOTE: These may be a different color from the brackets, depending on theme)
+
+serial_dialog _ {
+	"<reset>_</>_<bell>"
+}
+
+
+/* ---------- LANGUAGE VARIABLES ---------- */
+
+// variable.language.mgs
+// = Special keywords that are also variable-ish
+
+// Should be this color:
+// `%PLAYER%`, `%SELF%`, `%ENTITY_PATH%` `%ANYTHING%`, `$NUMBER$`
+// (but not the quotes wrapping them!)
+
+// TODO: doesn't work in all themes
+
+add dialog settings {
+	label PLAYER {
+		entity "%PLAYER%"
+		entity "%SELF%"
+		name "%ANYTHING%"
+	}
+}
+
+dialog _ {
+	entity "%PLAYER%" "_"
+	entity "%SELF%" "_"
+	name "%ANYTHING%" "_"
+	_ entity "%PLAYER%" "_"
+	_ entity "%SELF%" "_"
+	_ name "%ANYTHING%" "_"
+	_ "__%ANYTHING%__$NUMBER$__"
+}
+
+serial dialog _ {
+	"__%ANYTHING%__$NUMBER$__"
+}
+
+_ {
+	entity "%PLAYER%"
+	entity "%SELF%"
+	geometry "%ENTITY_PATH%"
+}
+
+
+/* ---------- NUMBER(-ish) ---------- */
+
+// constant.numeric.integer.mgs
+// = numbers, including suffixes and prefixes
+// + other number words, like `once` (if appropriate)
+
+#000 #010101 #abcDEF once twice thrice
+9000 9000s 9000ms 9000px 9000pix 9000x
+white black red green blue magenta cyan yellow
+
+/* ---------- SPECIAL ---------- */
+
+// support.type.mgs
+// ≈ Classes, or meta types (mostly aiming for a different color :P)
+
+add dialog settings {
+	// Should be this color: the second word
+	label PLAYER {}
+	entity Cleo {}
+	entity "Guardian Bob" {}
+	entity "%ABSOLUTENAME%" {}
+	entity "%PLAYER%" {} // quotes only
+	entity "%SELF%" {} // quotes only
+	label "INVALID" {} // but not this
+}
+
+// Should be this color: everything before a "_"
+dialog _ {
+	PLAYER "_"
+	entity entityName "_"
+	entity "Entity Name" "_"
+	name nameName "_"
+	name "Name Name" "_"
+}
+
+
+/* ---------- STRINGS ---------- */
+
+// string.variable.mgs
+// = Strings, either wrapped in `"`, `'`, or barewords (in syntactically appropraite moments)
+
+include "string";
+
+dialog _ {
+	entity string "_"
+	entity "string" "_"
+	entity "%PLAYER%" "_" // quotes alone
+	"string"
+	> "string" = _
+}
+
+serial_dialog _ {
+	"string"
+	_ "string" = _
+	# "string" = _
+}
+
+_ {
+	map string;
+	map "string";
+	command string = _;
+	command "string" = _;
+	command string fail = _;
+	command "string" fail = _;
+	command string + string = _;
+	command "string" + "string" = _;
+	alias string = string;
+	alias "string" = "string";
+	delete command string;
+	delete command "string";
+	delete command string + string;
+	delete command "string" + "string";
+	delete alias string;
+	delete alias "string";
+	hide command string;
+	hide command "string";
+	unhide command string;
+	unhide command "string";
+	show dialog string;
+	show dialog string {};
+	show serial_dialog string;
+	show serial_dialog string {};
+	concat serial_dialog string;
+	concat serial_dialog string {};
+	
+	geometry string
+	geometry "string"
+	entity string
+	entity "string"
+	string = true;
+	"string" = true;
+	asdf // any ol' thing without context
+}
+
+	
+/* ---------- OPERATORS ---------- */
+
+// keyword.operator.mgs
+// = the normal things: =, <, +
+
+_ {
+	-> = += -= *= /= ?= %=
+	< <= == != >= > ! || &&
+	over intersects
+	command _ + _ = _ // and `+` in this context
+}
+dialog _ {
+	_ "_"
+	> "_" = _ // `=`
+}
+serial_dialog _ {
+	"_"
+	_ "_" = _ // `=`
+	# "_" = _ // `=`
+}
+
+/* ---------- DIALOG MESSAGES (STRINGS XTREME) ---------- */
+
+// + string.quoted.double.mgs for the quotes themselves
+// Includes escaped characters: constant.character.escape.mgs
+// for: \n, \", \$, \%, \\
+
+dialog _ {
+	_ "__\n__\"__\$__\%__\\"
+}
+serial_dialog _ {
+	"__\n__\"__\\"
+}
+
+
+/* ---------- SPECIFIERS AND SUPPORT WORDS ---------- */
+
+// variable.parameter.mgs
+// words like `entity` and `geometry` that specify the category of string that will follow (sigils)
+// also entity fields
+// game engine categories of targets for actions, like set _hex editor clipboard_
+// (is this called something better??)
+
+// Should be this color:
+add dialog settings { //dialog
+	label _ {} //label
+	entity _ { //entity
+		// the first word in:
+		entity _
+		name _
+		emote 0
+		portrait _
+		alignment BR
+		border_tileset _
+		wrap 0 // wrap
+	}
+}
+
+dialog dialogName { // dialogName
+	_
+	// the first word in:
+	entity _
+	name _
+	emote 0
+	portrait _
+	alignment BR
+	border_tileset _
+	wrap 0 // messages
+	"_"
+}
+
+_ {
+	// the inside of:
+	debug!(serialDialogName)
+}
+
+_ {
+	// these words
+	warp_state debug_mode index 
+	hex_editor hex_dialog_mode hex_control hex_clipboard
+	serial_control player_control lights_control
+	warp_state = _;
+	warp_state = "_";
+	hex_editor = on;
+	hex_dialog_mode = on;
+	hex_control = on;
+	hex_clipboard = on;
+	serial_control = on;
+	player_control = on;
+	lights_control = on;
+	
+	// first word in: (and only in a pair)
+	map _
+	label _
+	
+	// `script` when after `goto`
+	goto script _;
+	
+	// second word in:
+	slot dialog serial_dialog
+	save slot;
+	close dialog;
+	close serial_dialog;
+	load slot 0;
+	erase slot 0;
+	show dialog _;
+	show dialog {};
+	show dialog _ {};
+	show serial_dialog _;
+	show serial_dialog {};
+	show serial_dialog _ {};
+	concat serial_dialog _;
+	concat serial_dialog {};
+	concat serial_dialog _ {};
+
+	// command, alias
+	command _ = _;
+	command _ fail = _;
+	command _ + _ = _;
+	hide command _;
+	unhide command _;
+	delete command _;
+	delete command _ + _;
+	delete alias _;
+	alias _ = _;
+
+	// position, origin, length, direction
+	position origin length direction
+	self direction = player;
+	self direction = self;
+	self direction = entity _;
+	self direction = geometry _;
+	player direction = player;
+	player direction = self;
+	player direction = entity _;
+	player direction = geometry _;
+	entity _ direction = player;
+	entity _ direction = self;
+	entity _ direction = entity _;
+	entity _ direction = geometry _;
+	self position -> geometry _ origin over 1ms;
+	self position -> geometry _ length over 1ms;
+	self position -> geometry _ length over 1ms forever;
+	player position = geometry _;
+	player position -> geometry _ origin over 1ms;
+	player position -> geometry _ length over 1ms;
+	player position -> geometry _ length over 1ms forever;
+	entity _ position -> geometry _ origin over 1ms;
+	entity _ position -> geometry _ length over 1ms;
+	entity _ position -> geometry _ length over 1ms forever;
+	camera -> entity "_" position over 1ms;
+	camera -> entity _ position over 1ms;
+	camera -> player position over 1ms;
+	camera -> self position over 1ms;
+
+	// animation, glitched, direction
+	animation glitched direction
+	self animation -> 0 1x;
+	player animation -> 0 1x;
+	entity _ animation -> 0 1x;
+	entity "_" animation -> 0 1x;
+	self glitched = true;
+	player glitched = true;
+	entity _ glitched = true;
+	entity "_" glitched = true;
+	self direction = north;
+	player direction = north;
+	entity _ direction = north;
+	entity "_" direction = north;
+
+	// int properties
+	x y primary_id secondary_id primary_id_type
+	current_animation animation_frame strafe direction direction
+	self x = 1;
+	self y = 1;
+	self primary_id = 1;
+	self secondary_id = 1;
+	self primary_id_type = 1;
+	self current_animation = 1;
+	self animation_frame = 1;
+	self strafe = 1;
+	self direction += 1;
+	self direction -= 1;
+	player x = 1;
+	player y = 1;
+	player primary_id = 1;
+	player secondary_id = 1;
+	player primary_id_type = 1;
+	player current_animation = 1;
+	player animation_frame = 1;
+	player strafe = 1;
+	player direction += 1;
+	player direction -= 1;
+	entity _ x = 1;
+	entity _ y = 1;
+	entity _ primary_id = 1;
+	entity _ secondary_id = 1;
+	entity _ primary_id_type = 1;
+	entity _ current_animation = 1;
+	entity _ animation_frame = 1;
+	entity _ strafe = 1;
+	entity _ direction += 1;
+	entity _ direction -= 1;
+	entity "_" x = 1;
+	entity "_" y = 1;
+	entity "_" primary_id = 1;
+	entity "_" secondary_id = 1;
+	entity "_" primary_id_type = 1;
+	entity "_" current_animation = 1;
+	entity "_" animation_frame = 1;
+	entity "_" strafe = 1;
+	entity "_" direction += 1;
+	entity "_" direction -= 1;
+
+	// string properties
+	name type path
+	on_look on_interact on_tick on_command
+	self name = _;
+	self type = _;
+	self path = _;
+	player name = _;
+	player type = _;
+	player path = _;
+	entity _ name = _;
+	entity _ type = _;
+	entity _ path = _;
+	map on_look = _;
+	map on_tick = _;
+	map on_command = _;
+	
+	// string properties that are also scripts
+	self on_look = _;
+	self on_interact = _;
+	self on_tick = _;
+	player on_look = _;
+	player on_interact = _;
+	player on_tick = _;
+	entity _ on_look = _;
+	entity _ on_interact = _;
+	entity _ on_tick = _;
+	entity "_" on_look = _;
+	entity "_" on_interact = _;
+	entity "_" on_tick = _;
+}
+
+
+/* ---------- LABEL ---------- */
+
+// entity.name.label.mgs
+// = goto jump label
+
+_ {
+	bigloop:
+	continue: // just can't be a keyword I guess
+}
+
+
+/* ---------- SPECTRUM TEST ---------- */
+
+// comment
+/* also comment */
+scriptName {
+	label:
+	if (entity flagName x == 80) {
+		show dialog {
+			Identifier
+			emote 9000
+			alignment TOP_RIGHT
+			"What do ya know, %PLAYER%!"
+			"\tSquare roots!"
+		}
+		flagName = debug_mode && player glitched;
+		show serial_dialog {
+			"<red>styled</>"
+		}
+		player_control = off;
+	}
+	goto scriptName;
+	load slot 9001;
+}
+
+
+/* ---------- SPECTRUM TEST 2 ---------- */
+
+scriptName {    // script name
+	entity Bob  // identifier + string
+	x =         // propertyName + operator (assignment)
+	9000        // number
+	;           // terminator
+
+	label:               // label
+	while (              // control word
+	entity "Bob"         // identifier + string
+	direction            // property
+	== north             /* operator (comparator) + language constant */ ) {}
+	varName = $SCREM     /* identifier + operator (assignment) + compile time constant */; show dialog _ {
+
+
+	Identifier // dialog identifier
+	emote      // variable identifier
+	0          // number
+	"string"   // normal string
+	"\n"       /* escaped char */ } show serial_dialog {
+
+
+	"message"        // normal message
+	"<c>...</>"      // xml style styles
+	"$v$ ... %e%"    // language constants I think
+	"\n\t\\escape!"  // escaped chars
+
+}
+}

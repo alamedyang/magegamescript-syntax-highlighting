@@ -874,7 +874,7 @@ repository:
                                 name: storage.type.mgs
                           "2":
                                 name: variable.parameter.mgs
-                  - match: \b(close)(\s+(serial\s+)?dialog)\b
+                  - match: \b(end)(\s+(serial\s+)?dialog)\b
                     captures:
                           "1":
                                 name: storage.type.mgs

@@ -2,7 +2,7 @@
     "name": "magegamescript-colors",
     "displayName": "MageGameScript Colors",
     "description": "Syntax highlighting for MageGameScript",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "publisher": "goat-and-bird",
     "repository": "https://github.com/alamedyang/magegamescript-syntax-highlighting.git",
     "icon": "MageGameScript-icon.png",
@@ -22,10 +22,19 @@
             "extensions": [".mgs"],
             "configuration": "./language-configuration.json"
         }],
-        "grammars": [{
-            "language": "mgs",
-            "scopeName": "source.mgs",
-            "path": "./syntaxes/mgs.tmLanguage.json"
-        }]
+        "grammars": [
+			{
+				"language": "mgs",
+				"scopeName": "source.mgs",
+				"path": "./syntaxes/mgs.tmLanguage.json"
+			},
+			{
+				"path": "./syntaxes/JSON.tmLanguage.json",
+				"scopeName": "source.json",
+				"embeddedLanguages": {
+				  "meta.embedded.block.json": "json"
+				}
+			  }
+		]
     }
 }
