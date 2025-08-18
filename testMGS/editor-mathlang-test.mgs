@@ -11,7 +11,6 @@ serial_dialog serialDialogName { wrap 40 "<b>BLUE</>" }
 script scriptName {}
 scriptName {}
 
-
 $constName = 40;
 $constName = 5x;
 $constName = 40ms;
@@ -26,8 +25,6 @@ $constName = string;
 $constName = true;
 $constName = open;
 $constName = off;
-
-
 
 _ {
 
@@ -54,7 +51,7 @@ _ {
 	while (debug_mode) { break; continue; return; }
 
 
-
+	
 
 
 

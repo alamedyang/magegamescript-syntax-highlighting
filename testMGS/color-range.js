@@ -24,38 +24,38 @@ const SCREAMING_SNAKE = '';
 
 /* ---------- SPECTRUM TEST 2 ---------- */
 
-scriptName = (a) => { // script name
+scriptName = (emote) => { // function name
 	let               // keyword
-	vari              // identifier
-	=                 // operator (asignment)
+	player_control    // identifier
+	=                 // assignment operator
 	'string'          /* string */ ||
 	9000              // number
 	;                 // terminator
 
+	entity.           // identifier
+		position      // property
 
-	label:            // label
+	label:            /* label */                   while (true) { break label; }
 	while (           // control word
-	'flagName'        // string
-	=== true          /* operator (comparator) + language constant */ ) { break label; } let _
-	= SCREAMING_SNAKE // operator (assignment) + compile time constant
-
-
-	a.propertyName  /* possibly different from above? */ ||
-	/^#[0-9A-Z]{6}\b/g /* not using the red or yellow from this currently */;
-
+	geometry          // identifier
+	===               // logical operator
+	true              /* language constant */ ) { player_control+=1; } let _
+	=                 // assignment operator
+	SCREAMING         /* compile-time constant */ ; 
 
 	Error    /* dialog identifier*/ (
-	a        /* variable identifier (alt: func arg) */ +
+	emote    /* identifier (alt version: func arg) */ +
 	0        /* number */ +
-	"string" /* normal string */ +
+	"string" /* string */ +
 	"\n"     /* escaped char */ ); _ =
 
+	"message"        /* normal message */ +
+	`${vari}`        /* can't do xml type stuff so here's a fancy string*/+
+	true             /* language constants I guess */ +
+	"\n\t\\escape!"  /* escaped chars */ }; let a =
 
-"message"        /* normal message */ +
-`${vari}`        /* can't really do xml type stuff here*/+
-true             /* language constants I guess */ +
-"\n\t\\escape!"  /* escaped chars */ };
-
+	
+	/^#[0-9A-Z]{6}\b/g /* not using the red or yellow from this currently */;
 
 unusedLabel:        // unused label
 const UNUSED = ''; // unused const

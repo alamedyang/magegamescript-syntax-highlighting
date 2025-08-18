@@ -2,6 +2,18 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2025-08-16 (v1.0.0)
+
+- "Mathlang" syntax overhaul!
+- More modular syntax (more like math than a natural language)
+- Properly recursive syntax
+- Expressions and other non-fixed-length features
+- Other QOL like the "spread" operator
+- Bare identifiers for bools and ints
+- Identifiers now identifier-colored
+- Much simpler keyword-based coloring
+
+
 ## 2024-03-12 (v0.10.0)
 
 - corrected color for certain contexts of quoted script names
