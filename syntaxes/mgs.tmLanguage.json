@@ -6,6 +6,7 @@
     { "include": "#include_macro" },
 
     { "include": "#fn_definition" },
+    { "include": "#fn_body" },
     {
       "begin": "\\b(add)(\\s+serial_dialog)(\\s+settings)(\\s*{)?",
       "beginCaptures": {

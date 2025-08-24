@@ -21,6 +21,10 @@
         <string>#fn_definition</string>
       </dict>
       <dict>
+        <key>include</key>
+        <string>#fn_body</string>
+      </dict>
+      <dict>
         <key>begin</key>
         <string>\b(add)(\s+serial_dialog)(\s+settings)(\s*{)?</string>
         <key>beginCaptures</key>

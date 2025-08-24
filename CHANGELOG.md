@@ -2,6 +2,10 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2025-08-23 (v1.1.2)
+
+- Fixed function definitions having wrong colors for body
+
 ## 2025-08-23 (v1.1.1)
 
 - Fixed label coloring bug
