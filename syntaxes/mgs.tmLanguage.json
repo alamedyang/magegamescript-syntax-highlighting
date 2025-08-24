@@ -226,15 +226,20 @@
       "name": "constant.language.mgs"
     },
     "fn_definition": {
-      "begin": "(fn\\s+)?(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)\\s*(\\()\\s*((\\$[_a-zA-Z0-9]+)\\s*(,\\s+(\\$[_a-zA-Z0-9]+))?)?\\s*(\\))\\s*(\\{)",
+      "begin": "(fn\\s+)?(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)\\s*(\\()",
       "beginCaptures": {
         "1": { "name": "storage.type.mgs" },
         "2": { "name": "entity.name.function.mgs" },
-        "3": { "name": "punctuation.section.block.begin.mgs" },
-        "5": { "name": "variable.other.constant.mgs" },
-        "7": { "name": "variable.other.constant.mgs" },
-        "8": { "name": "punctuation.section.block.end.mgs" },
-        "9": { "name": "punctuation.section.block.begin.mgs" }
+        "3": { "name": "punctuation.section.block.begin.mgs" }
+      },
+      "end": "\\)",
+      "name": "punctuation.section.block.end.mgs",
+      "patterns": [{ "include": "#constant_literal" }]
+    },
+    "fn_body": {
+      "begin": "(\\{)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.section.block.begin.mgs" }
       },
       "end": "\\}",
       "name": "punctuation.section.block.end.mgs",
@@ -479,6 +484,13 @@
     "script_body": {
       "patterns": [
         { "include": "#comment_node" },
+        {
+          "match": "([_a-zA-Z][_a-zA-Z0-9]*)\\s*(:)",
+          "captures": {
+            "1": { "name": "entity.name.label.mgs" },
+            "2": { "name": "keyword.operator.assignment.mgs" }
+          }
+        },
         {
           "begin": "\\b(for)\\s*(\\()",
           "beginCaptures": {
@@ -786,13 +798,6 @@
         {
           "match": "(?<=label)\\s+(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*\\b)",
           "name": "entity.name.label.mgs"
-        },
-        {
-          "match": "([_a-zA-Z][_a-zA-Z0-9]*)\\s*(:)",
-          "captures": {
-            "1": { "name": "entity.name.label.mgs" },
-            "2": { "name": "keyword.operator.assignment.mgs" }
-          }
         },
         { "match": "[_a-zA-Z][_a-zA-Z0-9]*", "name": "variable.parameter.mgs" },
         {

@@ -293,19 +293,27 @@ add dialog             settings              {}
 // ≈ Function definitions and calls, macros
 // Should be this color:
 						// these
-						include         "_";
-						fn_definition   ($_) {}
-						scriptName      {
-						debug!          ()
-						debug!          (_)
-						debug!          ("_")
-						rand!           ()
-						RNG!            ()
-						json            []
-						copy_script     ()
-						"copy_script"   ()
-						fn_call         ($asdf, 4, _, "_", "%SELF%")
-						"fn_call"       ($asdf) }
+						include           "_";
+						fn_definition     ($_) {}
+						fn_definition     ($_,) {}
+						fn_definition     ($_, $_) {}
+						fn_definition     ($_, $_,) {}
+						fn_definition     ($_, $_, $_) {}
+						fn_definition     ($_, $_, $_,) {}
+						fn_definition     ($_, $_, $_, $_) {}
+						fn_definition     ($_, $_, $_, $_,) {}
+						scriptName        {
+						debug!            ()
+						debug!            (_)
+						debug!            ("_")
+						rand!             ()
+						RNG!              ()
+						json              []
+						copy_script       ()
+						"copy_script"     ()
+						fn_call           ($asdf, 4, _, "_", "%SELF%")
+						"fn_call"         ($asdf) }
+						scriptName        {}
 						"scriptName"      {}
 						scriptName        ($_) {}
 						"scriptName"      ($_) {}
@@ -883,7 +891,7 @@ scriptName {        // function name
 	;               // terminator
 
 	entity _        // identifier (sigil)
-		position    // property
+		position    /* property */  = geometry stick;
 
 	label:          // label
 	while (         // control word
@@ -919,3 +927,4 @@ _ {
 	asdfasdf(asdfasdf, "%MAP%", 900)
 	wait 100ms;
 }
+

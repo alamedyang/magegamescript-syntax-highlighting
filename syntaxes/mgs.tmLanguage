@@ -572,7 +572,7 @@
       <key>fn_definition</key>
       <dict>
         <key>begin</key>
-        <string>(fn\s+)?("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()\s*((\$[_a-zA-Z0-9]+)\s*(,\s+(\$[_a-zA-Z0-9]+))?)?\s*(\))\s*(\{)</string>
+        <string>(fn\s+)?("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -590,22 +590,26 @@
             <key>name</key>
             <string>punctuation.section.block.begin.mgs</string>
           </dict>
-          <key>5</key>
+        </dict>
+        <key>end</key>
+        <string>\)</string>
+        <key>name</key>
+        <string>punctuation.section.block.end.mgs</string>
+        <key>patterns</key>
+        <array>
           <dict>
-            <key>name</key>
-            <string>variable.other.constant.mgs</string>
+            <key>include</key>
+            <string>#constant_literal</string>
           </dict>
-          <key>7</key>
-          <dict>
-            <key>name</key>
-            <string>variable.other.constant.mgs</string>
-          </dict>
-          <key>8</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.section.block.end.mgs</string>
-          </dict>
-          <key>9</key>
+        </array>
+      </dict>
+      <key>fn_body</key>
+      <dict>
+        <key>begin</key>
+        <string>(\{)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
           <dict>
             <key>name</key>
             <string>punctuation.section.block.begin.mgs</string>
@@ -1204,6 +1208,23 @@
           <dict>
             <key>include</key>
             <string>#comment_node</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>([_a-zA-Z][_a-zA-Z0-9]*)\s*(:)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.label.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.assignment.mgs</string>
+              </dict>
+            </dict>
           </dict>
           <dict>
             <key>begin</key>
@@ -2014,23 +2035,6 @@
             <string>(?&lt;=label)\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)</string>
             <key>name</key>
             <string>entity.name.label.mgs</string>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>([_a-zA-Z][_a-zA-Z0-9]*)\s*(:)</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.label.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.operator.assignment.mgs</string>
-              </dict>
-            </dict>
           </dict>
           <dict>
             <key>match</key>

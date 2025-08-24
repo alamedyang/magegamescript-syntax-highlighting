@@ -201,7 +201,7 @@ repository:
     match: \bnorth|south|west|east|MEM(0|1|2|3)|BIT(128|64|32|16|8|4|2|1)|XOR|ADD|SUB|PAGE|(L|R)JOY_(CENTER|UP|DOWN|LEFT|RIGHT)|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY|ALL|LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ANY)\b
     name: constant.language.mgs
   fn_definition:
-    begin: (fn\s+)?("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()\s*((\$[_a-zA-Z0-9]+)\s*(,\s+(\$[_a-zA-Z0-9]+))?)?\s*(\))\s*(\{)
+    begin: (fn\s+)?("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()
     beginCaptures:
       "1":
         name: storage.type.mgs
@@ -209,13 +209,14 @@ repository:
         name: entity.name.function.mgs
       "3":
         name: punctuation.section.block.begin.mgs
-      "5":
-        name: variable.other.constant.mgs
-      "7":
-        name: variable.other.constant.mgs
-      "8":
-        name: punctuation.section.block.end.mgs
-      "9":
+    end: \)
+    name: punctuation.section.block.end.mgs
+    patterns:
+      - include: "#constant_literal"
+  fn_body:
+    begin: (\{)
+    beginCaptures:
+      "1":
         name: punctuation.section.block.begin.mgs
     end: \}
     name: punctuation.section.block.end.mgs
@@ -423,6 +424,12 @@ repository:
   script_body:
     patterns:
       - include: "#comment_node"
+      - match: ([_a-zA-Z][_a-zA-Z0-9]*)\s*(:)
+        captures:
+          "1":
+            name: entity.name.label.mgs
+          "2":
+            name: keyword.operator.assignment.mgs
       - begin: \b(for)\s*(\()
         beginCaptures:
           "1":
@@ -708,12 +715,6 @@ repository:
         name: string.quoted.mgs
       - match: (?<=label)\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)
         name: entity.name.label.mgs
-      - match: ([_a-zA-Z][_a-zA-Z0-9]*)\s*(:)
-        captures:
-          "1":
-            name: entity.name.label.mgs
-          "2":
-            name: keyword.operator.assignment.mgs
       - match: "[_a-zA-Z][_a-zA-Z0-9]*"
         name: variable.parameter.mgs
       - match: '[_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"'

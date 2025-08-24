@@ -2,6 +2,11 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2025-08-23 (v1.1.1)
+
+- Fixed label coloring bug
+- Fixed function args not being colored after the first 1-2
+
 ## 2025-08-19 (v1.1.0)
 
 - Added functions! `fn functionName($arg, $arg)`
