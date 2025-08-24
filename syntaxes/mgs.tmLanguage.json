@@ -4,6 +4,8 @@
   "patterns": [
     { "include": "#comment_node" },
     { "include": "#include_macro" },
+
+    { "include": "#fn_definition" },
     {
       "begin": "\\b(add)(\\s+serial_dialog)(\\s+settings)(\\s*{)?",
       "beginCaptures": {
@@ -52,12 +54,12 @@
           ]
         },
         {
-          "begin": "\\b(entity)\\s+(([_a-zA-Z][_a-zA-Z0-9]*)|(['\"])(%(PLAYER|SELF)%)\\4)\\s*({)",
+          "begin": "\\b(entity)\\s+([_a-zA-Z][_a-zA-Z0-9]*|\"(%(PLAYER|SELF)%)\")\\s*({)",
           "beginCaptures": {
             "1": { "name": "variable.parameter.mgs" },
             "2": { "name": "support.type.mgs" },
-            "5": { "name": "variable.language.mgs" },
-            "7": { "name": "punctuation.section.block.begin.mgs" }
+            "3": { "name": "variable.language.mgs" },
+            "5": { "name": "punctuation.section.block.begin.mgs" }
           },
           "end": "}",
           "endCaptures": {
@@ -69,11 +71,11 @@
           ]
         },
         {
-          "begin": "\\b(entity)\\s+(([_a-zA-Z][_a-zA-Z0-9]*)|(['\"])[^`]*?\\4)\\s*({)",
+          "begin": "\\b(entity)\\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\\s*({)",
           "beginCaptures": {
             "1": { "name": "variable.parameter.mgs" },
             "2": { "name": "support.type.mgs" },
-            "5": { "name": "punctuation.section.block.begin.mgs" }
+            "3": { "name": "punctuation.section.block.begin.mgs" }
           },
           "end": "}",
           "endCaptures": {
@@ -102,11 +104,11 @@
       ]
     },
     {
-      "begin": "\\b(dialog)(\\s+([_a-zA-Z][_a-zA-Z0-9]*|(['\"])[^`]*?\\4))\\s*({)",
+      "begin": "\\b(dialog)\\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\\s*({)",
       "beginCaptures": {
         "1": { "name": "storage.type.mgs" },
         "2": { "name": "variable.parameter.mgs" },
-        "5": { "name": "punctuation.section.block.begin.mgs" }
+        "3": { "name": "punctuation.section.block.begin.mgs" }
       },
       "end": "}",
       "endCaptures": {
@@ -115,11 +117,11 @@
       "patterns": [{ "include": "#dialog_body" }]
     },
     {
-      "begin": "\\b(serial_dialog)(\\s+([_a-zA-Z][_a-zA-Z0-9]*|(['\"])[^`]*?\\4))\\s*({)",
+      "begin": "\\b(serial_dialog)\\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\\s*({)",
       "beginCaptures": {
         "1": { "name": "storage.type.mgs" },
         "2": { "name": "variable.parameter.mgs" },
-        "5": { "name": "punctuation.section.block.begin.mgs" }
+        "3": { "name": "punctuation.section.block.begin.mgs" }
       },
       "end": "}",
       "endCaptures": {
@@ -128,11 +130,11 @@
       "patterns": [{ "include": "#serial_body" }]
     },
     {
-      "begin": "(script\\s+)?(((([_a-zA-Z][_a-zA-Z0-9]*)|((['\"])[^`]*?\\7))))\\s*({)",
+      "begin": "(script\\s+)?([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\\s*({)",
       "beginCaptures": {
         "1": { "name": "storage.type.mgs" },
         "2": { "name": "entity.name.function.mgs" },
-        "8": { "name": "punctuation.section.block.begin.mgs" }
+        "3": { "name": "punctuation.section.block.begin.mgs" }
       },
       "end": "}",
       "endCaptures": {
@@ -212,7 +214,7 @@
       "name": "variable.other.constant.mgs"
     },
     "string_literal": {
-      "match": "[_a-zA-Z][_a-zA-Z0-9]*|(['\"])[^`]*?\\1",
+      "match": "[_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"",
       "name": "string.quoted.mgs"
     },
     "boolean_literal": {
@@ -223,8 +225,43 @@
       "match": "\\bnorth|south|west|east|MEM(0|1|2|3)|BIT(128|64|32|16|8|4|2|1)|XOR|ADD|SUB|PAGE|(L|R)JOY_(CENTER|UP|DOWN|LEFT|RIGHT)|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY|ALL|LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ANY)\\b",
       "name": "constant.language.mgs"
     },
+    "fn_definition": {
+      "begin": "(fn\\s+)?(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)\\s*(\\()\\s*((\\$[_a-zA-Z0-9]+)\\s*(,\\s+(\\$[_a-zA-Z0-9]+))?)?\\s*(\\))\\s*(\\{)",
+      "beginCaptures": {
+        "1": { "name": "storage.type.mgs" },
+        "2": { "name": "entity.name.function.mgs" },
+        "3": { "name": "punctuation.section.block.begin.mgs" },
+        "5": { "name": "variable.other.constant.mgs" },
+        "7": { "name": "variable.other.constant.mgs" },
+        "8": { "name": "punctuation.section.block.end.mgs" },
+        "9": { "name": "punctuation.section.block.begin.mgs" }
+      },
+      "end": "\\}",
+      "name": "punctuation.section.block.end.mgs",
+      "patterns": [{ "include": "#script_body" }]
+    },
+    "fn_call": {
+      "begin": "(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)\\s*(\\()",
+      "beginCaptures": {
+        "1": { "name": "entity.name.function.mgs" },
+        "2": { "name": "punctuation.section.block.begin.mgs" }
+      },
+      "end": "\\)",
+      "name": "punctuation.section.block.end.mgs",
+      "patterns": [
+        {
+          "match": "(\")(%(ENTITY_PATH|SELF|PLAYER|MAP)*%)(\")",
+          "captures": {
+            "1": { "name": "string.quoted.mgs" },
+            "2": { "name": "variable.language.mgs" },
+            "4": { "name": "string.quoted.mgs" }
+          }
+        },
+        { "include": "#script_body" }
+      ]
+    },
     "entity_identifier_special": {
-      "match": "\\b(entity)\\s+(['\"])(%PLAYER%|%SELF%)(\\2)",
+      "match": "\\b(entity)\\s+(\")(%PLAYER%|%SELF%)(\")",
       "captures": {
         "1": { "name": "variable.parameter.mgs" },
         "2": { "name": "string.quoted.mgs" },
@@ -237,7 +274,7 @@
         { "include": "#comment_node" },
         { "include": "#entity_identifier_special" },
         {
-          "match": "\\b(name)\\s+(['\"])(%[^%]*%)(\\2)",
+          "match": "\\b(name)\\s+(\")(%[^%]*%)(\")",
           "captures": {
             "1": { "name": "variable.parameter.mgs" },
             "2": { "name": "string.quoted.mgs" },
@@ -246,7 +283,7 @@
           }
         },
         {
-          "match": "\\b(border_tileset|portrait)\\s+(((['\"])[^`]*?\\4)|[_a-zA-Z][_a-zA-Z0-9]*)?",
+          "match": "\\b(border_tileset|portrait)\\s+(\"[^`]*\"|[_a-zA-Z][_a-zA-Z0-9]*)?",
           "captures": {
             "1": { "name": "variable.parameter.mgs" },
             "2": { "name": "string.quoted.mgs" }
@@ -266,7 +303,7 @@
       ]
     },
     "dialog_option_goto": {
-      "match": "(=)\\s*(((['\"])[^`]*?\\4)|[_a-zA-Z][_a-zA-Z0-9]*)",
+      "match": "(=)\\s*(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)",
       "captures": {
         "1": { "name": "keyword.operator.assignment.mgs" },
         "2": { "name": "entity.name.function.mgs" }
@@ -279,7 +316,7 @@
           "patterns": [
             { "include": "#comment_node" },
             {
-              "begin": "entity\\s+((\\$[_a-zA-Z0-9]+\\b)|[-0-9A-Za-z_$#]+\\b|(['\"])((%PLAYER%|%SELF%)|[^`]*?)\\3)",
+              "begin": "entity\\s+((\\$[_a-zA-Z0-9]+\\b)|[-0-9A-Za-z_$#]+\\b|(\")((%PLAYER%|%SELF%)|[^\"]*)\")",
               "beginCaptures": {
                 "0": { "name": "support.type.mgs" },
                 "2": { "name": "variable.other.constant.mgs" },
@@ -295,7 +332,7 @@
               ]
             },
             {
-              "begin": "name\\s+((\\$[_a-zA-Z0-9]+\\b)|[-0-9A-Za-z_$#]+\\b|(['\"])((%[^%]*%)|[^`]*?)\\3)",
+              "begin": "name\\s+((\\$[_a-zA-Z0-9]+\\b)|[-0-9A-Za-z_$#]+\\b|(\")((%[^%]*%)|[^\"]*)\")",
               "beginCaptures": {
                 "0": { "name": "support.type.mgs" },
                 "2": { "name": "variable.other.constant.mgs" },
@@ -543,8 +580,9 @@
           },
           "patterns": [{ "include": "#script_body" }]
         },
+        { "include": "#fn_call" },
         {
-          "match": "\\b(debug\\s*!)\\s*(\\()([_a-zA-Z][_a-zA-Z0-9]*)?(\\))",
+          "match": "\\b(debug\\s*!)\\s*(\\()\\s*([_a-zA-Z][_a-zA-Z0-9]*)?\\s*(\\))",
           "captures": {
             "1": { "name": "entity.name.function.mgs" },
             "2": { "name": "punctuation.section.block.begin.mgs" },
@@ -578,12 +616,12 @@
           "patterns": [{ "include": "#dialog_body" }]
         },
         {
-          "begin": "\\b(show)\\s+(dialog)(\\s+(([_a-zA-Z][_a-zA-Z0-9]*|(['\"])[^`]*?\\6)))\\s*({)",
+          "begin": "\\b(show)\\s+(dialog)(\\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"))\\s*({)",
           "beginCaptures": {
             "1": { "name": "storage.type.mgs" },
             "2": { "name": "variable.parameter.mgs" },
             "3": { "name": "string.quoted.double.mgs" },
-            "7": { "name": "punctuation.section.block.begin.mgs" }
+            "5": { "name": "punctuation.section.block.begin.mgs" }
           },
           "end": "}",
           "endCaptures": {
@@ -592,12 +630,12 @@
           "patterns": [{ "include": "#dialog_body" }]
         },
         {
-          "begin": "\\b(show|concat)\\s+(serial_dialog)(\\s+(([_a-zA-Z][_a-zA-Z0-9]*|(['\"])[^`]*?\\6)))?\\s*({)",
+          "begin": "\\b(show|concat)\\s+(serial_dialog)(\\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"))?\\s*({)",
           "beginCaptures": {
             "1": { "name": "storage.type.mgs" },
             "2": { "name": "variable.parameter.mgs" },
             "3": { "name": "string.quoted.double.mgs" },
-            "7": { "name": "punctuation.section.block.begin.mgs" }
+            "5": { "name": "punctuation.section.block.begin.mgs" }
           },
           "end": "}",
           "endCaptures": {
@@ -606,7 +644,7 @@
           "patterns": [{ "include": "#serial_body" }]
         },
         {
-          "begin": "\\b(rand!)\\s*(\\()",
+          "begin": "\\b(rand!|RNG!)\\s*(\\()",
           "beginCaptures": {
             "1": { "name": "entity.name.function.mgs" },
             "2": { "name": "punctuation.section.block.begin.mgs" }
@@ -625,26 +663,11 @@
           "name": "punctuation.section.block.end.mgs",
           "patterns": [{ "include": "source.json" }]
         },
-        {
-          "begin": "\\b(copy!)\\s*(\\()",
-          "beginCaptures": {
-            "1": { "name": "entity.name.function.mgs" },
-            "2": { "name": "punctuation.section.block.begin.mgs" }
-          },
-          "end": "\\)",
-          "name": "punctuation.section.block.end.mgs",
-          "patterns": [
-            {
-              "match": "((['\"])[^`]*?\\2)|[_a-zA-Z][_a-zA-Z0-9]*",
-              "name": "entity.name.function.mgs"
-            }
-          ]
-        },
         { "include": "#entity_identifier_special" },
         { "include": "#boolean_literal" },
         { "include": "#language_constants" },
         {
-          "match": "\\b(geometry)\\s+(['\"])(%ENTITY_PATH%)(\\2)",
+          "match": "\\b(geometry)\\s+(\")(%ENTITY_PATH%)(\")",
           "captures": {
             "1": { "name": "variable.parameter.mgs" },
             "2": { "name": "string.quoted" },
@@ -669,7 +692,7 @@
           }
         },
         {
-          "match": "(map\\s+)?(on_(tick|load|look|interact|command))\\s*(!=|==|=)\\s*([_a-zA-Z][_a-zA-Z0-9]*|(['\"])[^`]*?\\6)",
+          "match": "(map\\s+)?(on_(tick|load|look|interact|command))\\s*(!=|==|=)\\s*([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")",
           "captures": {
             "1": { "name": "variable.parameter.mgs" },
             "2": { "name": "variable.object.property.mgs" },
@@ -712,7 +735,7 @@
           }
         },
         {
-          "match": "\\b(geometry|map|command|alias|dialog|serial_dialog|entity|flag|variable)\\s+([_a-zA-Z][_a-zA-Z0-9]*\\b|(['\"])[^`]*?\\3)",
+          "match": "\\b(geometry|map|command|alias|dialog|serial_dialog|entity|flag|variable)\\s+([_a-zA-Z][_a-zA-Z0-9]*\\b|\"[^\"]*?\")",
           "captures": {
             "1": { "name": "variable.parameter.mgs" },
             "2": { "name": "string.quoted.mgs" }
@@ -753,15 +776,15 @@
         { "include": "#constant_literal" },
         { "include": "#number_literal" },
         {
-          "match": "(?<=goto|script)\\s+(((['\"])[^`]*?\\3)|[_a-zA-Z][_a-zA-Z0-9]*\\b)",
+          "match": "(?<=goto|script)\\s+(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*\\b)",
           "name": "entity.name.function.mgs"
         },
         {
-          "match": "(?<=(warp_state|type|name|path) (=|==|!=))\\s+(((['\"])[^`]*?\\5)|[_a-zA-Z][_a-zA-Z0-9]*\\b)",
+          "match": "(?<=(warp_state|type|name|path) (=|==|!=))\\s+(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*\\b)",
           "name": "string.quoted.mgs"
         },
         {
-          "match": "(?<=label)\\s+(((['\"])[^`]*?\\3)|[_a-zA-Z][_a-zA-Z0-9]*\\b)",
+          "match": "(?<=label)\\s+(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*\\b)",
           "name": "entity.name.label.mgs"
         },
         {
@@ -773,7 +796,7 @@
         },
         { "match": "[_a-zA-Z][_a-zA-Z0-9]*", "name": "variable.parameter.mgs" },
         {
-          "match": "[_a-zA-Z][_a-zA-Z0-9]*|(['\"])[^`]*?\\1",
+          "match": "[_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"",
           "name": "variable.parameter.mgs"
         }
       ]

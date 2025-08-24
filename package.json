@@ -2,7 +2,7 @@
 	"name": "magegamescript-colors",
 	"displayName": "MageGameScript Colors",
 	"description": "Syntax highlighting for MageGameScript",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"publisher": "goat-and-bird",
 	"repository": "https://github.com/alamedyang/magegamescript-syntax-highlighting.git",
 	"icon": "MageGameScript-icon.png",

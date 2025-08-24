@@ -2,6 +2,14 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2025-08-19 (v1.1.0)
+
+- Added functions! `fn functionName($arg, $arg)`
+- Changed `copy!(scriptName)` to just `scriptName()` to more closely resemble functions
+- Removed almost all ['\"] entries (single quotes are deprecated)
+	- Final case is complex and I'll do it later
+- Aligned tokens in unit tests to make it easier to spot anomalies
+
 ## 2025-08-16 (v1.0.0)
 
 - "Mathlang" syntax overhaul!

@@ -17,6 +17,10 @@
         <string>#include_macro</string>
       </dict>
       <dict>
+        <key>include</key>
+        <string>#fn_definition</string>
+      </dict>
+      <dict>
         <key>begin</key>
         <string>\b(add)(\s+serial_dialog)(\s+settings)(\s*{)?</string>
         <key>beginCaptures</key>
@@ -151,7 +155,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>\b(entity)\s+(([_a-zA-Z][_a-zA-Z0-9]*)|(['"])(%(PLAYER|SELF)%)\4)\s*({)</string>
+            <string>\b(entity)\s+([_a-zA-Z][_a-zA-Z0-9]*|"(%(PLAYER|SELF)%)")\s*({)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -164,12 +168,12 @@
                 <key>name</key>
                 <string>support.type.mgs</string>
               </dict>
-              <key>5</key>
+              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>variable.language.mgs</string>
               </dict>
-              <key>7</key>
+              <key>5</key>
               <dict>
                 <key>name</key>
                 <string>punctuation.section.block.begin.mgs</string>
@@ -199,7 +203,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>\b(entity)\s+(([_a-zA-Z][_a-zA-Z0-9]*)|(['"])[^`]*?\4)\s*({)</string>
+            <string>\b(entity)\s+([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*")\s*({)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -212,7 +216,7 @@
                 <key>name</key>
                 <string>support.type.mgs</string>
               </dict>
-              <key>5</key>
+              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>punctuation.section.block.begin.mgs</string>
@@ -282,7 +286,7 @@
       </dict>
       <dict>
         <key>begin</key>
-        <string>\b(dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\4))\s*({)</string>
+        <string>\b(dialog)\s+([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*")\s*({)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -295,7 +299,7 @@
             <key>name</key>
             <string>variable.parameter.mgs</string>
           </dict>
-          <key>5</key>
+          <key>3</key>
           <dict>
             <key>name</key>
             <string>punctuation.section.block.begin.mgs</string>
@@ -321,7 +325,7 @@
       </dict>
       <dict>
         <key>begin</key>
-        <string>\b(serial_dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\4))\s*({)</string>
+        <string>\b(serial_dialog)\s+([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*")\s*({)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -334,7 +338,7 @@
             <key>name</key>
             <string>variable.parameter.mgs</string>
           </dict>
-          <key>5</key>
+          <key>3</key>
           <dict>
             <key>name</key>
             <string>punctuation.section.block.begin.mgs</string>
@@ -360,7 +364,7 @@
       </dict>
       <dict>
         <key>begin</key>
-        <string>(script\s+)?(((([_a-zA-Z][_a-zA-Z0-9]*)|((['"])[^`]*?\7))))\s*({)</string>
+        <string>(script\s+)?([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*")\s*({)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -373,7 +377,7 @@
             <key>name</key>
             <string>entity.name.function.mgs</string>
           </dict>
-          <key>8</key>
+          <key>3</key>
           <dict>
             <key>name</key>
             <string>punctuation.section.block.begin.mgs</string>
@@ -547,7 +551,7 @@
       <key>string_literal</key>
       <dict>
         <key>match</key>
-        <string>[_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\1</string>
+        <string>[_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"</string>
         <key>name</key>
         <string>string.quoted.mgs</string>
       </dict>
@@ -565,10 +569,115 @@
         <key>name</key>
         <string>constant.language.mgs</string>
       </dict>
+      <key>fn_definition</key>
+      <dict>
+        <key>begin</key>
+        <string>(fn\s+)?("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()\s*((\$[_a-zA-Z0-9]+)\s*(,\s+(\$[_a-zA-Z0-9]+))?)?\s*(\))\s*(\{)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>storage.type.mgs</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.function.mgs</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.section.block.begin.mgs</string>
+          </dict>
+          <key>5</key>
+          <dict>
+            <key>name</key>
+            <string>variable.other.constant.mgs</string>
+          </dict>
+          <key>7</key>
+          <dict>
+            <key>name</key>
+            <string>variable.other.constant.mgs</string>
+          </dict>
+          <key>8</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.section.block.end.mgs</string>
+          </dict>
+          <key>9</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.section.block.begin.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\}</string>
+        <key>name</key>
+        <string>punctuation.section.block.end.mgs</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#script_body</string>
+          </dict>
+        </array>
+      </dict>
+      <key>fn_call</key>
+      <dict>
+        <key>begin</key>
+        <string>("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.function.mgs</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.section.block.begin.mgs</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\)</string>
+        <key>name</key>
+        <string>punctuation.section.block.end.mgs</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(")(%(ENTITY_PATH|SELF|PLAYER|MAP)*%)(")</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>string.quoted.mgs</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>variable.language.mgs</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>string.quoted.mgs</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#script_body</string>
+          </dict>
+        </array>
+      </dict>
       <key>entity_identifier_special</key>
       <dict>
         <key>match</key>
-        <string>\b(entity)\s+(['"])(%PLAYER%|%SELF%)(\2)</string>
+        <string>\b(entity)\s+(")(%PLAYER%|%SELF%)(")</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -607,7 +716,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(name)\s+(['"])(%[^%]*%)(\2)</string>
+            <string>\b(name)\s+(")(%[^%]*%)(")</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -634,7 +743,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(border_tileset|portrait)\s+(((['"])[^`]*?\4)|[_a-zA-Z][_a-zA-Z0-9]*)?</string>
+            <string>\b(border_tileset|portrait)\s+("[^`]*"|[_a-zA-Z][_a-zA-Z0-9]*)?</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -678,7 +787,7 @@
       <key>dialog_option_goto</key>
       <dict>
         <key>match</key>
-        <string>(=)\s*(((['"])[^`]*?\4)|[_a-zA-Z][_a-zA-Z0-9]*)</string>
+        <string>(=)\s*("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*)</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -710,7 +819,7 @@
               </dict>
               <dict>
                 <key>begin</key>
-                <string>entity\s+((\$[_a-zA-Z0-9]+\b)|[-0-9A-Za-z_$#]+\b|(['"])((%PLAYER%|%SELF%)|[^`]*?)\3)</string>
+                <string>entity\s+((\$[_a-zA-Z0-9]+\b)|[-0-9A-Za-z_$#]+\b|(")((%PLAYER%|%SELF%)|[^"]*)")</string>
                 <key>beginCaptures</key>
                 <dict>
                   <key>0</key>
@@ -753,7 +862,7 @@
               </dict>
               <dict>
                 <key>begin</key>
-                <string>name\s+((\$[_a-zA-Z0-9]+\b)|[-0-9A-Za-z_$#]+\b|(['"])((%[^%]*%)|[^`]*?)\3)</string>
+                <string>name\s+((\$[_a-zA-Z0-9]+\b)|[-0-9A-Za-z_$#]+\b|(")((%[^%]*%)|[^"]*)")</string>
                 <key>beginCaptures</key>
                 <dict>
                   <key>0</key>
@@ -1355,8 +1464,12 @@
             </array>
           </dict>
           <dict>
+            <key>include</key>
+            <string>#fn_call</string>
+          </dict>
+          <dict>
             <key>match</key>
-            <string>\b(debug\s*!)\s*(\()([_a-zA-Z][_a-zA-Z0-9]*)?(\))</string>
+            <string>\b(debug\s*!)\s*(\()\s*([_a-zA-Z][_a-zA-Z0-9]*)?\s*(\))</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1456,7 +1569,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>\b(show)\s+(dialog)(\s+(([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\6)))\s*({)</string>
+            <string>\b(show)\s+(dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"))\s*({)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -1474,7 +1587,7 @@
                 <key>name</key>
                 <string>string.quoted.double.mgs</string>
               </dict>
-              <key>7</key>
+              <key>5</key>
               <dict>
                 <key>name</key>
                 <string>punctuation.section.block.begin.mgs</string>
@@ -1500,7 +1613,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>\b(show|concat)\s+(serial_dialog)(\s+(([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\6)))?\s*({)</string>
+            <string>\b(show|concat)\s+(serial_dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"))?\s*({)</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -1518,7 +1631,7 @@
                 <key>name</key>
                 <string>string.quoted.double.mgs</string>
               </dict>
-              <key>7</key>
+              <key>5</key>
               <dict>
                 <key>name</key>
                 <string>punctuation.section.block.begin.mgs</string>
@@ -1544,7 +1657,7 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>\b(rand!)\s*(\()</string>
+            <string>\b(rand!|RNG!)\s*(\()</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
@@ -1599,36 +1712,6 @@
             </array>
           </dict>
           <dict>
-            <key>begin</key>
-            <string>\b(copy!)\s*(\()</string>
-            <key>beginCaptures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.function.mgs</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.section.block.begin.mgs</string>
-              </dict>
-            </dict>
-            <key>end</key>
-            <string>\)</string>
-            <key>name</key>
-            <string>punctuation.section.block.end.mgs</string>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>match</key>
-                <string>((['"])[^`]*?\2)|[_a-zA-Z][_a-zA-Z0-9]*</string>
-                <key>name</key>
-                <string>entity.name.function.mgs</string>
-              </dict>
-            </array>
-          </dict>
-          <dict>
             <key>include</key>
             <string>#entity_identifier_special</string>
           </dict>
@@ -1642,7 +1725,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(geometry)\s+(['"])(%ENTITY_PATH%)(\2)</string>
+            <string>\b(geometry)\s+(")(%ENTITY_PATH%)(")</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1713,7 +1796,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>(map\s+)?(on_(tick|load|look|interact|command))\s*(!=|==|=)\s*([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\6)</string>
+            <string>(map\s+)?(on_(tick|load|look|interact|command))\s*(!=|==|=)\s*([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*")</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1843,7 +1926,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>\b(geometry|map|command|alias|dialog|serial_dialog|entity|flag|variable)\s+([_a-zA-Z][_a-zA-Z0-9]*\b|(['"])[^`]*?\3)</string>
+            <string>\b(geometry|map|command|alias|dialog|serial_dialog|entity|flag|variable)\s+([_a-zA-Z][_a-zA-Z0-9]*\b|"[^"]*?")</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1916,19 +1999,19 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>(?&lt;=goto|script)\s+(((['"])[^`]*?\3)|[_a-zA-Z][_a-zA-Z0-9]*\b)</string>
+            <string>(?&lt;=goto|script)\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)</string>
             <key>name</key>
             <string>entity.name.function.mgs</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>(?&lt;=(warp_state|type|name|path) (=|==|!=))\s+(((['"])[^`]*?\5)|[_a-zA-Z][_a-zA-Z0-9]*\b)</string>
+            <string>(?&lt;=(warp_state|type|name|path) (=|==|!=))\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)</string>
             <key>name</key>
             <string>string.quoted.mgs</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>(?&lt;=label)\s+(((['"])[^`]*?\3)|[_a-zA-Z][_a-zA-Z0-9]*\b)</string>
+            <string>(?&lt;=label)\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)</string>
             <key>name</key>
             <string>entity.name.label.mgs</string>
           </dict>
@@ -1957,7 +2040,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>[_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\1</string>
+            <string>[_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"</string>
             <key>name</key>
             <string>variable.parameter.mgs</string>
           </dict>
