@@ -2,6 +2,15 @@
 
 All notable changes to the "magegamescript-colors" extension will be documented in this file.
 
+## 2025-09-02 (v1.1.3)
+
+- Operator bug fixes:
+	- Partial matches (was matching `<` before `<=`)
+	- Missing `>=` (was matching `=>`)
+	- `logical` vs `assignment` stricter scoping; split category in unit tests
+- Fixed TextMate version failing to match strings after `warp_state =` etc.
+- Syntax colors for script "lambdas" in dialog and serial dialog options
+
 ## 2025-08-23 (v1.1.2)
 
 - Fixed function definitions having wrong colors for body

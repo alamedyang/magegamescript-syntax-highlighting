@@ -1,0 +1,660 @@
+{	patterns = (
+		{	include = '#comment_node'; },
+		{	include = '#include_macro'; },
+		{	include = '#fn_definition'; },
+		{	include = '#fn_body'; },
+		{	begin = '\b(add)(\s+serial_dialog)(\s+settings)(\s*{)?';
+			end = '}';
+			beginCaptures = {
+				1 = { name = 'storage.type.mgs'; };
+				2 = { name = 'variable.parameter.mgs'; };
+				3 = { name = 'variable.object.property.mgs'; };
+				4 = { name = 'punctuation.section.block.begin.mgs'; };
+			};
+			endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+			patterns = (
+				{	include = '#comment_node'; },
+				{	include = '#serial_parameters'; },
+			);
+		},
+		{	begin = '\b(add)(\s+dialog)(\s+settings)(\s*{)?';
+			end = '}';
+			beginCaptures = {
+				1 = { name = 'storage.type.mgs'; };
+				2 = { name = 'variable.parameter.mgs'; };
+				3 = { name = 'variable.object.property.mgs'; };
+				4 = { name = 'punctuation.section.block.begin.mgs'; };
+			};
+			endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+			patterns = (
+				{	include = '#comment_node'; },
+				{	begin = '\b(label)\s+([_a-zA-Z][_a-zA-Z0-9]*)\s*({)';
+					end = '}';
+					beginCaptures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'support.type.mgs'; };
+						3 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#dialog_parameter'; },
+					);
+				},
+				{	begin = '\b(entity)\s+([_a-zA-Z][_a-zA-Z0-9]*|\"(%(PLAYER|SELF)%)\")\s*({)';
+					end = '}';
+					beginCaptures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'support.type.mgs'; };
+						3 = { name = 'variable.language.mgs'; };
+						5 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#dialog_parameter'; },
+					);
+				},
+				{	begin = '\b(entity)\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\s*({)';
+					end = '}';
+					beginCaptures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'support.type.mgs'; };
+						3 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#dialog_parameter'; },
+					);
+				},
+				{	begin = '\b(default)\s*({)';
+					end = '}';
+					beginCaptures = {
+						1 = { name = 'storage.type.mgs'; };
+						2 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#dialog_parameter'; },
+					);
+				},
+			);
+		},
+		{	begin = '\b(dialog)\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\s*({)';
+			end = '}';
+			beginCaptures = {
+				1 = { name = 'storage.type.mgs'; };
+				2 = { name = 'variable.parameter.mgs'; };
+				3 = { name = 'punctuation.section.block.begin.mgs'; };
+			};
+			endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+			patterns = ( { include = '#dialog_body'; } );
+		},
+		{	begin = '\b(serial_dialog)\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\s*({)';
+			end = '}';
+			beginCaptures = {
+				1 = { name = 'storage.type.mgs'; };
+				2 = { name = 'variable.parameter.mgs'; };
+				3 = { name = 'punctuation.section.block.begin.mgs'; };
+			};
+			endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+			patterns = ( { include = '#serial_body'; } );
+		},
+		{	begin = '(script\s+)?([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")\s*({)';
+			end = '}';
+			beginCaptures = {
+				1 = { name = 'storage.type.mgs'; };
+				2 = { name = 'entity.name.function.mgs'; };
+				3 = { name = 'punctuation.section.block.begin.mgs'; };
+			};
+			endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+			patterns = ( { include = '#script_body'; } );
+		},
+		{	name = 'keyword.operator.assignment.mgs';
+			match = '\b=\b';
+		},
+		{	include = '#constant_literal'; },
+		{	include = '#number_literal'; },
+		{	include = '#boolean_literal'; },
+		{	include = '#language_constants'; },
+		{	include = '#string_literal'; },
+	);
+	repository = {
+		boolean_literal = {
+			name = 'constant.language.mgs';
+			match = '\b(true|false|off)\b|\bon(?!_)\b';
+		};
+		comment_node = {
+			patterns = (
+				{	name = 'comment.block.mgs';
+					begin = '/\*';
+					end = '\*/';
+					beginCaptures = { 0 = { name = 'punctuation.definition.comment.mgs'; }; };
+					endCaptures = { 0 = { name = 'punctuation.definition.comment.mgs'; }; };
+					patterns = ( { match = '.+?'; } );
+				},
+				{	name = 'comment.line.double-slash.mgs';
+					begin = '//';
+					end = '\n|$';
+					beginCaptures = { 0 = { name = 'punctuation.definition.comment.mgs'; }; };
+					endCaptures = { 0 = { name = 'punctuation.definition.comment.mgs'; }; };
+					patterns = ( { match = '.+?'; } );
+				},
+			);
+		};
+		constant_literal = {
+			name = 'variable.other.constant.mgs';
+			match = '\$[_a-zA-Z0-9]+\b';
+		};
+		dialog_body = {
+			patterns = (
+				{	include = '#comment_node'; },
+				{	patterns = (
+						{	include = '#comment_node'; },
+						{	begin = 'entity\s+((\$[_a-zA-Z0-9]+\b)|[-0-9A-Za-z_$#]+\b|(\")((%PLAYER%|%SELF%)|[^\"]*)\")';
+							end = '(?=\")';
+							beginCaptures = {
+								0 = { name = 'support.type.mgs'; };
+								2 = { name = 'variable.other.constant.mgs'; };
+								5 = { name = 'variable.language.mgs'; };
+							};
+							endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+							patterns = (
+								{	include = '#comment_node'; },
+								{	include = '#dialog_parameter'; },
+							);
+						},
+						{	begin = 'name\s+((\$[_a-zA-Z0-9]+\b)|[-0-9A-Za-z_$#]+\b|(\")((%[^%]*%)|[^\"]*)\")';
+							end = '(?=\")';
+							beginCaptures = {
+								0 = { name = 'support.type.mgs'; };
+								2 = { name = 'variable.other.constant.mgs'; };
+								5 = { name = 'variable.language.mgs'; };
+							};
+							endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+							patterns = (
+								{	include = '#comment_node'; },
+								{	include = '#dialog_parameter'; },
+							);
+						},
+						{	begin = '((\$[_a-zA-Z0-9]+)|(\b[-0-9A-Za-z_$#]+))\b';
+							end = '(?=\")';
+							beginCaptures = {
+								2 = { name = 'variable.other.constant.mgs'; };
+								3 = { name = 'support.type.mgs'; };
+							};
+							endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+							patterns = (
+								{	include = '#comment_node'; },
+								{	include = '#dialog_parameter'; },
+							);
+						},
+					);
+				},
+				{	name = 'constant.character.escape.mgs';
+					begin = '\"';
+					end = '(?<!\\)(?:\\{2})*\K\"';
+					beginCaptures = { 0 = { name = 'string.quoted.double.mgs'; }; };
+					endCaptures = { 0 = { name = 'string.quoted.double.mgs'; }; };
+					patterns = (
+						{	name = 'constant.character.escape.mgs';
+							match = '\\[nt\"$%\\]';
+						},
+						{	name = 'variable.language.mgs';
+							match = '[%][^%]*?[%]';
+						},
+						{	name = 'variable.language.mgs';
+							match = '\$[^\$]+?\$';
+						},
+						{	name = 'string.variable.mgs';
+							match = '.+?';
+						},
+					);
+				},
+				{	include = '#dialog_option_goto'; },
+				{	match = '(>)(\s*\$[_a-zA-Z0-9]+)?';
+					captures = {
+						1 = { name = 'keyword.control.mgs'; };
+						2 = { name = 'variable.language.mgs'; };
+					};
+				},
+				{	include = '#script_body'; },
+			);
+		};
+		dialog_option_goto = {
+			match = '(=)\s*(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)';
+			captures = {
+				1 = { name = 'keyword.operator.assignment.mgs'; };
+				2 = { name = 'entity.name.function.mgs'; };
+			};
+		};
+		dialog_parameter = {
+			patterns = (
+				{	include = '#comment_node'; },
+				{	include = '#entity_identifier_special'; },
+				{	match = '\b(name)\s+(\")(%[^%]*%)(\")';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'string.quoted.mgs'; };
+						3 = { name = 'variable.language.mgs'; };
+						4 = { name = 'string.quoted.mgs'; };
+					};
+				},
+				{	match = '\b(border_tileset|portrait)\s+(\"[^`]*\"|[_a-zA-Z][_a-zA-Z0-9]*)?';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'string.quoted.mgs'; };
+					};
+				},
+				{	name = 'variable.parameter.mgs';
+					match = '\b(entity|name|portrait|border_tileset|alignment|emote|wrap)\b';
+				},
+				{	name = 'constant.language.mgs';
+					match = '(?<=\balignment)\s+(TR|BR|TL|BL|TOP_RIGHT|BOTTOM_RIGHT|TOP_LEFT|BOTTOM_LEFT)\b';
+				},
+				{	include = '#constant_literal'; },
+				{	include = '#number_literal'; },
+				{	include = '#string_literal'; },
+			);
+		};
+		entity_identifier_special = {
+			match = '\b(entity)\s+(\")(%PLAYER%|%SELF%)(\")';
+			captures = {
+				1 = { name = 'variable.parameter.mgs'; };
+				2 = { name = 'string.quoted.mgs'; };
+				3 = { name = 'variable.language.mgs'; };
+				4 = { name = 'string.quoted.mgs'; };
+			};
+		};
+		fn_body = {
+			name = 'punctuation.section.block.end.mgs';
+			begin = '(\{)';
+			end = '\}';
+			beginCaptures = { 1 = { name = 'punctuation.section.block.begin.mgs'; }; };
+			patterns = ( { include = '#script_body'; } );
+		};
+		fn_call = {
+			name = 'punctuation.section.block.end.mgs';
+			begin = '(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()';
+			end = '\)';
+			beginCaptures = {
+				1 = { name = 'entity.name.function.mgs'; };
+				2 = { name = 'punctuation.section.block.begin.mgs'; };
+			};
+			patterns = (
+				{	match = '(\")(%(ENTITY_PATH|SELF|PLAYER|MAP)*%)(\")';
+					captures = {
+						1 = { name = 'string.quoted.mgs'; };
+						2 = { name = 'variable.language.mgs'; };
+						4 = { name = 'string.quoted.mgs'; };
+					};
+				},
+				{	include = '#script_body'; },
+			);
+		};
+		fn_definition = {
+			name = 'punctuation.section.block.end.mgs';
+			begin = '(fn\s+)?(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*)\s*(\()';
+			end = '\)';
+			beginCaptures = {
+				1 = { name = 'storage.type.mgs'; };
+				2 = { name = 'entity.name.function.mgs'; };
+				3 = { name = 'punctuation.section.block.begin.mgs'; };
+			};
+			patterns = ( { include = '#constant_literal'; } );
+		};
+		include_macro = {
+			match = '\b(include)\s*(\"[^\"]+\")';
+			captures = {
+				1 = { name = 'entity.name.function.mgs'; };
+				2 = { name = 'string.quoted.mgs'; };
+			};
+		};
+		language_constants = {
+			name = 'constant.language.mgs';
+			match = '\bnorth|south|west|east|MEM(0|1|2|3)|BIT(128|64|32|16|8|4|2|1)|XOR|ADD|SUB|PAGE|(L|R)JOY_(CENTER|UP|DOWN|LEFT|RIGHT)|TRIANGLE|X|CROSS|CIRCLE|O|SQUARE|HAX|ANY|ALL|LED_(XOR|ADD|SUB|PAGE|BIT128|BIT64|BIT32|BIT16|BIT8|BIT4|BIT2|BIT1|MEM0|MEM1|MEM2|MEM3|HAX|USB|SD|ANY)\b';
+		};
+		number_literal = {
+			patterns = (
+				{	name = 'constant.numeric.integer.mgs';
+					match = '#[0-9A-Fa-f]+\b';
+				},
+				{	name = 'constant.numeric.integer.mgs';
+					match = '\b([0-9]+(s|ms|px|pix|x)?|once|twice|thrice)\b';
+				},
+				{	name = 'constant.numeric.integer.mgs';
+					match = '\bblack|white|red|green|blue|magenta|cyan|yellow\b';
+				},
+			);
+		};
+		script_body = {
+			patterns = (
+				{	include = '#comment_node'; },
+				{	match = '([_a-zA-Z][_a-zA-Z0-9]*)\s*(:)';
+					captures = {
+						1 = { name = 'entity.name.label.mgs'; };
+						2 = { name = 'keyword.operator.assignment.mgs'; };
+					};
+				},
+				{	begin = '\b(for)\s*(\()';
+					end = '\)';
+					beginCaptures = {
+						1 = { name = 'keyword.control.conditional.mgs'; };
+						2 = { name = 'punctuation.section.parens.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.parens.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	name = 'keyword.operator.logical.mgs';
+							match = ';';
+						},
+						{	include = '#script_body'; },
+					);
+				},
+				{	begin = '\b(do)\s*(\{)';
+					end = '\}';
+					beginCaptures = {
+						1 = { name = 'keyword.control.conditional.mgs'; };
+						2 = { name = 'punctuation.section.parens.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.parens.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#script_body'; },
+					);
+				},
+				{	begin = '\b(while)\s*(\()';
+					end = '\)';
+					beginCaptures = {
+						1 = { name = 'keyword.control.conditional.mgs'; };
+						2 = { name = 'punctuation.section.parens.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.parens.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#script_body'; },
+					);
+				},
+				{	begin = '\b(if|else\s+if)\s*(\()';
+					end = '\)';
+					beginCaptures = {
+						1 = { name = 'keyword.control.conditional.mgs'; };
+						2 = { name = 'punctuation.section.parens.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.parens.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#script_body'; },
+					);
+				},
+				{	begin = '\belse\s+(\{)';
+					end = '\}';
+					beginCaptures = {
+						0 = { name = 'keyword.control.conditional.mgs'; };
+						1 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#script_body'; },
+					);
+				},
+				{	begin = '\{';
+					end = '\}';
+					beginCaptures = { 0 = { name = 'punctuation.section.block.begin.mgs'; }; };
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = (
+						{	include = '#comment_node'; },
+						{	include = '#script_body'; },
+					);
+				},
+				{	begin = '\bif\b';
+					end = '\bthen\b|\n';
+					beginCaptures = { 0 = { name = 'keyword.control.conditional.mgs'; }; };
+					endCaptures = { 0 = { name = 'keyword.control.conditional.mgs'; }; };
+					patterns = ( { include = '#script_body'; } );
+				},
+				{	include = '#fn_call'; },
+				{	match = '\b(debug\s*!)\s*(\()\s*([_a-zA-Z][_a-zA-Z0-9]*)?\s*(\))';
+					captures = {
+						1 = { name = 'entity.name.function.mgs'; };
+						2 = { name = 'punctuation.section.block.begin.mgs'; };
+						3 = { name = 'variable.parameter.mgs'; };
+						4 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+				},
+				{	begin = '\b(debug\s*!)\s*(\()';
+					end = '\)';
+					beginCaptures = {
+						1 = { name = 'entity.name.function.mgs'; };
+						2 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = ( { include = '#serial_body'; } );
+				},
+				{	begin = '\b(show)\s+(dialog)\s*({)';
+					end = '}';
+					beginCaptures = {
+						1 = { name = 'storage.type.mgs'; };
+						2 = { name = 'variable.parameter.mgs'; };
+						3 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = ( { include = '#dialog_body'; } );
+				},
+				{	begin = '\b(show)\s+(dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"))?\s*({)';
+					end = '}';
+					beginCaptures = {
+						1 = { name = 'storage.type.mgs'; };
+						2 = { name = 'variable.parameter.mgs'; };
+						4 = { name = 'string.quoted.double.mgs'; };
+						5 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = ( { include = '#dialog_body'; } );
+				},
+				{	begin = '\b(show|concat)\s+(serial_dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"))?\s*({)';
+					end = '}';
+					beginCaptures = {
+						1 = { name = 'storage.type.mgs'; };
+						2 = { name = 'variable.parameter.mgs'; };
+						4 = { name = 'string.quoted.double.mgs'; };
+						5 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					endCaptures = { 0 = { name = 'punctuation.section.block.end.mgs'; }; };
+					patterns = ( { include = '#serial_body'; } );
+				},
+				{	name = 'punctuation.section.block.end.mgs';
+					begin = '\b(rand!|RNG!)\s*(\()';
+					end = '\)';
+					beginCaptures = {
+						1 = { name = 'entity.name.function.mgs'; };
+						2 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					patterns = ( { include = '#script_body'; } );
+				},
+				{	name = 'punctuation.section.block.end.mgs';
+					begin = '\b(json)\s*(\[)';
+					end = '\]';
+					beginCaptures = {
+						1 = { name = 'entity.name.function.mgs'; };
+						2 = { name = 'punctuation.section.block.begin.mgs'; };
+					};
+					patterns = ( { include = 'source.json'; } );
+				},
+				{	include = '#entity_identifier_special'; },
+				{	include = '#boolean_literal'; },
+				{	include = '#language_constants'; },
+				{	match = '\b(geometry)\s+(\")(%ENTITY_PATH%)(\")';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'string.quoted.mgs'; };
+						3 = { name = 'variable.language.mgs'; };
+						4 = { name = 'string.quoted.mgs'; };
+					};
+				},
+				{	match = '\b(goto)\s+(label|index|script)\b';
+					captures = {
+						1 = { name = 'keyword.control.mgs'; };
+						2 = { name = 'variable.parameter.mgs'; };
+					};
+				},
+				{	match = '(map\s+)?(on_(tick|load|look|interact|command))\s*(!=|==|=)\s*(\$[_a-zA-Z0-9]+)';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'variable.object.property.mgs'; };
+						4 = { name = 'keyword.operator.assignment.mgs'; };
+						5 = { name = 'variable.other.constant.mgs'; };
+					};
+				},
+				{	match = '(map\s+)?(on_(tick|load|look|interact|command))\s*(!=|==|=)\s*([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'variable.object.property.mgs'; };
+						4 = { name = 'keyword.operator.assignment.mgs'; };
+						5 = { name = 'entity.name.function.mgs'; };
+					};
+				},
+				{	match = '(map\s+)?(on_(tick|load|look|interact|command))';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'variable.object.property.mgs'; };
+					};
+				},
+				{	name = 'keyword.control.mgs';
+					match = '\b(load)\s*(?=map)\b';
+				},
+				{	name = 'keyword.control.loop.mgs';
+					match = '\b(return|continue|break|goto)\b';
+				},
+				{	match = '\b(command)\s+((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"))(\s+(fail)|\s*(\+)\s*((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")))?\s*((=)\s*((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\")))?';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						3 = { name = 'variable.other.constant.mgs'; };
+						4 = { name = 'string.quoted.mgs'; };
+						6 = { name = 'variable.language.mgs'; };
+						7 = { name = 'keyword.operator.logical.mgs'; };
+						9 = { name = 'variable.other.constant.mgs'; };
+						10 = { name = 'string.quoted.mgs'; };
+						12 = { name = 'keyword.operator.assignment.mgs'; };
+						14 = { name = 'variable.other.constant.mgs'; };
+						15 = { name = 'entity.name.function.mgs'; };
+					};
+				},
+				{	match = '\b(geometry|map|command|alias|dialog|serial_dialog|entity|flag|variable)\s+(\$[_a-zA-Z0-9]+)\b';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'variable.other.constant.mgs'; };
+					};
+				},
+				{	match = '\b(geometry|map|command|alias|dialog|serial_dialog|entity|flag|variable)\s+([_a-zA-Z][_a-zA-Z0-9]*\b|\"[^\"]*?\")';
+					captures = {
+						1 = { name = 'variable.parameter.mgs'; };
+						2 = { name = 'string.quoted.mgs'; };
+					};
+				},
+				{	name = 'variable.parameter.mgs';
+					match = '\b(index|slot|button|light|dialog|serial_dialog|flag|variable|label)\b';
+				},
+				{	name = 'variable.object.property.mgs';
+					match = '\b(origin|length|position|x|y|(primary|secondary)_id|primary_id_type|(current_)?animation|animation_frame|strafe|name|path|direction|type|glitched)\b';
+				},
+				{	name = 'variable.parameter.mgs';
+					match = '\b(player_control|lights_control|hex_editor|hex_dialog_mode|hex_control|hex_clipboard|serial_control|warp_state|serial_connect|debug_mode)\b';
+				},
+				{	name = 'storage.type.mgs';
+					match = '\b(delete|(un)?hide|save|load|erase|block|wait|close|(un)?pause|show|copy|fade|shake|show|concat)\b';
+				},
+				{	name = 'variable.language.mgs';
+					match = '\b(out|in|open|closed|fail|forever|over|down|up|pressed)\b';
+				},
+				{	name = 'variable.language.mgs';
+					match = '\b(player|self|camera)\b';
+				},
+				{	match = '(?<=warp_state|type|name|path)\s*(=|==|!=)\s*(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*\b)';
+					captures = {
+						1 = { name = 'keyword.operator.assignment.mgs'; };
+						2 = { name = 'string.quoted.mgs'; };
+					};
+				},
+				{	name = 'keyword.operator.logical.mgs';
+					match = '<=|!=|==|>=|<|>|\|\||&&|!|intersects';
+				},
+				{	name = 'keyword.operator.assignment.mgs';
+					match = '->|=|\\?=|\\+=|-=|\\*=|\\/=|%=';
+				},
+				{	include = '#constant_literal'; },
+				{	include = '#number_literal'; },
+				{	name = 'entity.name.function.mgs';
+					match = '(?<=goto|script)\s+(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*\b)';
+				},
+				{	name = 'entity.name.label.mgs';
+					match = '(?<=label)\s+(\"[^\"]*\"|[_a-zA-Z][_a-zA-Z0-9]*\b)';
+				},
+				{	name = 'variable.parameter.mgs';
+					match = '[_a-zA-Z][_a-zA-Z0-9]*';
+				},
+				{	name = 'variable.parameter.mgs';
+					match = '[_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"';
+				},
+			);
+		};
+		serial_body = {
+			patterns = (
+				{	include = '#comment_node'; },
+				{	include = '#serial_parameters'; },
+				{	include = '#serial_message'; },
+				{	include = '#dialog_option_goto'; },
+				{	name = 'keyword.control.mgs';
+					match = '_|#';
+				},
+				{	include = '#script_body'; },
+			);
+		};
+		serial_message = {
+			name = 'constant.character.escape.mgs';
+			begin = '\"';
+			end = '(?<!\\)(?:\\{2})*\K\"';
+			beginCaptures = { 0 = { name = 'string.quoted.double.mgs'; }; };
+			endCaptures = { 0 = { name = 'string.quoted.double.mgs'; }; };
+			patterns = (
+				{	match = '(<)(((/|reset|bell)|bold|dim|(bg-)?(black|red|green|yellow|blue|magenta|cyan|white|k|r|g|y|b|m|c|w)))(>)';
+					captures = {
+						1 = { name = 'punctuation.definition.tag.begin.mgs'; };
+						2 = { name = 'entity.name.tag.mgs'; };
+						4 = { name = 'punctuation.definition.tag.mgs'; };
+						7 = { name = 'punctuation.definition.tag.end.mgs'; };
+					};
+				},
+				{	name = 'constant.character.escape.mgs';
+					match = '\\[nt\"\\]';
+				},
+				{	name = 'variable.language.mgs';
+					match = '[%][^%]*[%]';
+				},
+				{	name = 'variable.language.mgs';
+					match = '\$[^\$]+?\$';
+				},
+				{	name = 'string.variable.mgs';
+					match = '.+?';
+				},
+			);
+		};
+		serial_parameters = {
+			patterns = (
+				{	include = '#comment_node'; },
+				{	name = 'variable.parameter.mgs';
+					match = '\bwrap\b';
+				},
+				{	include = '#constant_literal'; },
+				{	include = '#number_literal'; },
+			);
+		};
+		string_literal = {
+			name = 'string.quoted.mgs';
+			match = '[_a-zA-Z][_a-zA-Z0-9]*|\"[^\"]*\"';
+		};
+	};
+}

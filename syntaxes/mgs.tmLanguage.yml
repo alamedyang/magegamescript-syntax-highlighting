@@ -360,6 +360,7 @@ repository:
             name: keyword.control.mgs
           "2":
             name: variable.language.mgs
+      - include: "#script_body"
   serial_message:
     begin: '"'
     beginCaptures:
@@ -389,23 +390,6 @@ repository:
         name: variable.language.mgs
       - match: .+?
         name: string.variable.mgs
-  serial_message_underscore:
-    begin: (_)\s+(")
-    beginCaptures:
-      "1":
-        name: keyword.control.mgs
-      "2":
-        name: string.quoted.double.mgs
-    end: (?<!\\)(?:\\{2})*\K"
-    endCaptures:
-      "0":
-        name: string.quoted.double.mgs
-    name: constant.character.escape.mgs
-    patterns:
-      - match: \\[t"\\]
-        name: constant.character.escape.mgs
-      - match: .+?
-        name: string.variable.mgs
   serial_parameters:
     patterns:
       - include: "#comment_node"
@@ -418,10 +402,10 @@ repository:
       - include: "#comment_node"
       - include: "#serial_parameters"
       - include: "#serial_message"
-      - include: "#serial_message_underscore"
       - include: "#dialog_option_goto"
-      - match: _|:|#
+      - match: _|#
         name: keyword.control.mgs
+      - include: "#script_body"
   script_body:
     patterns:
       - include: "#comment_node"
@@ -542,7 +526,7 @@ repository:
             name: punctuation.section.block.end.mgs
         patterns:
           - include: "#serial_body"
-      - begin: \b(show)(\s+dialog)(\s*{)
+      - begin: \b(show)\s+(dialog)\s*({)
         beginCaptures:
           "1":
             name: storage.type.mgs
@@ -556,13 +540,13 @@ repository:
             name: punctuation.section.block.end.mgs
         patterns:
           - include: "#dialog_body"
-      - begin: \b(show)\s+(dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"))\s*({)
+      - begin: \b(show)\s+(dialog)(\s+([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"))?\s*({)
         beginCaptures:
           "1":
             name: storage.type.mgs
           "2":
             name: variable.parameter.mgs
-          "3":
+          "4":
             name: string.quoted.double.mgs
           "5":
             name: punctuation.section.block.begin.mgs
@@ -578,7 +562,7 @@ repository:
             name: storage.type.mgs
           "2":
             name: variable.parameter.mgs
-          "3":
+          "4":
             name: string.quoted.double.mgs
           "5":
             name: punctuation.section.block.begin.mgs
@@ -616,11 +600,11 @@ repository:
           "1":
             name: variable.parameter.mgs
           "2":
-            name: string.quoted
+            name: string.quoted.mgs
           "3":
             name: variable.language.mgs
           "4":
-            name: string.quoted
+            name: string.quoted.mgs
       - match: \b(goto)\s+(label|index|script)\b
         captures:
           "1":
@@ -657,7 +641,7 @@ repository:
         name: keyword.control.mgs
       - match: \b(return|continue|break|goto)\b
         name: keyword.control.loop.mgs
-      - match: \b(command)\s+((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\5))(\s+(fail)|\s*(\+)\s*((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\12)))?\s*((=)\s*((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|(['"])[^`]*?\18)))?
+      - match: \b(command)\s+((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*"))(\s+(fail)|\s*(\+)\s*((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*")))?\s*((=)\s*((\$[_a-zA-Z0-9]+)|([_a-zA-Z][_a-zA-Z0-9]*|"[^"]*")))?
         captures:
           "1":
             name: variable.parameter.mgs
@@ -667,17 +651,17 @@ repository:
             name: string.quoted.mgs
           "6":
             name: variable.language.mgs
-          "8":
-            name: keyword.operator.assignment.mgs
+          "7":
+            name: keyword.operator.logical.mgs
+          "9":
+            name: variable.other.constant.mgs
           "10":
-            name: variable.other.constant.mgs
-          "11":
             name: string.quoted.mgs
-          "14":
+          "12":
             name: keyword.operator.assignment.mgs
-          "16":
+          "14":
             name: variable.other.constant.mgs
-          "17":
+          "15":
             name: entity.name.function.mgs
       - match: \b(geometry|map|command|alias|dialog|serial_dialog|entity|flag|variable)\s+(\$[_a-zA-Z0-9]+)\b
         captures:
@@ -703,17 +687,20 @@ repository:
         name: variable.language.mgs
       - match: \b(player|self|camera)\b
         name: variable.language.mgs
-      - match: <|<=|!=|==|=>|>|\|\||&&|intersects
+      - match: (?<=warp_state|type|name|path)\s*(=|==|!=)\s*("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)
+        captures:
+          "1":
+            name: keyword.operator.assignment.mgs
+          "2":
+            name: string.quoted.mgs
+      - match: <=|!=|==|>=|<|>|\|\||&&|!|intersects
         name: keyword.operator.logical.mgs
-      - match: (->|=|\?=|\+=|-=|\*=|\/=|%=|!)
+      - match: ->|=|\?=|\+=|-=|\*=|\/=|%=
         name: keyword.operator.assignment.mgs
       - include: "#constant_literal"
       - include: "#number_literal"
       - match: (?<=goto|script)\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)
         name: entity.name.function.mgs
-      - match: (?<=(warp_state|type|name|path)
-          (=|==|!=))\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)
-        name: string.quoted.mgs
       - match: (?<=label)\s+("[^"]*"|[_a-zA-Z][_a-zA-Z0-9]*\b)
         name: entity.name.label.mgs
       - match: "[_a-zA-Z][_a-zA-Z0-9]*"
